@@ -64,3 +64,7 @@
     
     대참사 넘버2 
 ```
+
+
+## 🖥️ **Tech Stacks**
+[ 🖥️ About Tech Stacks ](https://noble-nephew-f49.notion.site/13b76e79e164809ba951f794ba0f8a3e?pvs=4)
