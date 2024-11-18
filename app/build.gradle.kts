@@ -59,7 +59,7 @@ dependencies {
     androidTestImplementation(libs.androidx.ui.test.junit4)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
-    // Hilt 관련 의존성 추가
+    // Hilt
     implementation(libs.hilt.android)
     implementation(libs.hilt.navigation.compose)
     implementation(libs.androidx.appcompat)

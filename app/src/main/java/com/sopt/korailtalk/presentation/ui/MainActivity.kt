@@ -1,4 +1,4 @@
-package com.sopt.korailtalk
+package com.sopt.korailtalk.presentation.ui
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -12,7 +12,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.sopt.korailtalk.ui.theme._35COLLAVORATIONANDROIDKORAILTALKTheme
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -21,7 +23,7 @@ class MainActivity : ComponentActivity() {
             _35COLLAVORATIONANDROIDKORAILTALKTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
                     Greeting(
-                        name = "Android",
+                        name = "코레일톡 기초세팅 !!",
                         modifier = Modifier.padding(innerPadding)
                     )
                 }
