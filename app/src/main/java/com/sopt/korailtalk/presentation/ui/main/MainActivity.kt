@@ -1,4 +1,4 @@
-package com.sopt.korailtalk.presentation.ui
+package com.sopt.korailtalk.presentation.ui.main
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -23,7 +23,7 @@ class MainActivity : ComponentActivity() {
             _35COLLAVORATIONANDROIDKORAILTALKTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
                     Greeting(
-                        name = "코레일톡 기초세팅 !!",
+                        name = "코레일톡 기초세팅",
                         modifier = Modifier.padding(innerPadding)
                     )
                 }
