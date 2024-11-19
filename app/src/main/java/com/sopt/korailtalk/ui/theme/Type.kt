@@ -8,9 +8,9 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.unit.sp
 import com.sopt.korailtalk.R
 
-val PretendardSemi = FontFamily(Font(R.font.Pretendard_SemiBold))
-val PretendardMedium = FontFamily(Font(R.font.Pretendard_Medium))
-val PretendardRegular = FontFamily(Font(R.font.Pretendard_Regular))
+val PretendardSemi = FontFamily(Font(R.font.pretendard_semibold))
+val PretendardMedium = FontFamily(Font(R.font.pretendard_medium))
+val PretendardRegular = FontFamily(Font(R.font.pretendard_regular))
 
 @Immutable
 data class KorailTalkTypography(

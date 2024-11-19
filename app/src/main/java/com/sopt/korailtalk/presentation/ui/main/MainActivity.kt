@@ -5,6 +5,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
@@ -13,6 +14,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import com.sopt.korailtalk.ui.theme.KorailTalkTheme
 import com.sopt.korailtalk.ui.theme._35COLLAVORATIONANDROIDKORAILTALKTheme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -40,10 +42,37 @@ fun Greeting(name: String, modifier: Modifier = Modifier) {
         modifier = Modifier.fillMaxSize(),
         contentAlignment = Alignment.Center
     ) {
-        Text(
-            text = "$name!",
-            modifier = modifier
-        )
+        Column {
+            Text(
+                text = "$name!",
+                style = KorailTalkTheme.typography.head1.copy(
+                    color = KorailTalkTheme.colors.TransparentBlue50
+                ),
+                modifier = modifier
+            )
+            Text(
+                text = "$name!",
+                style = KorailTalkTheme.typography.title1.copy(
+                    color = KorailTalkTheme.colors.Blue01
+                ),
+                modifier = modifier
+            )
+            Text(
+                text = "$name!",
+                style = KorailTalkTheme.typography.body3.copy(
+                    color = KorailTalkTheme.colors.Purple01
+                ),
+                modifier = modifier
+            )
+            Text(
+                text = "$name!",
+                style = KorailTalkTheme.typography.caption1.copy(
+                    color = KorailTalkTheme.colors.Grey600
+                ),
+                modifier = modifier
+            )
+        }
+
     }
 }
 
