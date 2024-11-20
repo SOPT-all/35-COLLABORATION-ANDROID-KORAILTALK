@@ -37,8 +37,8 @@ fun ProvideKorailTalkColorsAndTypography(
 }
 
 @Composable
-fun _35COLLAVORATIONANDROIDKORAILTALKTheme(
-    backgroundColor: Color = defaultKorailTalkColors.White,
+fun COLLAVORATIONANDROIDKORAILTALKTheme(
+    backgroundColor: Color = defaultKorailTalkColors.white,
     content: @Composable () -> Unit
 ) {
     ProvideKorailTalkColorsAndTypography(

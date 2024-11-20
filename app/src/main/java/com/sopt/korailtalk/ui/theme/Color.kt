@@ -48,91 +48,91 @@ val TransparentBlack50 = Color(0xB2000000)
 
 @Immutable
 data class KorailTalkColors(
-    val White: Color,
-    val Black: Color,
+    val white: Color,
+    val black: Color,
 
     //Primary-Blue
-    val Blue01: Color,
-    val Blue02: Color,
-    val Blue03: Color,
-    val Blue04: Color,
-    val Blue05: Color,
-    val Blue06: Color,
-    val Blue07: Color,
+    val blue01: Color,
+    val blue02: Color,
+    val blue03: Color,
+    val blue04: Color,
+    val blue05: Color,
+    val blue06: Color,
+    val blue07: Color,
 
     //Secondary-Purple
-    val Purple01: Color,
-    val Purple02: Color,
-    val Purple03: Color,
-    val Purple04: Color,
-    val Purple05: Color,
+    val purple01: Color,
+    val purple02: Color,
+    val purple03: Color,
+    val purple04: Color,
+    val purple05: Color,
 
     //GrayScale
-    val Grey25: Color,
-    val Grey50: Color,
-    val Grey100: Color,
-    val Grey200: Color,
-    val Grey300: Color,
-    val Grey400: Color,
-    val Grey500: Color,
-    val Grey600: Color,
-    val Grey700: Color,
-    val Grey800: Color,
-    val Grey900: Color,
-    val Grey950: Color,
+    val grey25: Color,
+    val grey50: Color,
+    val grey100: Color,
+    val grey200: Color,
+    val grey300: Color,
+    val grey400: Color,
+    val grey500: Color,
+    val grey600: Color,
+    val grey700: Color,
+    val grey800: Color,
+    val grey900: Color,
+    val grey950: Color,
 
     //Red
-    val Red: Color,
+    val red: Color,
 
     //Transparent/BG
-    val TransparentWhite10: Color,
-    val TransparentBlue50: Color,
-    val TransparentBlue95: Color,
-    val TransparentBlack50: Color,
+    val transparentWhite10: Color,
+    val transparentBlue50: Color,
+    val transparentBlue95: Color,
+    val transparentBlack50: Color,
 )
 
 val defaultKorailTalkColors = KorailTalkColors(
-    White = White,
-    Black = Black,
+    white = White,
+    black = Black,
 
     //Primary-Blue
-    Blue01 = Blue01,
-    Blue02 = Blue02,
-    Blue03 = Blue03,
-    Blue04 = Blue04,
-    Blue05 = Blue05,
-    Blue06 = Blue06,
-    Blue07 = Blue07,
+    blue01 = Blue01,
+    blue02 = Blue02,
+    blue03 = Blue03,
+    blue04 = Blue04,
+    blue05 = Blue05,
+    blue06 = Blue06,
+    blue07 = Blue07,
 
     //Secondary-Purple
-    Purple01 = Purple01,
-    Purple02 = Purple02,
-    Purple03 = Purple03,
-    Purple04 = Purple04,
-    Purple05 = Purple05,
+    purple01 = Purple01,
+    purple02 = Purple02,
+    purple03 = Purple03,
+    purple04 = Purple04,
+    purple05 = Purple05,
 
     //GrayScale
-    Grey25 = Grey25,
-    Grey50 = Grey50,
-    Grey100 = Grey100,
-    Grey200 = Grey200,
-    Grey300 = Grey300,
-    Grey400 = Grey400,
-    Grey500 = Grey500,
-    Grey600 = Grey600,
-    Grey700 = Grey700,
-    Grey800 = Grey800,
-    Grey900 = Grey900,
-    Grey950 = Grey950,
+    grey25 = Grey25,
+    grey50 = Grey50,
+    grey100 = Grey100,
+    grey200 = Grey200,
+    grey300 = Grey300,
+    grey400 = Grey400,
+    grey500 = Grey500,
+    grey600 = Grey600,
+    grey700 = Grey700,
+    grey800 = Grey800,
+    grey900 = Grey900,
+    grey950 = Grey950,
 
     //Red
-    Red = Red,
+    red = Red,
 
     //Transparent/BG
-    TransparentWhite10 = TransparentWhite10,
-    TransparentBlue50 = TransparentBlue50,
-    TransparentBlue95 = TransparentBlue95,
-    TransparentBlack50 = TransparentBlack50
+    transparentWhite10 = TransparentWhite10,
+    transparentBlue50 = TransparentBlue50,
+    transparentBlue95 = TransparentBlue95,
+    transparentBlack50 = TransparentBlack50
 )
 
 val LocalColors = staticCompositionLocalOf { defaultKorailTalkColors }

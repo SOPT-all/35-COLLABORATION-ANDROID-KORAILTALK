@@ -15,7 +15,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.sopt.korailtalk.ui.theme.KorailTalkTheme
-import com.sopt.korailtalk.ui.theme._35COLLAVORATIONANDROIDKORAILTALKTheme
+import com.sopt.korailtalk.ui.theme.COLLAVORATIONANDROIDKORAILTALKTheme
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -24,7 +24,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            _35COLLAVORATIONANDROIDKORAILTALKTheme {
+            COLLAVORATIONANDROIDKORAILTALKTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
                     Greeting(
                         name = "코레일톡 기초세팅",
@@ -46,28 +46,28 @@ fun Greeting(name: String, modifier: Modifier = Modifier) {
             Text(
                 text = "$name!",
                 style = KorailTalkTheme.typography.head1.copy(
-                    color = KorailTalkTheme.colors.TransparentBlue50
+                    color = KorailTalkTheme.colors.transparentBlue50
                 ),
                 modifier = modifier
             )
             Text(
                 text = "$name!",
                 style = KorailTalkTheme.typography.title1.copy(
-                    color = KorailTalkTheme.colors.Blue01
+                    color = KorailTalkTheme.colors.blue01
                 ),
                 modifier = modifier
             )
             Text(
                 text = "$name!",
                 style = KorailTalkTheme.typography.body3.copy(
-                    color = KorailTalkTheme.colors.Purple01
+                    color = KorailTalkTheme.colors.purple01
                 ),
                 modifier = modifier
             )
             Text(
                 text = "$name!",
                 style = KorailTalkTheme.typography.caption1.copy(
-                    color = KorailTalkTheme.colors.Grey600
+                    color = KorailTalkTheme.colors.grey600
                 ),
                 modifier = modifier
             )
@@ -79,7 +79,7 @@ fun Greeting(name: String, modifier: Modifier = Modifier) {
 @Preview(showBackground = true)
 @Composable
 fun GreetingPreview() {
-    _35COLLAVORATIONANDROIDKORAILTALKTheme {
+    COLLAVORATIONANDROIDKORAILTALKTheme {
         Greeting("Android")
     }
 }
