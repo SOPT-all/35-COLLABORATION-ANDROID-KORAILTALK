@@ -6,4 +6,8 @@
     <string name="korailDialog_consentDescription">USB-A 타입의 포트 2개와 220V 콘센트 하나가 벽면에 제공되나, 모든 좌석에 제공되지 않으니 좌석을 확인하시기 바랍니다.</string>
     <string name="korailDialog_confirm">확인 완료</string>
 
+    <!-- SeatMapCoachSelector -->
+    <string name="seatMapCoachSelector_coach">%1$s호차</string>
+    <string name="seatMapCoachSelector_leftSeats">%1$s석</string>
+    <string name="seatMapCoachSelectpr_normal">일반실</string>
 </resources>
