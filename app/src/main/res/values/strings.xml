@@ -10,4 +10,9 @@
     <string name="seatMapCoachSelector_coach">%1$s호차</string>
     <string name="seatMapCoachSelector_leftSeats">%1$s석</string>
     <string name="seatMapCoachSelectpr_normal">일반실</string>
+
+    <!-- TrainCheckDetailInfo   -->
+    <string name="trainCheckDetailInfo_ticket">승차권</string>
+    <string name="trainCheckDetailInfo_seat">좌석</string>
+    <string name="trainCheckDetailInfo_ticketPrice">운임가격</string>
 </resources>
