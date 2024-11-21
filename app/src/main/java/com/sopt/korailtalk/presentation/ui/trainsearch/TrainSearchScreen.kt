@@ -52,7 +52,78 @@ fun TrainSearchScreen() {
             SearchTrainDateChipGroup(
                 chipList = chipList
             )
+
+            SearchWayInfoWithTravelTime(
+                departureTime = "01:12",
+                arrivalTime = "12:22",
+                travelTime = 1010
+            )
         }
+    }
+}
+
+@Composable
+fun SearchWayInfoWithTravelTime(
+    departureTime: String,
+    arrivalTime: String,
+    travelTime: Int,
+    modifier: Modifier = Modifier
+) {
+    Row(
+        horizontalArrangement = Arrangement.SpaceEvenly,
+        verticalAlignment = Alignment.CenterVertically,
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(vertical = 20.dp, horizontal = 39.dp)
+    ) {
+        SearchWayInfoItem(
+            location = "서울",
+            time = departureTime
+        )
+        Column(
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Image(
+                painter = painterResource(R.drawable.icn_trainsearch_arrow_blue_right),
+                contentDescription = "화살표"
+            )
+            Text(
+                text = travelTime.toString(),
+                style = KorailTalkTheme.typography.caption4.copy(
+                    color = KorailTalkTheme.colors.grey500
+                )
+            )
+        }
+        SearchWayInfoItem(
+            location = "부산",
+            time = arrivalTime
+        )
+    }
+}
+
+@Composable
+fun SearchWayInfoItem(
+    location: String,
+    time: String,
+    modifier: Modifier = Modifier
+) {
+    Column(
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        Text(
+            text = location,
+            style = KorailTalkTheme.typography.head5.copy(
+                color = KorailTalkTheme.colors.black
+            )
+        )
+        Text(
+            text = time,
+            style = KorailTalkTheme.typography.body3.copy(
+                color = KorailTalkTheme.colors.black
+            )
+        )
     }
 }
 
