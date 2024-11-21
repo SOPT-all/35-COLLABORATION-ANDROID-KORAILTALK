@@ -1,11 +1,15 @@
 package com.sopt.korailtalk.presentation.ui.trainsearch
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -33,15 +37,57 @@ fun TrainSearchScreen() {
                 arrivalTime = "07:13"
             )
 
-            SearchFilterItem(
-                filterName = "모든 열차"
+            SearchTrainFilter(
+                date = "2024.11.16 (토)"
             )
+
         }
     }
 }
 
 @Composable
-private fun SearchFilterItem(
+fun SearchTrainFilter(
+    date: String,
+    modifier: Modifier = Modifier
+) {
+    Row(
+        horizontalArrangement = Arrangement.Center,
+        verticalAlignment = Alignment.CenterVertically,
+        modifier = Modifier
+            .fillMaxWidth()
+            .background(color = KorailTalkTheme.colors.blue07)
+            .padding(start = 16.dp, end = 10.dp, top = 12.dp, bottom = 12.dp)
+    ) {
+        Text(
+            text = date,
+            style = KorailTalkTheme.typography.title3.copy(
+                KorailTalkTheme.colors.black
+            )
+        )
+        Image(
+            painter = painterResource(R.drawable.icn_search_arrow_down),
+            contentDescription = "화살표"
+        )
+        Spacer(modifier = Modifier.weight(1f))
+        Row(
+            horizontalArrangement = Arrangement.spacedBy(8.dp, Alignment.Start),
+        ) {
+            SearchFilterItem(
+                filterName = "모든 열차"
+            )
+            SearchFilterItem(
+                filterName = "일반석"
+            )
+            SearchFilterItem(
+                filterName = "직통"
+            )
+        }
+
+    }
+}
+
+@Composable
+fun SearchFilterItem(
     filterName: String,
     modifier: Modifier = Modifier
 ) {
@@ -63,7 +109,7 @@ private fun SearchFilterItem(
 }
 
 @Composable
-private fun SearchDepartureToArrival(
+fun SearchDepartureToArrival(
     departureTime: String,
     arrivalTime: String,
     modifier: Modifier = Modifier
