@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">35-COLLAVORATION-ANDROID-KORAILTALK</string>
+
+    <!-- KorailDialog -->
+    <string name="korailDialog_consentTitle">콘센트 확인</string>
+    <string name="korailDialog_consentDescription">USB-A 타입의 포트 2개와 220V 콘센트 하나가 벽면에 제공되나, 모든 좌석에 제공되지 않으니 좌석을 확인하시기 바랍니다.</string>
+    <string name="korailDialog_confirm">확인 완료</string>
+
 </resources>
