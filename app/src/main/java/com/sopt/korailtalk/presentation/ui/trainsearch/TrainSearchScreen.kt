@@ -32,7 +32,33 @@ fun TrainSearchScreen() {
                 departureTime = "05:13",
                 arrivalTime = "07:13"
             )
+
+            SearchFilterItem(
+                filterName = "모든 열차"
+            )
         }
+    }
+}
+
+@Composable
+private fun SearchFilterItem(
+    filterName: String,
+    modifier: Modifier = Modifier
+) {
+    Row(
+        horizontalArrangement = Arrangement.spacedBy(4.dp, Alignment.CenterHorizontally),
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        Text(
+            text = filterName,
+            style = KorailTalkTheme.typography.body2.copy(
+                color = KorailTalkTheme.colors.grey500
+            )
+        )
+        Image(
+            painter = painterResource(R.drawable.icn_trainsearch_arrow_down),
+            contentDescription = "화살표"
+        )
     }
 }
 
