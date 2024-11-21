@@ -20,6 +20,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.sopt.korailtalk.R
+import com.sopt.korailtalk.presentation.util.clickableWithoutRipple
 import com.sopt.korailtalk.ui.theme.COLLAVORATIONANDROIDKORAILTALKTheme
 import com.sopt.korailtalk.ui.theme.KorailTalkTheme
 
@@ -53,7 +54,7 @@ fun KorailDoubleActionTopAppBar(
                 painter = painterResource(id = primaryIconId),
                 contentDescription = null,
                 modifier = Modifier
-                    .clickable(onClick = onPrimaryClick)
+                    .clickableWithoutRipple(onClick = onPrimaryClick)
                     .padding(10.dp),
                 tint = KorailTalkTheme.colors.white
             )
@@ -61,7 +62,7 @@ fun KorailDoubleActionTopAppBar(
                 painter = painterResource(id = secondaryIconId),
                 contentDescription = null,
                 modifier = Modifier
-                    .clickable(onClick = onSecondaryClick)
+                    .clickableWithoutRipple(onClick = onSecondaryClick)
                     .padding(10.dp),
                 tint = KorailTalkTheme.colors.white
             )

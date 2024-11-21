@@ -1,6 +1,5 @@
 package com.sopt.korailtalk.presentation.ui
 
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -19,6 +18,7 @@ import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import com.sopt.korailtalk.presentation.util.clickableWithoutRipple
 import com.sopt.korailtalk.presentation.util.roundedBackgroundWithBorder
 import com.sopt.korailtalk.ui.theme.COLLAVORATIONANDROIDKORAILTALKTheme
 import com.sopt.korailtalk.ui.theme.KorailTalkTheme
@@ -43,7 +43,7 @@ fun KorailRoundedButton(
                 borderColor = borderColor,
                 borderWidth = borderWidth
             )
-            .clickable(
+            .clickableWithoutRipple(
                 enabled = enabled,
                 onClick = onClick
             ),

@@ -2,8 +2,12 @@ package com.sopt.korailtalk.presentation.util
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.composed
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
@@ -21,4 +25,17 @@ fun Modifier.roundedBackgroundWithBorder(
             color = borderColor,
             shape = RoundedCornerShape(cornerRadius)
         )
+}
+
+fun Modifier.clickableWithoutRipple(
+    enabled: Boolean = true,
+    onClick: () -> Unit,
+): Modifier = composed {
+    this.clickable(
+        indication = null,
+        interactionSource = remember { MutableInteractionSource() },
+        enabled = enabled
+    ) {
+        onClick()
+    }
 }
