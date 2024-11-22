@@ -1,4 +1,4 @@
-package com.sopt.korailtalk.presentation.ui.trainsearch.component
+package com.sopt.korailtalk.presentation.ui
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
