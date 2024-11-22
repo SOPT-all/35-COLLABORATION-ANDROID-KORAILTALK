@@ -25,10 +25,11 @@ fun KorailWayInfo(
     Row(modifier = Modifier
         .fillMaxWidth()
         .background(color = KorailTalkTheme.colors.white)
-        .padding(23.dp)){
+        .padding(23.dp),
+        verticalAlignment = Alignment.CenterVertically){
         Text(text = departurePlace,
             style = typography.head5,
-            modifier = Modifier.weight(1f).align(Alignment.CenterVertically),
+            modifier = Modifier.weight(1f),
             textAlign = TextAlign.Center
         )
         Image(
@@ -38,7 +39,7 @@ fun KorailWayInfo(
         )
         Text(text = arrivalPlace,
             style = typography.head5,
-            modifier = Modifier.weight(1f).align(Alignment.CenterVertically),
+            modifier = Modifier.weight(1f),
             textAlign = TextAlign.Center
         )
     }
