@@ -19,7 +19,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.SolidColor
-import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -78,7 +77,7 @@ fun PaymentTextField(
                             if (value.isBlank()) {
                                 Text(
                                     text = hint,
-                                    color = KorailTalkTheme.colors.grey300,
+                                    color = KorailTalkTheme.colors.grey400,
                                     style = KorailTalkTheme.typography.body2
                                 )
                             }
@@ -118,8 +117,85 @@ fun ShowPaymentTextField() {
                     hint = "2000",
                     value = text,
                     onValueChange = { newValue -> text = newValue },
-                    modifier = Modifier.width((LocalConfiguration.current.screenWidthDp * 0.717).dp),
+                    modifier = Modifier.weight(1f),
                     unit = "점"
+                )
+                Spacer(modifier = Modifier.width(4.dp))
+                PaymentChipButton(
+                    title = "전액적용",
+                    onClick = {}
+                )
+            }
+            Spacer(modifier = Modifier.height(16.dp))
+
+            PaymentTextField(
+                title = "보훈번호",
+                hint = "보훈번호 8자리",
+                value = text,
+                onValueChange = { newValue -> text = newValue },
+                modifier = Modifier.fillMaxWidth(),
+            )
+
+            Spacer(modifier = Modifier.height(16.dp))
+
+            PaymentTextField(
+                title = "비밀번호",
+                hint = "숫자 4자리(최초 주민번호 앞 4자리)",
+                value = text,
+                onValueChange = { newValue -> text = newValue },
+                modifier = Modifier.fillMaxWidth(),
+            )
+
+            Spacer(modifier = Modifier.height(16.dp))
+
+            Row(
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                PaymentTextField(
+                    title = "인증번호",
+                    hint = "주민번호 앞자리 6자리",
+                    value = text,
+                    onValueChange = { newValue -> text = newValue },
+                    modifier = Modifier.weight(1f),
+                )
+                Spacer(modifier = Modifier.width(4.dp))
+                PaymentChipButton(
+                    title = "보훈번호 확인",
+                    onClick = {}
+                )
+            }
+
+            Spacer(modifier = Modifier.height(16.dp))
+
+            Row(
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                PaymentTextField(
+                    title = "포인트 비밀번호",
+                    hint = "비밀번호 6자리",
+                    value = text,
+                    onValueChange = { newValue -> text = newValue },
+                    modifier = Modifier.weight(1f),
+                )
+                Spacer(modifier = Modifier.width(4.dp))
+                PaymentChipButton(
+                    title = "조회하기",
+                    onClick = {}
+                )
+            }
+
+            Spacer(modifier = Modifier.height(16.dp))
+
+            Row(
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                PaymentTextField(
+                    title = "사용 포인트",
+                    hint = "1483",
+                    value = text,
+                    onValueChange = { newValue -> text = newValue },
+                    modifier = Modifier.weight(1f),
+                    unit = "P"
                 )
                 Spacer(modifier = Modifier.width(4.dp))
                 PaymentChipButton(
@@ -129,6 +205,23 @@ fun ShowPaymentTextField() {
             }
 
             Spacer(modifier = Modifier.height(16.dp))
+
+            Row(
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                PaymentTextField(
+                    title = "카드번호",
+                    hint = "0000 - 0000 - 0000 - 0000",
+                    value = text,
+                    onValueChange = { newValue -> text = newValue },
+                    modifier = Modifier.weight(1f),
+                )
+                Spacer(modifier = Modifier.width(4.dp))
+                PaymentChipButton(
+                    title = "카드스캔",
+                    onClick = {}
+                )
+            }
         }
     }
 }
