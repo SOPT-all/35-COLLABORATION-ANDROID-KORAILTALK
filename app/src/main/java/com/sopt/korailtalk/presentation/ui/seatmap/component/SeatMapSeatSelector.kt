@@ -22,9 +22,9 @@ fun SeatMapSeatSelector(
     onSelectionChange: (Long?) -> Unit
 ) {
     val image = when {
-        isSold -> if (direction) R.drawable.icn_seatmap_forward_inactive else R.drawable.icn_seatmap_backward_inactive
-        isSelected -> if (direction) R.drawable.icn_seatmap_forward_selected else R.drawable.icn_seatmap_backward_selected
-        else -> if (direction) R.drawable.icn_seatmap_forward_activate else R.drawable.icn_seatmap_backward_activate
+        isSold -> if (direction) R.drawable.ic_seatmap_forward_inactive else R.drawable.ic_seatmap_backward_inactive
+        isSelected -> if (direction) R.drawable.ic_seatmap_forward_selected else R.drawable.ic_seatmap_backward_selected
+        else -> if (direction) R.drawable.ic_seatmap_forward_activate else R.drawable.ic_seatmap_backward_activate
     }
     val textColor = if (isSelected) KorailTalkTheme.colors.white else KorailTalkTheme.colors.black
 

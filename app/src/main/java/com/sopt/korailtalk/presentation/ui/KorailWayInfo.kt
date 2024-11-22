@@ -33,7 +33,7 @@ fun KorailWayInfo(
             textAlign = TextAlign.Center
         )
         Image(
-            painter = painterResource(id = R.drawable.icn_arrow_circle),
+            painter = painterResource(id = R.drawable.ic_arrow_circle),
             contentDescription = "열차 조회 화살표",
             modifier = Modifier.padding(horizontal = 26.dp)
         )

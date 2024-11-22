@@ -25,10 +25,10 @@ fun TrainCheckDetailInfo(
 ) {
     // type에 따라 이미지 변경
     val image = when (type) {
-        R.string.trainCheckDetailInfo_ticket -> R.drawable.icn_money
-        R.string.trainCheckDetailInfo_seat -> R.drawable.ic_traincheck_seat_filled
-        R.string.trainCheckDetailInfo_ticketPrice -> R.drawable.ic_traincheck_passenger_filled
-        else -> R.drawable.icn_money
+        R.string.trainCheckDetailInfo_ticket -> R.drawable.ic_money
+        R.string.trainCheckDetailInfo_seat -> R.drawable.ic_traincheck_seat
+        R.string.trainCheckDetailInfo_ticketPrice -> R.drawable.ic_traincheck_passenger
+        else -> R.drawable.ic_money
     }
 
     Row(
