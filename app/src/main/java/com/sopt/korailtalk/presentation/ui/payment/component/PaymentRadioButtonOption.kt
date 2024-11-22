@@ -26,7 +26,7 @@ import com.sopt.korailtalk.ui.theme.KorailTalkTheme
 
 @Composable
 fun PaymentRadioButtonOption(
-    optionName: String,
+    title: String,
     selected: Boolean,
     onClick: () -> Unit,
 ) {
@@ -57,7 +57,7 @@ fun PaymentRadioButtonOption(
         }
         Spacer(modifier = Modifier.width(6.dp))
         Text(
-            text = optionName,
+            text = title,
             modifier = Modifier.padding(vertical = 6.dp),
             color = KorailTalkTheme.colors.grey800,
             style = KorailTalkTheme.typography.body1
@@ -77,7 +77,7 @@ fun ShowPaymentRadioButtonOption() {
             Spacer(modifier = Modifier.height(16.dp))
 
             PaymentRadioButtonOption(
-                optionName = "KTX 마일리지",
+                title = "KTX 마일리지",
                 selected = false,
                 onClick = { }
             )
@@ -85,7 +85,7 @@ fun ShowPaymentRadioButtonOption() {
             Spacer(modifier = Modifier.height(16.dp))
 
             PaymentRadioButtonOption(
-                optionName = "할인쿠폰",
+                title = "할인쿠폰",
                 selected = false,
                 onClick = { }
             )
@@ -93,7 +93,7 @@ fun ShowPaymentRadioButtonOption() {
             Spacer(modifier = Modifier.height(16.dp))
 
             PaymentRadioButtonOption(
-                optionName = "포인트 사용",
+                title = "포인트 사용",
                 selected = false,
                 onClick = { }
             )
@@ -101,7 +101,7 @@ fun ShowPaymentRadioButtonOption() {
             Spacer(modifier = Modifier.height(16.dp))
 
             PaymentRadioButtonOption(
-                optionName = "간편결제",
+                title = "간편결제",
                 selected = false,
                 onClick = { }
             )
@@ -109,7 +109,7 @@ fun ShowPaymentRadioButtonOption() {
             Spacer(modifier = Modifier.height(16.dp))
 
             PaymentRadioButtonOption(
-                optionName = "카드결제",
+                title = "카드결제",
                 selected = false,
                 onClick = { }
             )
