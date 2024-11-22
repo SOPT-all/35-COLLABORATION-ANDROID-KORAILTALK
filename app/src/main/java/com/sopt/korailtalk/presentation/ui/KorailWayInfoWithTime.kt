@@ -28,7 +28,8 @@ fun KorailWayInfoWithTime(
     Row(modifier = Modifier
         .fillMaxWidth()
         .background(color = KorailTalkTheme.colors.white)
-        .padding(23.dp)){
+        .padding(23.dp),
+        verticalAlignment = Alignment.CenterVertically){
         Column(
             modifier = Modifier.weight(1f),
         ){
@@ -47,7 +48,7 @@ fun KorailWayInfoWithTime(
         Image(
             painter = painterResource(id = R.drawable.icn_arrow_circle),
             contentDescription = "열차 조회 화살표",
-            modifier = Modifier.padding(horizontal = 26.dp).align(Alignment.CenterVertically)
+            modifier = Modifier.padding(horizontal = 26.dp)
         )
         Column(
             modifier = Modifier.weight(1f)
