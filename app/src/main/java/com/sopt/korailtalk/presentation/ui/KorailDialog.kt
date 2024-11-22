@@ -58,8 +58,7 @@ fun KorailDialog(
                             bottomEnd = 12.dp
                         )
                     )
-                    .clickable(enabled = true,
-                        onClick = onConfirm)
+                    .clickable(onClick = onConfirm)
                     .padding(vertical = 17.dp),
                 style = typography.body1,
                 color = KorailTalkTheme.colors.white,
