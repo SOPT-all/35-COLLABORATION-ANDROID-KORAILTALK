@@ -14,8 +14,8 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.sopt.korailtalk.R
+import com.sopt.korailtalk.ui.theme.KorailTalkTheme
 import com.sopt.korailtalk.ui.theme.KorailTalkTheme.typography
-import com.sopt.korailtalk.ui.theme.LocalColors
 
 @Composable
 fun KorailWayInfo(
@@ -24,7 +24,7 @@ fun KorailWayInfo(
 ) {
     Row(modifier = Modifier
         .fillMaxWidth()
-        .background(color = LocalColors.current.white)
+        .background(color = KorailTalkTheme.colors.white)
         .padding(23.dp)){
         Text(text = departurePlace,
             style = typography.head5,

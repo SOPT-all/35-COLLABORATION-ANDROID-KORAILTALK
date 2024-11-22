@@ -10,7 +10,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.sopt.korailtalk.R
-import com.sopt.korailtalk.ui.theme.LocalColors
+import com.sopt.korailtalk.ui.theme.KorailTalkTheme
 
 @Composable
 fun SeatMapSeatSelector(
@@ -26,7 +26,7 @@ fun SeatMapSeatSelector(
         isSelected -> if (direction) R.drawable.icn_seatmap_forward_selected else R.drawable.icn_seatmap_backward_selected
         else -> if (direction) R.drawable.icn_seatmap_forward_activate else R.drawable.icn_seatmap_backward_activate
     }
-    val textColor = if (isSelected) LocalColors.current.white else LocalColors.current.black
+    val textColor = if (isSelected) KorailTalkTheme.colors.white else KorailTalkTheme.colors.black
 
     Box(
         modifier = Modifier

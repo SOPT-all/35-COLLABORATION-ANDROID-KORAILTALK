@@ -15,8 +15,8 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.sopt.korailtalk.R
+import com.sopt.korailtalk.ui.theme.KorailTalkTheme
 import com.sopt.korailtalk.ui.theme.KorailTalkTheme.typography
-import com.sopt.korailtalk.ui.theme.LocalColors
 
 @Composable
 fun KorailWayInfoWithTime(
@@ -27,7 +27,7 @@ fun KorailWayInfoWithTime(
 ) {
     Row(modifier = Modifier
         .fillMaxWidth()
-        .background(color = LocalColors.current.white)
+        .background(color = KorailTalkTheme.colors.white)
         .padding(23.dp)){
         Column(
             modifier = Modifier.weight(1f),
@@ -39,7 +39,7 @@ fun KorailWayInfoWithTime(
             )
             Text(text = departureTime,
                 modifier = Modifier.fillMaxWidth().padding(top = 4.dp),
-                color = LocalColors.current.grey600,
+                color = KorailTalkTheme.colors.grey600,
                 style = typography.body3,
                 textAlign = TextAlign.Center
             )
@@ -60,7 +60,7 @@ fun KorailWayInfoWithTime(
             Text(text = arrivalTime,
                 modifier = Modifier.fillMaxWidth().padding(top = 4.dp),
                 style = typography.body3,
-                color = LocalColors.current.grey600,
+                color = KorailTalkTheme.colors.grey600,
                 textAlign = TextAlign.Center
             )
         }

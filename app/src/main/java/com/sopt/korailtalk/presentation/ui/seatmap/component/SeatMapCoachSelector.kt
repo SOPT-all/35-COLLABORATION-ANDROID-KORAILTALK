@@ -13,8 +13,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.sopt.korailtalk.R
+import com.sopt.korailtalk.ui.theme.KorailTalkTheme
 import com.sopt.korailtalk.ui.theme.KorailTalkTheme.typography
-import com.sopt.korailtalk.ui.theme.LocalColors
 
 @Composable
 fun SeatMapCoachSelector(
@@ -23,8 +23,8 @@ fun SeatMapCoachSelector(
     isSelected: Boolean,
     onSelectionChange: (Long) -> Unit
 ) {
-    val backgroundColor = if (isSelected) LocalColors.current.blue06 else LocalColors.current.white
-    val borderColor = if (isSelected) LocalColors.current.blue02 else LocalColors.current.grey300
+    val backgroundColor = if (isSelected) KorailTalkTheme.colors.blue06 else KorailTalkTheme.colors.white
+    val borderColor = if (isSelected) KorailTalkTheme.colors.blue02 else KorailTalkTheme.colors.grey300
 
     Column(
         modifier = Modifier

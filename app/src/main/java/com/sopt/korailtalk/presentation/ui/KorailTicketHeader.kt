@@ -11,8 +11,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.sopt.korailtalk.ui.theme.KorailTalkTheme
 import com.sopt.korailtalk.ui.theme.KorailTalkTheme.typography
-import com.sopt.korailtalk.ui.theme.LocalColors
 
 @Composable
 fun KorailTicketHeader(
@@ -21,7 +21,7 @@ fun KorailTicketHeader(
 ) {
     Box(modifier = Modifier
         .fillMaxWidth()
-        .background(color = LocalColors.current.blue02,
+        .background(color = KorailTalkTheme.colors.blue02,
             shape = RoundedCornerShape(
                 topStart = 12.dp,
                 topEnd = 12.dp))
@@ -29,7 +29,7 @@ fun KorailTicketHeader(
         Text(text = date,
             modifier = Modifier.align(Alignment.CenterStart),
             style = typography.title3,
-            color = LocalColors.current.white)
+            color = KorailTalkTheme.colors.white)
 
         // KorailChip 정의되는 부분, trainName을 전달합니다.
         /* KorailChip(

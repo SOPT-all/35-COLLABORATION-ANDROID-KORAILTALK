@@ -19,6 +19,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import com.sopt.korailtalk.R
+import com.sopt.korailtalk.ui.theme.KorailTalkTheme
 import com.sopt.korailtalk.ui.theme.KorailTalkTheme.typography
 import com.sopt.korailtalk.ui.theme.LocalColors
 
@@ -36,7 +37,7 @@ fun KorailDialog(
                 modifier = Modifier
                     .fillMaxWidth()
                     .background(
-                        LocalColors.current.blue07,
+                        KorailTalkTheme.colors.blue07,
                         shape = RoundedCornerShape(
                             topStart = 12.dp,
                             topEnd = 12.dp
@@ -51,7 +52,7 @@ fun KorailDialog(
                 modifier = Modifier
                     .fillMaxWidth()
                     .background(
-                        LocalColors.current.blue03,
+                        KorailTalkTheme.colors.blue03,
                         shape = RoundedCornerShape(
                             bottomStart = 12.dp,
                             bottomEnd = 12.dp
@@ -61,7 +62,7 @@ fun KorailDialog(
                         onClick = onConfirm)
                     .padding(vertical = 17.dp),
                 style = typography.body1,
-                color = LocalColors.current.white,
+                color = KorailTalkTheme.colors.white,
                 textAlign = TextAlign.Center,
             )
         }
@@ -81,7 +82,7 @@ fun KorailDialogPreview(){
                 Box(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .background(LocalColors.current.white)
+                        .background(KorailTalkTheme.colors.white)
                         .padding(16.dp)
                 ) {
                     Column {

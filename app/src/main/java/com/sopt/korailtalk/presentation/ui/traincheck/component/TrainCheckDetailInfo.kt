@@ -15,8 +15,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.sopt.korailtalk.R
+import com.sopt.korailtalk.ui.theme.KorailTalkTheme
 import com.sopt.korailtalk.ui.theme.KorailTalkTheme.typography
-import com.sopt.korailtalk.ui.theme.LocalColors
 
 @Composable
 fun TrainCheckDetailInfo(
@@ -32,7 +32,7 @@ fun TrainCheckDetailInfo(
     }
 
     Row(
-        modifier = Modifier.fillMaxWidth().background(LocalColors.current.white)
+        modifier = Modifier.fillMaxWidth().background(KorailTalkTheme.colors.white)
     ) {
         Image(
             painter = painterResource(id = image),
@@ -55,7 +55,7 @@ fun TrainCheckDetailInfoPreview(){
     TrainCheckDetailInfo(R.string.trainCheckDetailInfo_seat){
         Text(text = "12,500원",
             style = typography.head5,
-            color = LocalColors.current.purple04,
+            color = KorailTalkTheme.colors.purple04,
         )
     }
 }
