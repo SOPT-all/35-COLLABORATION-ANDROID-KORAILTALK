@@ -10,6 +10,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.sopt.korailtalk.R
+import com.sopt.korailtalk.ui.theme.LocalColors
 
 @Composable
 fun SeatMapSeatSelector(
@@ -25,6 +26,7 @@ fun SeatMapSeatSelector(
         isSelected -> if (direction) R.drawable.icn_seatmap_forward_selected else R.drawable.icn_seatmap_backward_selected
         else -> if (direction) R.drawable.icn_seatmap_forward_activate else R.drawable.icn_seatmap_backward_activate
     }
+    val textColor = if (isSelected) LocalColors.current.white else LocalColors.current.black
 
     Box(
         modifier = Modifier
@@ -35,6 +37,7 @@ fun SeatMapSeatSelector(
         Image(painter = painterResource(id = image),
             contentDescription = "좌석 이미지")
         Text(text = seatName,
+            color = textColor,
             modifier = Modifier.align(Alignment.Center))
     }
 }
