@@ -12,6 +12,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
@@ -21,7 +22,6 @@ import androidx.compose.ui.window.Dialog
 import com.sopt.korailtalk.R
 import com.sopt.korailtalk.ui.theme.KorailTalkTheme
 import com.sopt.korailtalk.ui.theme.KorailTalkTheme.typography
-import com.sopt.korailtalk.ui.theme.LocalColors
 
 @Composable
 fun KorailDialog(
@@ -32,17 +32,14 @@ fun KorailDialog(
     Dialog(
         onDismissRequest = {},
     ) {
-        Column(modifier = Modifier.fillMaxWidth()){
+        Column(modifier = Modifier.fillMaxWidth()
+            .clip(RoundedCornerShape(12.dp))
+            .background(color = KorailTalkTheme.colors.white)
+        ){
             Text(text = title,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .background(
-                        KorailTalkTheme.colors.blue07,
-                        shape = RoundedCornerShape(
-                            topStart = 12.dp,
-                            topEnd = 12.dp
-                        )
-                    )
+                    .background(KorailTalkTheme.colors.blue07)
                     .padding(horizontal = 20.dp, vertical = 12.dp),
                 style = typography.body1
             )
@@ -51,18 +48,12 @@ fun KorailDialog(
                 text = stringResource(R.string.korailDialog_confirm),
                 modifier = Modifier
                     .fillMaxWidth()
-                    .background(
-                        KorailTalkTheme.colors.blue03,
-                        shape = RoundedCornerShape(
-                            bottomStart = 12.dp,
-                            bottomEnd = 12.dp
-                        )
-                    )
+                    .background(KorailTalkTheme.colors.blue03)
                     .clickable(onClick = onConfirm)
                     .padding(vertical = 17.dp),
                 style = typography.body1,
                 color = KorailTalkTheme.colors.white,
-                textAlign = TextAlign.Center,
+                textAlign = TextAlign.Center
             )
         }
     }
