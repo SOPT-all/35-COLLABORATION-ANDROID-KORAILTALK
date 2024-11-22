@@ -41,22 +41,18 @@ fun SeatMapCoachSelector(
                 borderColor,
                 shape = androidx.compose.foundation.shape.RoundedCornerShape(8.dp)
             )
-            .padding(horizontal = 21.5.dp, vertical = 8.dp)
+            .padding(horizontal = 21.5.dp, vertical = 8.dp),
+        horizontalAlignment = Alignment.CenterHorizontally
 
     ) {
         Text(text = stringResource(R.string.seatMapCoachSelector_coach, coachId),
             style = typography.caption1,
-            modifier = Modifier
-                .padding(bottom = 6.dp)
-                .align(Alignment.CenterHorizontally))
+            modifier = Modifier.padding(bottom = 6.dp))
         Text(text = stringResource(R.string.seatMapCoachSelectpr_normal),
             style = typography.caption2,
-            modifier = Modifier
-                .padding(bottom = 6.dp)
-                .align(Alignment.CenterHorizontally))
+            modifier = Modifier.padding(bottom = 6.dp))
         Text(text = stringResource(R.string.seatMapCoachSelector_leftSeats, leftSeats),
-            style = typography.body2,
-            modifier = Modifier.align(Alignment.CenterHorizontally))
+            style = typography.body2)
     }
 }
 
