@@ -6,12 +6,14 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.sopt.korailtalk.presentation.util.clickableWithoutRipple
 import com.sopt.korailtalk.presentation.util.roundedBackgroundWithBorder
 import com.sopt.korailtalk.ui.theme.COLLAVORATIONANDROIDKORAILTALKTheme
 import com.sopt.korailtalk.ui.theme.KorailTalkTheme
@@ -24,10 +26,12 @@ fun PaymentChipButton(
 ) {
     Box(
         modifier = modifier
+            .wrapContentWidth()
             .roundedBackgroundWithBorder(
                 cornerRadius = 8.dp,
                 backgroundColor = KorailTalkTheme.colors.purple05
-            ),
+            )
+            .clickableWithoutRipple(onClick = onClick),
         contentAlignment = Alignment.Center
     ) {
         Text(
