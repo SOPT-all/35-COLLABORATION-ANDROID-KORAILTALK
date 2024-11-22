@@ -8,6 +8,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.sopt.korailtalk.R
 import com.sopt.korailtalk.ui.theme.KorailTalkTheme
@@ -35,7 +36,7 @@ fun SeatMapSeatSelector(
             }
     ){
         Image(painter = painterResource(id = image),
-            contentDescription = "좌석 이미지")
+            contentDescription = stringResource(R.string.seatmap_seat_description))
         Text(text = seatName,
             color = textColor,
             modifier = Modifier.align(Alignment.Center))

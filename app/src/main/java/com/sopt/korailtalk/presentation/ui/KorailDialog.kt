@@ -32,7 +32,8 @@ fun KorailDialog(
     Dialog(
         onDismissRequest = {},
     ) {
-        Column(modifier = Modifier.fillMaxWidth()
+        Column(modifier = Modifier
+            .fillMaxWidth()
             .clip(RoundedCornerShape(12.dp))
             .background(color = KorailTalkTheme.colors.white)
         ){
@@ -83,7 +84,7 @@ fun KorailDialogPreview(){
                         )
                         Image(
                             painter = painterResource(R.drawable.img_outlet),
-                            contentDescription = "콘센트 사진",
+                            contentDescription = stringResource(R.string.seatmap_consent_description),
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .aspectRatio(1.23f)
