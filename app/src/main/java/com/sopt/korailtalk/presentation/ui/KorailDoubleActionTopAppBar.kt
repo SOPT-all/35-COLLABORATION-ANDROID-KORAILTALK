@@ -37,7 +37,7 @@ fun KorailDoubleActionTopAppBar(
         modifier = Modifier
             .fillMaxWidth()
             .background(color = backgroundColor)
-            .height((LocalConfiguration.current.screenHeightDp * 0.072).dp)
+            .height(56.dp)
 
     ) {
         Text(
