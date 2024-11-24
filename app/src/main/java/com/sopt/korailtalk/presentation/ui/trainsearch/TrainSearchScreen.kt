@@ -62,6 +62,9 @@ fun TrainSearchScreen() {
                 title = "열차 조회",
                 content = {
                     TrainSelectContent()
+                },
+                onDismissRequest = {
+                    showTrainBottomSheet = false
                 }
             )
 
@@ -71,6 +74,9 @@ fun TrainSearchScreen() {
                 title = "자주쓰는카드",
                 content = {
                     CardSelectContent()
+                },
+                onDismissRequest = {
+                    showCardBottomSheet = false
                 }
             )
         }

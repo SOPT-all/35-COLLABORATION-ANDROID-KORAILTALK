@@ -42,8 +42,8 @@ fun KorailBottomSheet(
     isOpenBottomSheet: Boolean,
     title: String,
     content: @Composable () -> Unit,
+    sheetState: SheetState,
     modifier: Modifier = Modifier,
-    sheetState: SheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true),
     onDismissRequest: () -> Unit = {},
 ) {
     val coroutineScope = rememberCoroutineScope()
@@ -84,9 +84,7 @@ fun KorailBottomSheet(
                         painter = painterResource(R.drawable.ic_close_black),
                         contentDescription = "닫기",
                         modifier = Modifier.clickable {
-                            coroutineScope.launch {
-                                sheetState.hide()
-                            }
+                            onDismissRequest()
                         }
                     )
                 }
@@ -136,6 +134,9 @@ fun ShowKorailBottomSheet() {
                 title = "열차 조회",
                 content = {
                     TrainSelectContent()
+                },
+                onDismissRequest = {
+                    showTrainBottomSheet = false
                 }
             )
 
@@ -145,9 +146,11 @@ fun ShowKorailBottomSheet() {
                 title = "자주쓰는카드",
                 content = {
                     CardSelectContent()
+                },
+                onDismissRequest = {
+                    showCardBottomSheet = false
                 }
             )
-
         }
     }
 }
