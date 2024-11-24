@@ -3,6 +3,7 @@ package com.sopt.korailtalk.presentation.ui
 import android.annotation.SuppressLint
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -30,10 +31,10 @@ import kotlinx.coroutines.launch
 @Composable
 fun KorailBottomSheet(
     isOpenBottomSheet: Boolean,
-    sheetState: SheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true),
     title: String,
     content: @Composable () -> Unit,
     modifier: Modifier = Modifier,
+    sheetState: SheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true),
     onDismissRequest: () -> Unit = {},
 ) {
     val coroutineScope = rememberCoroutineScope()
@@ -55,38 +56,33 @@ fun KorailBottomSheet(
                     .fillMaxWidth()
                     .background(Color.White)
             ) {
-                KorailBottomSheetTitle(
-                    title = title
-                )
+                Row(
+                    modifier = Modifier
+                        .padding(horizontal = 16.dp, vertical = 12.dp),
+                    verticalAlignment = Alignment.CenterVertically,
+                ) {
+                    Text(
+                        text = title,
+                        style = KorailTalkTheme.typography.title1.copy(
+                            color = KorailTalkTheme.colors.black
+                        ),
+                    )
+                    Spacer(
+                        modifier = Modifier
+                            .weight(1f)
+                    )
+                    Image(
+                        painter = painterResource(R.drawable.ic_close_black),
+                        contentDescription = "닫기",
+                        modifier = Modifier.clickable {
+                            coroutineScope.launch {
+                                sheetState.hide()
+                            }
+                        }
+                    )
+                }
                 content()
             }
         }
-    }
-}
-
-@Composable
-private fun KorailBottomSheetTitle(
-    title: String,
-    modifier: Modifier = Modifier
-) {
-    Row(
-        modifier = Modifier
-            .padding(horizontal = 16.dp, vertical = 12.dp),
-        verticalAlignment = Alignment.CenterVertically,
-    ) {
-        Text(
-            text = title,
-            style = KorailTalkTheme.typography.title1.copy(
-                color = KorailTalkTheme.colors.black
-            ),
-        )
-        Spacer(
-            modifier = Modifier
-                .weight(1f)
-        )
-        Image(
-            painter = painterResource(R.drawable.ic_close_black),
-            contentDescription = "닫기"
-        )
     }
 }

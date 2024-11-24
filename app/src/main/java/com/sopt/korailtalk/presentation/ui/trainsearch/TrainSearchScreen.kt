@@ -8,9 +8,9 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -29,10 +29,11 @@ import com.sopt.korailtalk.ui.theme.KorailTalkTheme
 @Composable
 fun TrainSearchScreen() {
 
-    val sheetState = rememberModalBottomSheetState()
-    val scope = rememberCoroutineScope()
-    var showBottomSheet by remember { mutableStateOf(false) }
-    var isItemEnabled by remember { mutableStateOf(true) }
+    val sheetTrainState = rememberModalBottomSheetState()
+    var showTrainBottomSheet by remember { mutableStateOf(false) }
+
+    val sheetCardState = rememberModalBottomSheetState()
+    var showCardBottomSheet by remember { mutableStateOf(false) }
 
     Box(
         modifier = Modifier.fillMaxSize(),
@@ -42,7 +43,13 @@ fun TrainSearchScreen() {
             KorailChip(
                 text = "KTX 009",
                 modifier = Modifier.clickable {
-                    showBottomSheet = true
+                    showTrainBottomSheet = true
+                }
+            )
+            KorailChip(
+                text = "자주쓰는카드",
+                modifier = Modifier.clickable {
+                    showCardBottomSheet = true
                 }
             )
             SearchDepartureToArrival(
@@ -67,24 +74,62 @@ fun TrainSearchScreen() {
             )
 
             KorailBottomSheet(
-                isOpenBottomSheet = showBottomSheet,
-                sheetState = sheetState,
+                isOpenBottomSheet = showTrainBottomSheet,
+                sheetState = sheetTrainState,
                 title = "열차 조회",
                 content = {
-                    KorailOptionBottomSheetItem(
-                        isActive = isItemEnabled,
-                        activeBgColor = KorailTalkTheme.colors.purple05,
-                        activeContentColor = KorailTalkTheme.colors.purple02,
-                        onClick = {
-                            isItemEnabled = !isItemEnabled
-                        }
-                    )
-                },
+                    TrainSelectContent()
+                }
+            )
+
+            KorailBottomSheet(
+                isOpenBottomSheet = showCardBottomSheet,
+                sheetState = sheetCardState,
+                title = "자주쓰는카드",
+                content = {
+                    CardSelectContent()
+                }
             )
         }
     }
+}
 
+@Composable
+fun TrainSelectContent() {
+    var activeIndex by remember { mutableIntStateOf(-1) }
 
+    val options = listOf("모든열차", "KTX", "ITX", "무궁화")
+
+    options.forEachIndexed { index, option ->
+        KorailOptionBottomSheetItem(
+            option = option,
+            isActive = activeIndex == index,
+            activeBgColor = KorailTalkTheme.colors.blue07,
+            activeContentColor = KorailTalkTheme.colors.blue02,
+            onClick = {
+                activeIndex = if (activeIndex == index) -1 else index
+            }
+        )
+    }
+}
+
+@Composable
+fun CardSelectContent() {
+    var activeIndex by remember { mutableIntStateOf(-1) }
+
+    val options = listOf("직접입력", "내 현대카드")
+
+    options.forEachIndexed { index, option ->
+        KorailOptionBottomSheetItem(
+            option = option,
+            isActive = activeIndex == index,
+            activeBgColor = KorailTalkTheme.colors.purple05,
+            activeContentColor = KorailTalkTheme.colors.purple02,
+            onClick = {
+                activeIndex = if (activeIndex == index) -1 else index
+            }
+        )
+    }
 }
 
 

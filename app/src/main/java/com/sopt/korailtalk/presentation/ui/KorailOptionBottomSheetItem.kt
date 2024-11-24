@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -14,6 +15,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.sopt.korailtalk.R
@@ -21,6 +23,7 @@ import com.sopt.korailtalk.ui.theme.KorailTalkTheme
 
 @Composable
 fun KorailOptionBottomSheetItem(
+    option: String,
     isActive: Boolean,
     activeBgColor: Color,
     activeContentColor: Color,
@@ -29,6 +32,7 @@ fun KorailOptionBottomSheetItem(
     Row(
         modifier = Modifier
             .fillMaxWidth()
+            .height((LocalConfiguration.current.screenHeightDp * 0.072).dp)
             .background(
                 color = if (isActive) activeBgColor else KorailTalkTheme.colors.white
             )
@@ -40,7 +44,7 @@ fun KorailOptionBottomSheetItem(
         verticalAlignment = Alignment.CenterVertically,
     ) {
         Text(
-            text = "모든열차",
+            text = option,
             style = KorailTalkTheme.typography.title3.copy(
                 color = if (isActive) activeContentColor else KorailTalkTheme.colors.black
             )

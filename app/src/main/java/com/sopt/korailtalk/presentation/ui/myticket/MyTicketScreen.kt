@@ -11,8 +11,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.sopt.korailtalk.presentation.ui.myticket.component.AdditionalServiceItem
 import com.sopt.korailtalk.presentation.ui.myticket.component.MyTicketAdditionalService
+import com.sopt.korailtalk.presentation.ui.myticket.component.MyTicketAdditionalServiceType
 import com.sopt.korailtalk.presentation.ui.myticket.component.MyTicketButton
 import com.sopt.korailtalk.presentation.ui.myticket.component.MyTicketInfomation
 import com.sopt.korailtalk.presentation.ui.myticket.component.MyTicketTabBar
@@ -54,7 +54,7 @@ fun MyTicketScreen() {
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically,
             ) {
-                for (item in AdditionalServiceItem.entries) {
+                for (item in MyTicketAdditionalServiceType.entries) {
                     MyTicketAdditionalService(
                         image = item.image,
                         text = item.text,

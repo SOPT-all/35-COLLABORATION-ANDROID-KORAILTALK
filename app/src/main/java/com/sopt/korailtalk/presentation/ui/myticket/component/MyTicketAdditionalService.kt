@@ -14,7 +14,7 @@ import androidx.compose.ui.unit.dp
 import com.sopt.korailtalk.R
 import com.sopt.korailtalk.ui.theme.KorailTalkTheme
 
-enum class AdditionalServiceItem(
+enum class MyTicketAdditionalServiceType(
     val image: @Composable () -> Unit,
     val text: String,
     val textColor: @Composable () -> Color
