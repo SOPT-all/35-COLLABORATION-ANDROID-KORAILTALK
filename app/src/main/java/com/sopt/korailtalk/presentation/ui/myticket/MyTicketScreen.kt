@@ -14,7 +14,6 @@ import androidx.compose.ui.unit.dp
 import com.sopt.korailtalk.presentation.ui.myticket.component.MyTicketAdditionalService
 import com.sopt.korailtalk.presentation.ui.myticket.component.MyTicketAdditionalServiceType
 import com.sopt.korailtalk.presentation.ui.myticket.component.MyTicketButton
-import com.sopt.korailtalk.presentation.ui.myticket.component.MyTicketInfomation
 import com.sopt.korailtalk.presentation.ui.myticket.component.MyTicketTabBar
 import com.sopt.korailtalk.ui.theme.COLLAVORATIONANDROIDKORAILTALKTheme
 
@@ -30,10 +29,7 @@ fun MyTicketScreen() {
         Column {
             MyTicketTabBar(myTicketTabText = myTicketTabText)
 
-            MyTicketInfomation(
-                coachesNumber = 4,
-                seatName = "16A"
-            )
+
 
             Row(
                 horizontalArrangement = Arrangement.spacedBy(4.dp, Alignment.Start),

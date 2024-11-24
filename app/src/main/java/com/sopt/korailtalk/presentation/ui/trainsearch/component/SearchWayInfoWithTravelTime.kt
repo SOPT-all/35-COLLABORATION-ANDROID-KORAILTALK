@@ -4,6 +4,7 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Text
@@ -11,8 +12,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.sopt.korailtalk.R
+import com.sopt.korailtalk.ui.theme.COLLAVORATIONANDROIDKORAILTALKTheme
 import com.sopt.korailtalk.ui.theme.KorailTalkTheme
 
 @Composable
@@ -38,7 +41,7 @@ fun SearchWayInfoWithTravelTime(
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Image(
-                painter = painterResource(R.drawable.icn_trainsearch_arrow_blue_right),
+                painter = painterResource(R.drawable.ic_arrow_blue_right),
                 contentDescription = "화살표"
             )
             Text(
@@ -77,5 +80,24 @@ fun SearchWayInfoItem(
                 color = KorailTalkTheme.colors.black
             )
         )
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun ShowSearchWayInfoWithTravelTime() {
+    COLLAVORATIONANDROIDKORAILTALKTheme {
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(16.dp),
+            verticalArrangement = Arrangement.spacedBy(space = 5.dp)
+        ) {
+            SearchWayInfoWithTravelTime(
+                departureTime = "01:12",
+                arrivalTime = "12:22",
+                travelTime = 1010
+            )
+        }
     }
 }

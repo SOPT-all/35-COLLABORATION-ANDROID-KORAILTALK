@@ -28,7 +28,7 @@ fun SearchFilterItem(
             )
         )
         Image(
-            painter = painterResource(R.drawable.icn_trainsearch_arrow_down),
+            painter = painterResource(R.drawable.ic_search_arrow_down),
             contentDescription = "화살표"
         )
     }

@@ -3,6 +3,9 @@ package com.sopt.korailtalk.presentation.ui.myticket.component
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -10,8 +13,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.sopt.korailtalk.R
+import com.sopt.korailtalk.ui.theme.COLLAVORATIONANDROIDKORAILTALKTheme
 import com.sopt.korailtalk.ui.theme.KorailTalkTheme
 
 enum class MyTicketAdditionalServiceType(
@@ -71,5 +76,33 @@ fun MyTicketAdditionalService(
                 color = textColor()
             ),
         )
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun ShowMyTicketAdditionalService() {
+    COLLAVORATIONANDROIDKORAILTALKTheme {
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(16.dp),
+            verticalArrangement = Arrangement.spacedBy(space = 5.dp)
+        ) {
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically,
+            ) {
+                for (item in MyTicketAdditionalServiceType.entries) {
+                    MyTicketAdditionalService(
+                        image = item.image,
+                        text = item.text,
+                        textColor = item.textColor,
+                    )
+                }
+            }
+        }
     }
 }
