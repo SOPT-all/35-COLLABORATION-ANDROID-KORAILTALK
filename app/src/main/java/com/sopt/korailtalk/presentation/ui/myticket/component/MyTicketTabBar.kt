@@ -17,12 +17,13 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.sopt.korailtalk.domain.type.MyTicketTabType
 import com.sopt.korailtalk.ui.theme.COLLAVORATIONANDROIDKORAILTALKTheme
 import com.sopt.korailtalk.ui.theme.KorailTalkTheme
 
 @Composable
 fun MyTicketTabBar(
-    myTicketTabText: List<String>,
+    myTicketTabText: Array<MyTicketTabType>,
     modifier: Modifier = Modifier
 ) {
     var selectedTabIndex by remember { mutableIntStateOf(0) }
@@ -45,7 +46,7 @@ fun MyTicketTabBar(
                 onClick = { selectedTabIndex = index },
                 text = {
                     Text(
-                        text = tab,
+                        text = tab.text,
                         style = KorailTalkTheme.typography.title1,
                         color = if (selectedTabIndex == index) KorailTalkTheme.colors.blue01 else KorailTalkTheme.colors.grey400,
                     )
@@ -66,7 +67,7 @@ fun ShowMyTicketTabBar() {
                 .padding(16.dp),
             verticalArrangement = Arrangement.spacedBy(space = 5.dp)
         ) {
-            val myTicketTabText = listOf("승차권 (1)", "이용권", "정기권 · 패스")
+            val myTicketTabText = MyTicketTabType.entries.toTypedArray()
 
             MyTicketTabBar(myTicketTabText = myTicketTabText)
         }

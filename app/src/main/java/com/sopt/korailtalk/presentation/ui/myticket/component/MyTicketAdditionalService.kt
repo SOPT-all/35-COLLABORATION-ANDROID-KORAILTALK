@@ -20,37 +20,22 @@ import com.sopt.korailtalk.ui.theme.COLLAVORATIONANDROIDKORAILTALKTheme
 import com.sopt.korailtalk.ui.theme.KorailTalkTheme
 
 enum class MyTicketAdditionalServiceType(
-    val image: @Composable () -> Unit,
+    val imageId: Int,
     val text: String,
     val textColor: @Composable () -> Color
 ) {
     REPORT(
-        image = {
-            Image(
-                painter = painterResource(R.drawable.ic_ticket_report),
-                contentDescription = "철도범죄신고"
-            )
-        },
+        imageId = R.drawable.ic_ticket_report,
         text = "철도범죄신고",
         textColor = { KorailTalkTheme.colors.grey500 }
     ),
     HELP(
-        image = {
-            Image(
-                painter = painterResource(R.drawable.ic_ticket_help),
-                contentDescription = "승하차 도우미 신청"
-            )
-        },
+        imageId = R.drawable.ic_ticket_help,
         text = "승하차 도우미 신청",
         textColor = { KorailTalkTheme.colors.grey300 }
     ),
     SMS(
-        image = {
-            Image(
-                painter = painterResource(R.drawable.ic_ticket_sms),
-                contentDescription = "보호자 안심 SMS"
-            )
-        },
+        imageId = R.drawable.ic_ticket_sms,
         text = "보호자 안심 SMS",
         textColor = { KorailTalkTheme.colors.grey300 }
     )
@@ -64,10 +49,10 @@ fun MyTicketAdditionalService(
     modifier: Modifier = Modifier
 ) {
     Column(
+        modifier = modifier
+            .padding(top = 4.dp, bottom = 8.dp),
         verticalArrangement = Arrangement.spacedBy(8.dp, Alignment.Top),
         horizontalAlignment = Alignment.CenterHorizontally,
-        modifier = modifier
-            .padding(top = 4.dp, bottom = 8.dp)
     ) {
         image()
         Text(
@@ -97,7 +82,12 @@ fun ShowMyTicketAdditionalService() {
             ) {
                 for (item in MyTicketAdditionalServiceType.entries) {
                     MyTicketAdditionalService(
-                        image = item.image,
+                        image = {
+                            Image(
+                                painter = painterResource(item.imageId),
+                                contentDescription = item.text
+                            )
+                        },
                         text = item.text,
                         textColor = item.textColor,
                     )

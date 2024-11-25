@@ -33,7 +33,7 @@ fun SearchDepartureToArrival(
         )
         Image(
             painter = painterResource(R.drawable.ic_search_arrow_right),
-            contentDescription = "화살표"
+            contentDescription = null
         )
         Text(
             text = arrivalTime,

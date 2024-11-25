@@ -41,7 +41,7 @@ fun SearchTrainFilter(
         )
         Image(
             painter = painterResource(R.drawable.ic_search_triangle_down),
-            contentDescription = "화살표"
+            contentDescription = null
         )
         Spacer(modifier = Modifier.weight(1f))
         Row(

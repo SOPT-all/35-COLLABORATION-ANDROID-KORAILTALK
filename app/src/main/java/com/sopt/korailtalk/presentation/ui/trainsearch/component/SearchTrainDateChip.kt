@@ -25,7 +25,7 @@ import com.sopt.korailtalk.ui.theme.KorailTalkTheme
 fun SearchTrainDateChip(
     date: String,
     modifier: Modifier = Modifier,
-    isSelected: Boolean = false,
+    isActive: Boolean = false,
     onSelectedChange: (Boolean) -> Unit = {},
 ) {
     Row(
@@ -33,18 +33,18 @@ fun SearchTrainDateChip(
         verticalAlignment = Alignment.CenterVertically,
         modifier = Modifier
             .background(
-                color = if (isSelected) KorailTalkTheme.colors.blue04 else KorailTalkTheme.colors.grey25,
+                color = if (isActive) KorailTalkTheme.colors.blue04 else KorailTalkTheme.colors.grey25,
                 shape = RoundedCornerShape(size = 17.dp)
             )
             .padding(horizontal = 16.dp, vertical = 6.dp)
             .clickableWithoutRipple {
-                onSelectedChange(isSelected)
+                onSelectedChange(isActive)
             }
     ) {
         Text(
             text = date,
             style = KorailTalkTheme.typography.body3.copy(
-                color = if (isSelected) KorailTalkTheme.colors.white else KorailTalkTheme.colors.grey500
+                color = if (isActive) KorailTalkTheme.colors.white else KorailTalkTheme.colors.grey500
             )
         )
     }
@@ -64,7 +64,7 @@ fun SearchTrainDateChipGroup(
         chipList.forEach { chipTime ->
             SearchTrainDateChip(
                 date = chipTime,
-                isSelected = selectedTime == chipTime,
+                isActive = selectedTime == chipTime,
                 onSelectedChange = {
                     selectedTime = if (selectedTime == chipTime) null else chipTime
                 }

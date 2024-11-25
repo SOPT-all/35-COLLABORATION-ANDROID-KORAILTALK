@@ -42,10 +42,10 @@ fun SearchWayInfoWithTravelTime(
         ) {
             Image(
                 painter = painterResource(R.drawable.ic_arrow_blue_right),
-                contentDescription = "화살표"
+                contentDescription = null
             )
             Text(
-                text = travelTime.toString(),
+                text = "$travelTime",
                 style = KorailTalkTheme.typography.caption4.copy(
                     color = KorailTalkTheme.colors.grey500
                 )

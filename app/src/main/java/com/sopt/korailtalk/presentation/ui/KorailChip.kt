@@ -7,11 +7,13 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.sopt.korailtalk.ui.theme.COLLAVORATIONANDROIDKORAILTALKTheme
@@ -23,15 +25,16 @@ fun KorailChip(
     modifier: Modifier = Modifier
 ) {
     Row(
-        horizontalArrangement = Arrangement.spacedBy(10.dp, Alignment.CenterHorizontally),
+        horizontalArrangement = Arrangement.Center,
         verticalAlignment = Alignment.CenterVertically,
         modifier = modifier
-            .width(106.dp)
+            .width((LocalConfiguration.current.screenWidthDp * 0.256).dp)
             .background(
                 color = KorailTalkTheme.colors.blue02,
                 shape = RoundedCornerShape(size = 10.dp)
             )
             .padding(horizontal = 7.dp, vertical = 3.dp)
+            .wrapContentWidth()
     ) {
         Text(
             text = text,
@@ -50,7 +53,7 @@ fun ShowKorailChip() {
                 .padding(16.dp),
             verticalArrangement = Arrangement.spacedBy(space = 5.dp)
         ) {
-            val chipNames = listOf("KTX 001", "KTX 003")
+            val chipNames = listOf("KTX 001", "KTX-산천 075", "ITX-새마을 1001")
 
             chipNames.forEach { name ->
                 KorailChip(

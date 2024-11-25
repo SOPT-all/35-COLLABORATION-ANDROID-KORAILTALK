@@ -12,6 +12,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -61,7 +62,7 @@ fun MyTicketInfomation(
                 ) {
                     Image(
                         painter = painterResource(R.drawable.ic_ticket_refresh_l),
-                        contentDescription = "리프레시"
+                        contentDescription = stringResource(R.string.my_ticket_refresh)
                     )
                     Text(
                         text = "15분전에\n표시됩니다",
@@ -121,7 +122,7 @@ fun MyTicketInfomation(
             content = {
                 Image(
                     painter = painterResource(R.drawable.img_ticket_qr),
-                    contentDescription = "영수증"
+                    contentDescription = stringResource(R.string.my_ticket_receipt)
                 )
             },
         )

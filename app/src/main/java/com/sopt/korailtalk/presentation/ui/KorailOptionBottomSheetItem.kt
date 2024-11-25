@@ -25,6 +25,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.sopt.korailtalk.R
+import com.sopt.korailtalk.domain.type.SearchTrainType
 import com.sopt.korailtalk.presentation.util.clickableWithoutRipple
 import com.sopt.korailtalk.ui.theme.COLLAVORATIONANDROIDKORAILTALKTheme
 import com.sopt.korailtalk.ui.theme.KorailTalkTheme
@@ -67,7 +68,7 @@ fun KorailOptionBottomSheetItem(
                 colorFilter = ColorFilter.tint(
                     color = activeContentColor
                 ),
-                contentDescription = "체크"
+                contentDescription = null
             )
         }
     }
@@ -77,11 +78,11 @@ fun KorailOptionBottomSheetItem(
 fun TrainSelectContent() {
     var activeIndex by remember { mutableIntStateOf(-1) }
 
-    val options = listOf("모든열차", "KTX", "ITX", "무궁화")
+    val options = SearchTrainType.entries.toTypedArray()
 
     options.forEachIndexed { index, option ->
         KorailOptionBottomSheetItem(
-            option = option,
+            option = option.trainType,
             isActive = activeIndex == index,
             activeBgColor = KorailTalkTheme.colors.blue07,
             activeContentColor = KorailTalkTheme.colors.blue02,

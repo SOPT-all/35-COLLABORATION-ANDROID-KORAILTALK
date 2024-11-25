@@ -1,5 +1,6 @@
 package com.sopt.korailtalk.presentation.ui.myticket
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -9,8 +10,11 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.sopt.korailtalk.domain.type.MyTicketButtonType
+import com.sopt.korailtalk.domain.type.MyTicketTabType
 import com.sopt.korailtalk.presentation.ui.myticket.component.MyTicketAdditionalService
 import com.sopt.korailtalk.presentation.ui.myticket.component.MyTicketAdditionalServiceType
 import com.sopt.korailtalk.presentation.ui.myticket.component.MyTicketButton
@@ -19,8 +23,8 @@ import com.sopt.korailtalk.ui.theme.COLLAVORATIONANDROIDKORAILTALKTheme
 
 @Composable
 fun MyTicketScreen() {
-    val myTicketButtonText = listOf("승차권 전달", "예매 취소", "예매 변경")
-    val myTicketTabText = listOf("승차권 (1)", "이용권", "정기권 · 패스")
+    val myTicketButtonText = MyTicketButtonType.entries.toTypedArray()
+    val myTicketTabText = MyTicketTabType.entries.toTypedArray()
 
     Box(
         modifier = Modifier.fillMaxSize(),
@@ -29,15 +33,13 @@ fun MyTicketScreen() {
         Column {
             MyTicketTabBar(myTicketTabText = myTicketTabText)
 
-
-
             Row(
                 horizontalArrangement = Arrangement.spacedBy(4.dp, Alignment.Start),
                 verticalAlignment = Alignment.CenterVertically,
             ) {
-                myTicketButtonText.forEach { text ->
+                myTicketButtonText.forEach { enum ->
                     MyTicketButton(
-                        text = text,
+                        text = enum.text,
                         onClick = {},
                         modifier = Modifier
                             .weight(1f)
@@ -52,7 +54,12 @@ fun MyTicketScreen() {
             ) {
                 for (item in MyTicketAdditionalServiceType.entries) {
                     MyTicketAdditionalService(
-                        image = item.image,
+                        image = {
+                            Image(
+                                painter = painterResource(item.imageId),
+                                contentDescription = item.text
+                            )
+                        },
                         text = item.text,
                         textColor = item.textColor,
                     )
