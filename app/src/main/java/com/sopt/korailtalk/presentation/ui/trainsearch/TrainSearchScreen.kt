@@ -2,8 +2,11 @@ package com.sopt.korailtalk.presentation.ui.trainsearch
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -16,12 +19,14 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.sopt.korailtalk.R
 import com.sopt.korailtalk.data.remote.model.response.Timetable
 import com.sopt.korailtalk.presentation.ui.KorailBottomSheet
 import com.sopt.korailtalk.presentation.ui.KorailDoubleActionTopAppBar
+import com.sopt.korailtalk.presentation.ui.KorailRoundedButton
 import com.sopt.korailtalk.presentation.ui.KorailWayInfo
 import com.sopt.korailtalk.presentation.ui.SeatSelectContent
 import com.sopt.korailtalk.presentation.ui.TrainSelectContent
@@ -53,7 +58,7 @@ fun TrainSearchScreen() {
         travelTime = 2,
     )
     val trainDummyList = mutableListOf<Timetable>()
-    repeat(20) {
+    repeat(5) {
         trainDummyList.add(trainDummy)
     }
 
@@ -96,14 +101,34 @@ fun TrainSearchScreen() {
                             isOpenBottomSheet = true
                         }
                     )
-                    if (index < trainDummyList.lastIndex) {
-                        HorizontalDivider(
-                            thickness = 2.dp,
-                            color = KorailTalkTheme.colors.grey200
-                        )
-                    }
+                    HorizontalDivider(
+                        thickness = 2.dp,
+                        color = KorailTalkTheme.colors.grey200
+                    )
                 }
             }
+            Spacer(
+                modifier = Modifier
+                    .height(22.dp)
+            )
+            KorailRoundedButton(
+                title = "다음날 (11월 17일) 조회하기",
+                modifier = Modifier
+                    .height((LocalConfiguration.current.screenHeightDp * 0.064).dp)
+                    .fillMaxWidth()
+                    .padding(horizontal = 10.dp),
+                enabled = true,
+                contentColor = KorailTalkTheme.colors.blue01,
+                cornerRadius = 26.dp,
+                backgroundColor = KorailTalkTheme.colors.white,
+                borderColor = KorailTalkTheme.colors.grey200,
+                borderWidth = 1.dp,
+                onClick = {}
+            )
+            Spacer(
+                modifier = Modifier
+                    .height(58.dp)
+            )
         }
     }
 
