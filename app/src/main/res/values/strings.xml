@@ -19,6 +19,10 @@
     <string name="trainCheckDetailInfo_seat">좌석</string>
     <string name="trainCheckDetailInfo_ticketPrice">운임가격</string>
 
+    <!-- MyTicket  -->
+    <string name="my_ticket_refresh">리프레시</string>
+    <string name="my_ticket_receipt">영수증</string>
+
     <!-- KorailWayInfoWithTime -->
     <string name="korailWayInfo_arrow_description">열차 조회 화살표</string>
 
@@ -26,8 +30,6 @@
     <string name="seatmap_seat_description">좌석 이미지</string>
     <string name="seatmap_consent_description">콘센트 사진</string>
 
-    <!-- MyTicket  -->
-    <string name="my_ticket_refresh">리프레시</string>
-    <string name="my_ticket_receipt">영수증</string>
 
 </resources>
+
