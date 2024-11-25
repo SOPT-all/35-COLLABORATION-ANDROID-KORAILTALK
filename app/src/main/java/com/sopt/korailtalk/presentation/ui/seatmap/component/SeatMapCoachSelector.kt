@@ -13,6 +13,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.sopt.korailtalk.R
+import com.sopt.korailtalk.presentation.util.roundedBackgroundWithBorder
 import com.sopt.korailtalk.ui.theme.KorailTalkTheme
 import com.sopt.korailtalk.ui.theme.KorailTalkTheme.typography
 
@@ -28,7 +29,7 @@ fun SeatMapCoachSelector(
 
     Column(
         modifier = Modifier
-            .background(backgroundColor)
+            .padding(horizontal = 4.dp)
             .clickable(
                 enabled = true,
                 onClick = {
@@ -36,10 +37,11 @@ fun SeatMapCoachSelector(
                         onSelectionChange(coachId)
                     }
                 })
-            .border(
-                1.dp,
-                borderColor,
-                shape = androidx.compose.foundation.shape.RoundedCornerShape(8.dp)
+            .roundedBackgroundWithBorder(
+                cornerRadius = 8.dp,
+                backgroundColor = backgroundColor,
+                borderColor = borderColor,
+                borderWidth = 1.dp
             )
             .padding(horizontal = 21.5.dp, vertical = 8.dp),
         horizontalAlignment = Alignment.CenterHorizontally
