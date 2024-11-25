@@ -1,7 +1,9 @@
 package com.sopt.korailtalk.presentation.ui.trainsearch
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -32,6 +34,7 @@ import com.sopt.korailtalk.presentation.ui.SeatSelectContent
 import com.sopt.korailtalk.presentation.ui.TrainSelectContent
 import com.sopt.korailtalk.presentation.ui.WaySelectContent
 import com.sopt.korailtalk.presentation.ui.trainsearch.component.SearchDetailBottomSheet
+import com.sopt.korailtalk.presentation.ui.trainsearch.component.SearchTrainDateChipGroup
 import com.sopt.korailtalk.presentation.ui.trainsearch.component.SearchTrainFilter
 import com.sopt.korailtalk.presentation.ui.trainsearch.component.SearchTrainInfoItem
 import com.sopt.korailtalk.ui.theme.COLLAVORATIONANDROIDKORAILTALKTheme
@@ -41,11 +44,13 @@ import com.sopt.korailtalk.ui.theme.KorailTalkTheme
 @Composable
 fun TrainSearchScreen() {
 
+    var showDateChip by remember { mutableStateOf(false) }
     var showTrainBottomSheet by remember { mutableStateOf(false) }
     var showSeatBottomSheet by remember { mutableStateOf(false) }
     var showWayBottomSheet by remember { mutableStateOf(false) }
     var isOpenBottomSheet by rememberSaveable { mutableStateOf(false) }
 
+    val chipList = listOf("11:08", "11:18", "11:28", "11:38", "11:48", "11:58", "11:68", "11:78")
     val trainDummy = Timetable(
         timetableId = 1,
         trainName = "KTX 001",
@@ -78,6 +83,10 @@ fun TrainSearchScreen() {
             )
             SearchTrainFilter(
                 date = "2024.11.16 (토)",
+                isPressed = showDateChip,
+                onDateClick = {
+                    showDateChip = !showDateChip
+                },
                 onTrainTypeClick = {
                     showTrainBottomSheet = true
                 },
@@ -88,6 +97,18 @@ fun TrainSearchScreen() {
                     showWayBottomSheet = true
                 }
             )
+            if (showDateChip) {
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .background(color = KorailTalkTheme.colors.grey100)
+                        .padding(horizontal = 16.dp, vertical = 7.dp)
+                ) {
+                    SearchTrainDateChipGroup(
+                        chipList = chipList
+                    )
+                }
+            }
             LazyColumn {
                 itemsIndexed(items = trainDummyList) { index, item ->
                     SearchTrainInfoItem(

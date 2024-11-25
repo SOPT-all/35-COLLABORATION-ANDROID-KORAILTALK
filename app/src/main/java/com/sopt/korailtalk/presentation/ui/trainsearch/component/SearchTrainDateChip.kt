@@ -6,6 +6,8 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -57,11 +59,11 @@ fun SearchTrainDateChipGroup(
 ) {
     var selectedTime by remember { mutableStateOf<String?>(null) }
 
-    Row(
-        horizontalArrangement = Arrangement.spacedBy(10.dp),
+    LazyRow(
+        horizontalArrangement = Arrangement.spacedBy(8.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
-        chipList.forEach { chipTime ->
+        items(items = chipList) { chipTime ->
             SearchTrainDateChip(
                 date = chipTime,
                 isActive = selectedTime == chipTime,
