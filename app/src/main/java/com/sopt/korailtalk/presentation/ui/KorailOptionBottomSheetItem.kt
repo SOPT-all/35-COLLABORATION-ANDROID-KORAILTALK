@@ -25,7 +25,9 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.sopt.korailtalk.R
+import com.sopt.korailtalk.domain.type.SearchCarType
 import com.sopt.korailtalk.domain.type.SearchTrainType
+import com.sopt.korailtalk.domain.type.SearchWayType
 import com.sopt.korailtalk.presentation.util.clickableWithoutRipple
 import com.sopt.korailtalk.ui.theme.COLLAVORATIONANDROIDKORAILTALKTheme
 import com.sopt.korailtalk.ui.theme.KorailTalkTheme
@@ -82,7 +84,45 @@ fun TrainSelectContent() {
 
     options.forEachIndexed { index, option ->
         KorailOptionBottomSheetItem(
-            option = option.trainType,
+            option = option.text,
+            isActive = activeIndex == index,
+            activeBgColor = KorailTalkTheme.colors.blue07,
+            activeContentColor = KorailTalkTheme.colors.blue02,
+            onClick = {
+                activeIndex = if (activeIndex == index) -1 else index
+            }
+        )
+    }
+}
+
+@Composable
+fun SeatSelectContent() {
+    var activeIndex by remember { mutableIntStateOf(-1) }
+
+    val options = SearchCarType.entries.toTypedArray()
+
+    options.forEachIndexed { index, option ->
+        KorailOptionBottomSheetItem(
+            option = option.text,
+            isActive = activeIndex == index,
+            activeBgColor = KorailTalkTheme.colors.blue07,
+            activeContentColor = KorailTalkTheme.colors.blue02,
+            onClick = {
+                activeIndex = if (activeIndex == index) -1 else index
+            }
+        )
+    }
+}
+
+@Composable
+fun WaySelectContent() {
+    var activeIndex by remember { mutableIntStateOf(-1) }
+
+    val options = SearchWayType.entries.toTypedArray()
+
+    options.forEachIndexed { index, option ->
+        KorailOptionBottomSheetItem(
+            option = option.text,
             isActive = activeIndex == index,
             activeBgColor = KorailTalkTheme.colors.blue07,
             activeContentColor = KorailTalkTheme.colors.blue02,

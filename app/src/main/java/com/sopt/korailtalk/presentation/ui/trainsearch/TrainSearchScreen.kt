@@ -22,7 +22,9 @@ import com.sopt.korailtalk.data.remote.model.response.Timetable
 import com.sopt.korailtalk.presentation.ui.KorailBottomSheet
 import com.sopt.korailtalk.presentation.ui.KorailDoubleActionTopAppBar
 import com.sopt.korailtalk.presentation.ui.KorailWayInfo
+import com.sopt.korailtalk.presentation.ui.SeatSelectContent
 import com.sopt.korailtalk.presentation.ui.TrainSelectContent
+import com.sopt.korailtalk.presentation.ui.WaySelectContent
 import com.sopt.korailtalk.presentation.ui.trainsearch.component.SearchTrainFilter
 import com.sopt.korailtalk.presentation.ui.trainsearch.component.SearchTrainInfoItem
 import com.sopt.korailtalk.ui.theme.COLLAVORATIONANDROIDKORAILTALKTheme
@@ -33,7 +35,7 @@ import com.sopt.korailtalk.ui.theme.KorailTalkTheme
 fun TrainSearchScreen() {
 
     var showTrainBottomSheet by remember { mutableStateOf(false) }
-    var showCarBottomSheet by remember { mutableStateOf(false) }
+    var showSeatBottomSheet by remember { mutableStateOf(false) }
     var showWayBottomSheet by remember { mutableStateOf(false) }
 
     val trainDummy = Timetable(
@@ -72,7 +74,7 @@ fun TrainSearchScreen() {
                     showTrainBottomSheet = true
                 },
                 onCarTypeClick = {
-                    showCarBottomSheet = true
+                    showSeatBottomSheet = true
                 },
                 onWayTypeClick = {
                     showWayBottomSheet = true
@@ -109,14 +111,14 @@ fun TrainSearchScreen() {
     )
 
     KorailBottomSheet(
-        isOpenBottomSheet = showCarBottomSheet,
+        isOpenBottomSheet = showSeatBottomSheet,
         sheetState = rememberModalBottomSheetState(),
         title = "좌석형태",
         content = {
-            TrainSelectContent()
+            SeatSelectContent()
         },
         onDismissRequest = {
-            showCarBottomSheet = false
+            showSeatBottomSheet = false
         }
     )
 
@@ -125,7 +127,7 @@ fun TrainSearchScreen() {
         sheetState = rememberModalBottomSheetState(),
         title = "열차유형",
         content = {
-            TrainSelectContent()
+            WaySelectContent()
         },
         onDismissRequest = {
             showWayBottomSheet = false
