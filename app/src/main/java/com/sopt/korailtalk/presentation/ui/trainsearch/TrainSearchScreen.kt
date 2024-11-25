@@ -13,6 +13,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
@@ -25,6 +26,7 @@ import com.sopt.korailtalk.presentation.ui.KorailWayInfo
 import com.sopt.korailtalk.presentation.ui.SeatSelectContent
 import com.sopt.korailtalk.presentation.ui.TrainSelectContent
 import com.sopt.korailtalk.presentation.ui.WaySelectContent
+import com.sopt.korailtalk.presentation.ui.trainsearch.component.SearchDetailBottomSheet
 import com.sopt.korailtalk.presentation.ui.trainsearch.component.SearchTrainFilter
 import com.sopt.korailtalk.presentation.ui.trainsearch.component.SearchTrainInfoItem
 import com.sopt.korailtalk.ui.theme.COLLAVORATIONANDROIDKORAILTALKTheme
@@ -37,6 +39,7 @@ fun TrainSearchScreen() {
     var showTrainBottomSheet by remember { mutableStateOf(false) }
     var showSeatBottomSheet by remember { mutableStateOf(false) }
     var showWayBottomSheet by remember { mutableStateOf(false) }
+    var isOpenBottomSheet by rememberSaveable { mutableStateOf(false) }
 
     val trainDummy = Timetable(
         timetableId = 1,
@@ -85,7 +88,13 @@ fun TrainSearchScreen() {
                     SearchTrainInfoItem(
                         modifier = Modifier
                             .fillMaxWidth(),
-                        timetable = item
+                        timetable = item,
+                        onBasicCarClick = {
+                            isOpenBottomSheet = true
+                        },
+                        onSpecialCarClick = {
+                            isOpenBottomSheet = true
+                        }
                     )
                     if (index < trainDummyList.lastIndex) {
                         HorizontalDivider(
@@ -131,6 +140,17 @@ fun TrainSearchScreen() {
         },
         onDismissRequest = {
             showWayBottomSheet = false
+        }
+    )
+
+    SearchDetailBottomSheet(
+        isOpenBottomSheet = isOpenBottomSheet,
+        date = "2024.11.16 (토)",
+        trainData = trainDummy,
+        onSelectSeatClick = {},
+        onAutoSeatClick = {},
+        onDismissRequest = {
+            isOpenBottomSheet = false
         }
     )
 }
