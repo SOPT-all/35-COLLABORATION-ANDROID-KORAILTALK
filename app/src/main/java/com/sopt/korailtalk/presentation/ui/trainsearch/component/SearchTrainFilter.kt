@@ -23,7 +23,10 @@ import com.sopt.korailtalk.ui.theme.KorailTalkTheme
 @Composable
 fun SearchTrainFilter(
     date: String,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    onTrainTypeClick: () -> Unit = {},
+    onCarTypeClick: () -> Unit = {},
+    onWayTypeClick: () -> Unit = {}
 ) {
     Row(
         horizontalArrangement = Arrangement.Center,
@@ -48,13 +51,16 @@ fun SearchTrainFilter(
             horizontalArrangement = Arrangement.spacedBy(8.dp, Alignment.Start),
         ) {
             SearchFilterItem(
-                filterName = "모든 열차"
+                filterName = "모든 열차",
+                onFilterClick = onTrainTypeClick
             )
             SearchFilterItem(
-                filterName = "일반석"
+                filterName = "일반석",
+                onFilterClick = onCarTypeClick
             )
             SearchFilterItem(
-                filterName = "직통"
+                filterName = "직통",
+                onFilterClick = onWayTypeClick
             )
         }
 
