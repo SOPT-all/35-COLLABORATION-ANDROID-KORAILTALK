@@ -39,6 +39,7 @@ fun SeatMapSeatSelector(
             contentDescription = stringResource(R.string.seatmap_seat_description))
         Text(text = seatName,
             color = textColor,
+            style = KorailTalkTheme.typography.caption2,
             modifier = Modifier.align(Alignment.Center))
     }
 }
