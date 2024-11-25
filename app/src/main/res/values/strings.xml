@@ -1,6 +1,9 @@
 <resources>
     <string name="app_name">35-COLLAVORATION-ANDROID-KORAILTALK</string>
 
+    <!-- All  -->
+    <string name="close">닫기</string>
+
     <!-- KorailDialog -->
     <string name="korailDialog_consentTitle">콘센트 확인</string>
     <string name="korailDialog_consentDescription">USB-A 타입의 포트 2개와 220V 콘센트 하나가 벽면에 제공되나, 모든 좌석에 제공되지 않으니 좌석을 확인하시기 바랍니다.</string>
@@ -22,5 +25,9 @@
     <!-- SeatMapSeatSelector  -->
     <string name="seatmap_seat_description">좌석 이미지</string>
     <string name="seatmap_consent_description">콘센트 사진</string>
+
+    <!-- MyTicket  -->
+    <string name="my_ticket_refresh">리프레시</string>
+    <string name="my_ticket_receipt">영수증</string>
 
 </resources>
