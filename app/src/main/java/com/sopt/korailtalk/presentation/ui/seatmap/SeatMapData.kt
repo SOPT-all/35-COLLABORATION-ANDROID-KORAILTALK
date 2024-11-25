@@ -1,4 +1,4 @@
-package com.sopt.korailtalk.presentation.ui.seatmap.component
+package com.sopt.korailtalk.presentation.ui.seatmap
 
 data class SeatMapData (
     val coachId: Long,

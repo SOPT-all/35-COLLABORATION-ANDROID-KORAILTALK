@@ -1,10 +1,7 @@
 package com.sopt.korailtalk.presentation.ui.seatmap
 
-import androidx.compose.runtime.mutableLongStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
-import com.sopt.korailtalk.presentation.ui.seatmap.component.SeatData
-import com.sopt.korailtalk.presentation.ui.seatmap.component.SeatMapData
 
 class SeatMapViewModel : ViewModel() {
 
