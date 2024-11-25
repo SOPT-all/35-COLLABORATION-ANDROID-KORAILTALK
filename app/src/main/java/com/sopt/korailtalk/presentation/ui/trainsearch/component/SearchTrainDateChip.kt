@@ -3,6 +3,7 @@ package com.sopt.korailtalk.presentation.ui.trainsearch.component
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -60,6 +61,7 @@ fun SearchTrainDateChipGroup(
     var selectedTime by remember { mutableStateOf<String?>(null) }
 
     LazyRow(
+        contentPadding = PaddingValues(horizontal = 16.dp),
         horizontalArrangement = Arrangement.spacedBy(8.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {

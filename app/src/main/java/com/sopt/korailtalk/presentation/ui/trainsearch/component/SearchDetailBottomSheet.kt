@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.SheetState
@@ -94,6 +95,7 @@ fun SearchDetailBottomSheet(
                     imageId = R.drawable.img_search_timetable,
                     onClick = {
                         isTimeTableVisible = !isTimeTableVisible
+                        isMoneyTableVisible = false
                     },
                     isActive = isTimeTableVisible
                 )
@@ -105,6 +107,7 @@ fun SearchDetailBottomSheet(
                     imageId = R.drawable.img_search_moneytable,
                     onClick = {
                         isMoneyTableVisible = !isMoneyTableVisible
+                        isTimeTableVisible = false
                     },
                     isActive = isMoneyTableVisible
                 )
@@ -204,6 +207,8 @@ private fun SearchTrainInfoDropDown(
                 )
             } else {
                 Image(
+                    modifier = Modifier
+                        .size(24.dp),
                     painter = painterResource(R.drawable.ic_search_arrow_down),
                     contentDescription = null
                 )

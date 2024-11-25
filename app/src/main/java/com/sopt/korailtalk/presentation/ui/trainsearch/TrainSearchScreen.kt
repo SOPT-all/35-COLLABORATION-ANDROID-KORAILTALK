@@ -102,7 +102,7 @@ fun TrainSearchScreen() {
                     modifier = Modifier
                         .fillMaxWidth()
                         .background(color = KorailTalkTheme.colors.grey100)
-                        .padding(horizontal = 16.dp, vertical = 7.dp)
+                        .padding(vertical = 7.dp)
                 ) {
                     SearchTrainDateChipGroup(
                         chipList = chipList
