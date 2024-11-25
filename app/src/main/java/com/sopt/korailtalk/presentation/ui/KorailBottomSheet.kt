@@ -3,7 +3,6 @@ package com.sopt.korailtalk.presentation.ui
 import android.annotation.SuppressLint
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -31,6 +30,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.sopt.korailtalk.R
+import com.sopt.korailtalk.presentation.util.clickableWithoutRipple
 import com.sopt.korailtalk.ui.theme.COLLAVORATIONANDROIDKORAILTALKTheme
 import com.sopt.korailtalk.ui.theme.KorailTalkTheme
 import kotlinx.coroutines.launch
@@ -83,7 +83,7 @@ fun KorailBottomSheet(
                     Image(
                         painter = painterResource(R.drawable.ic_close_black),
                         contentDescription = "닫기",
-                        modifier = Modifier.clickable {
+                        modifier = Modifier.clickableWithoutRipple {
                             onDismissRequest()
                         }
                     )
@@ -113,7 +113,7 @@ fun ShowKorailBottomSheet() {
 
             KorailChip(
                 text = "KTX 009",
-                modifier = Modifier.clickable {
+                modifier = Modifier.clickableWithoutRipple {
                     showTrainBottomSheet = true
                 }
             )
@@ -123,7 +123,7 @@ fun ShowKorailBottomSheet() {
             )
             KorailChip(
                 text = "자주쓰는카드",
-                modifier = Modifier.clickable {
+                modifier = Modifier.clickableWithoutRipple {
                     showCardBottomSheet = true
                 }
             )

@@ -1,6 +1,5 @@
 package com.sopt.korailtalk.presentation.ui.trainsearch
 
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -21,6 +20,7 @@ import com.sopt.korailtalk.presentation.ui.CardSelectContent
 import com.sopt.korailtalk.presentation.ui.KorailBottomSheet
 import com.sopt.korailtalk.presentation.ui.KorailChip
 import com.sopt.korailtalk.presentation.ui.TrainSelectContent
+import com.sopt.korailtalk.presentation.util.clickableWithoutRipple
 import com.sopt.korailtalk.ui.theme.COLLAVORATIONANDROIDKORAILTALKTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -40,7 +40,7 @@ fun TrainSearchScreen() {
         Column {
             KorailChip(
                 text = "KTX 009",
-                modifier = Modifier.clickable {
+                modifier = Modifier.clickableWithoutRipple {
                     showTrainBottomSheet = true
                 }
             )
@@ -50,7 +50,7 @@ fun TrainSearchScreen() {
             )
             KorailChip(
                 text = "자주쓰는카드",
-                modifier = Modifier.clickable {
+                modifier = Modifier.clickableWithoutRipple {
                     showCardBottomSheet = true
                 }
             )

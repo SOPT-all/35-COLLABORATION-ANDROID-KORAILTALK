@@ -1,7 +1,6 @@
 package com.sopt.korailtalk.presentation.ui.trainsearch.component
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -18,6 +17,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.sopt.korailtalk.presentation.util.clickableWithoutRipple
 import com.sopt.korailtalk.ui.theme.COLLAVORATIONANDROIDKORAILTALKTheme
 import com.sopt.korailtalk.ui.theme.KorailTalkTheme
 
@@ -37,7 +37,7 @@ fun SearchTrainDateChip(
                 shape = RoundedCornerShape(size = 17.dp)
             )
             .padding(horizontal = 16.dp, vertical = 6.dp)
-            .clickable {
+            .clickableWithoutRipple {
                 onSelectedChange(isSelected)
             }
     ) {

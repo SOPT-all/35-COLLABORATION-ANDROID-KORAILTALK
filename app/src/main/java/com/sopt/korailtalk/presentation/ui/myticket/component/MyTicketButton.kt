@@ -1,7 +1,6 @@
 package com.sopt.korailtalk.presentation.ui.myticket.component
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -15,6 +14,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.sopt.korailtalk.presentation.util.clickableWithoutRipple
 import com.sopt.korailtalk.ui.theme.COLLAVORATIONANDROIDKORAILTALKTheme
 import com.sopt.korailtalk.ui.theme.KorailTalkTheme
 
@@ -30,7 +30,7 @@ fun MyTicketButton(
                 color = KorailTalkTheme.colors.blue07,
                 shape = RoundedCornerShape(size = 8.dp)
             )
-            .clickable {
+            .clickableWithoutRipple {
                 onClick()
             }
             .padding(vertical = 17.dp),

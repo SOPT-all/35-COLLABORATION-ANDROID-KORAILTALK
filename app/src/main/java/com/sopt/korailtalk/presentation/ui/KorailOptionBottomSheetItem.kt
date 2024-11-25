@@ -2,7 +2,6 @@ package com.sopt.korailtalk.presentation.ui
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -26,6 +25,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.sopt.korailtalk.R
+import com.sopt.korailtalk.presentation.util.clickableWithoutRipple
 import com.sopt.korailtalk.ui.theme.COLLAVORATIONANDROIDKORAILTALKTheme
 import com.sopt.korailtalk.ui.theme.KorailTalkTheme
 
@@ -44,7 +44,7 @@ fun KorailOptionBottomSheetItem(
             .background(
                 color = if (isActive) activeBgColor else KorailTalkTheme.colors.white
             )
-            .clickable {
+            .clickableWithoutRipple {
                 onClick()
             }
             .padding(vertical = 10.dp, horizontal = 22.dp),
