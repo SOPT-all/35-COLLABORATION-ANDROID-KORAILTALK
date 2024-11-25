@@ -9,7 +9,7 @@
 | 손민재 <br> [@SYAAINN](https://github.com/SYAAINN) |             김태정 <br> [@imtaejugkim](https://github.com/imtaejugkim)             |              김수현 <br>[@gitsuhyun](https://github.com/gitsuhyun)               |
 |:---:|:-----------------------------------------------------------------------------:|:-----------------------------------------------------------------------------:|
 | <img width="250" src="https://avatars.githubusercontent.com/u/137160756?s=400&u=1375e6a20891ea260599b2bd3f0b3496e976ea8f&v=4"/> | <img width="250" src="https://avatars.githubusercontent.com/u/92737123?v=4"/> | <img width="250" src="https://avatars.githubusercontent.com/u/117820337?v=4"/> |
-| `미정` |`미정`|`미정`|
+| `결제하기` |`좌석선택` , `승차권 정보 확인` | `열차조회`, `나의티켓` |
 
 <br>
 
