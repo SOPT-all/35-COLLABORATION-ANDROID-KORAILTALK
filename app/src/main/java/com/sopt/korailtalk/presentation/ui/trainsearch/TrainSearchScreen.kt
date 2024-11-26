@@ -24,8 +24,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.sopt.korailtalk.R
-import com.sopt.korailtalk.data.remote.model.response.Timetable
 import com.sopt.korailtalk.presentation.ui.KorailBottomSheet
 import com.sopt.korailtalk.presentation.ui.KorailDoubleActionTopAppBar
 import com.sopt.korailtalk.presentation.ui.KorailRoundedButton
@@ -42,7 +42,9 @@ import com.sopt.korailtalk.ui.theme.KorailTalkTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun TrainSearchScreen() {
+fun TrainSearchScreen(
+    viewModel: TravelSearchViewModel = hiltViewModel()
+) {
 
     var showDateChip by remember { mutableStateOf(false) }
     var showTrainBottomSheet by remember { mutableStateOf(false) }
@@ -50,21 +52,8 @@ fun TrainSearchScreen() {
     var showWayBottomSheet by remember { mutableStateOf(false) }
     var isOpenBottomSheet by rememberSaveable { mutableStateOf(false) }
 
-    val chipList = listOf("11:08", "11:18", "11:28", "11:38", "11:48", "11:58", "11:68", "11:78")
-    val trainDummy = Timetable(
-        timetableId = 1,
-        trainName = "KTX 001",
-        departureTime = "05:13",
-        arrivalTime = "07:49",
-        standardPrice = 12300,
-        premiumPrice = 15000,
-        isStandardSold = true,
-        isPremiumSold = false,
-        travelTime = 2,
-    )
-    val trainDummyList = mutableListOf<Timetable>()
-    repeat(5) {
-        trainDummyList.add(trainDummy)
+    repeat(0) {
+        viewModel.trainDummyList.add(viewModel.trainDummy)
     }
 
     Box(
@@ -82,7 +71,7 @@ fun TrainSearchScreen() {
                 arrivalPlace = "부산"
             )
             SearchTrainFilter(
-                date = "2024.11.16 (토)",
+                date = "2024.${viewModel.selectDate.value}",
                 isPressed = showDateChip,
                 onDateClick = {
                     showDateChip = !showDateChip
@@ -105,12 +94,15 @@ fun TrainSearchScreen() {
                         .padding(vertical = 7.dp)
                 ) {
                     SearchTrainDateChipGroup(
-                        chipList = chipList
+                        chipList = viewModel.chipList,
+                        onActivedChange = { date ->
+                            viewModel.setDate(date = date)
+                        }
                     )
                 }
             }
             LazyColumn {
-                itemsIndexed(items = trainDummyList) { index, item ->
+                itemsIndexed(items = viewModel.trainDummyList) { index, item ->
                     SearchTrainInfoItem(
                         modifier = Modifier
                             .fillMaxWidth(),
@@ -144,7 +136,9 @@ fun TrainSearchScreen() {
                 backgroundColor = KorailTalkTheme.colors.white,
                 borderColor = KorailTalkTheme.colors.grey200,
                 borderWidth = 1.dp,
-                onClick = {}
+                onClick = {
+                    viewModel.setDate(date = "11.17 (일)")
+                }
             )
             Spacer(
                 modifier = Modifier
@@ -192,7 +186,7 @@ fun TrainSearchScreen() {
     SearchDetailBottomSheet(
         isOpenBottomSheet = isOpenBottomSheet,
         date = "2024.11.16 (토)",
-        trainData = trainDummy,
+        trainData = viewModel.trainDummy,
         onSelectSeatClick = {},
         onAutoSeatClick = {},
         onDismissRequest = {

@@ -29,7 +29,7 @@ fun SearchTrainDateChip(
     date: String,
     modifier: Modifier = Modifier,
     isActive: Boolean = false,
-    onSelectedChange: (Boolean) -> Unit = {},
+    onActivedChange: (Boolean) -> Unit = {},
 ) {
     Row(
         horizontalArrangement = Arrangement.spacedBy(10.dp, Alignment.CenterHorizontally),
@@ -41,7 +41,7 @@ fun SearchTrainDateChip(
             )
             .padding(horizontal = 16.dp, vertical = 6.dp)
             .clickableWithoutRipple {
-                onSelectedChange(isActive)
+                onActivedChange(isActive)
             }
     ) {
         Text(
@@ -56,9 +56,10 @@ fun SearchTrainDateChip(
 @Composable
 fun SearchTrainDateChipGroup(
     chipList: List<String>,
-    modifier: Modifier = Modifier
-) {
-    var selectedTime by remember { mutableStateOf<String?>(null) }
+    modifier: Modifier = Modifier,
+    onActivedChange: (String) -> Unit = {}
+    ) {
+    var selectedTime by remember { mutableStateOf<String?>("11.16 (토)") }
 
     LazyRow(
         contentPadding = PaddingValues(horizontal = 16.dp),
@@ -69,7 +70,8 @@ fun SearchTrainDateChipGroup(
             SearchTrainDateChip(
                 date = chipTime,
                 isActive = selectedTime == chipTime,
-                onSelectedChange = {
+                onActivedChange = {
+                    onActivedChange(selectedTime!!)
                     selectedTime = if (selectedTime == chipTime) null else chipTime
                 }
             )
