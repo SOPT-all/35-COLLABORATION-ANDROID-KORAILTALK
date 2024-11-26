@@ -1,7 +1,7 @@
 package com.sopt.korailtalk.presentation.ui.payment
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -13,16 +13,17 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.sopt.korailtalk.R
@@ -36,17 +37,26 @@ import com.sopt.korailtalk.presentation.ui.payment.component.PaymentHorizontalDi
 import com.sopt.korailtalk.presentation.ui.payment.component.PaymentRadioButtonOption
 import com.sopt.korailtalk.presentation.ui.payment.component.PaymentSelectableOption
 import com.sopt.korailtalk.presentation.ui.payment.component.PaymentTextField
+import com.sopt.korailtalk.presentation.util.clickableWithoutRipple
 import com.sopt.korailtalk.presentation.util.showIf
 import com.sopt.korailtalk.ui.theme.COLLAVORATIONANDROIDKORAILTALKTheme
 import com.sopt.korailtalk.ui.theme.KorailTalkTheme
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun PaymentScreen() {
     var isKtxMileageSectionVisible by remember { mutableStateOf(false) }
     var isDiscountCouponSectionVisible by remember { mutableStateOf(false) }
-    var isPointUsageSectionVisible by remember { mutableStateOf(true) }
+    var isPointUsageSectionVisible by remember { mutableStateOf(false) }
+    var isEasyPaymentSectionVisible by remember { mutableStateOf(false) }
+    var isCardPaymentSectionVisible by remember { mutableStateOf(true) }
+    var isPrivacyChecked by remember { mutableStateOf(false) }
 
     var ktxMileage by remember { mutableStateOf("") }
+    var cardNumber by remember { mutableStateOf("") }
+    var cardExpirationPeriod by remember { mutableStateOf("") }
+    var cardPassword by remember { mutableStateOf("") }
+    var cardCertificationNumber by remember { mutableStateOf("") }
 
     Column(
         modifier = Modifier.fillMaxSize(),
@@ -149,7 +159,9 @@ fun PaymentScreen() {
                     PaymentRadioButtonOption(
                         title = "할인쿠폰",
                         selected = isDiscountCouponSectionVisible,
-                        onClick = { isDiscountCouponSectionVisible = !isDiscountCouponSectionVisible }
+                        onClick = {
+                            isDiscountCouponSectionVisible = !isDiscountCouponSectionVisible
+                        }
                     )
                     Column(
                         modifier = Modifier
@@ -269,23 +281,254 @@ fun PaymentScreen() {
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(horizontal = 16.dp, vertical = 20.dp),
-                    verticalArrangement = Arrangement.spacedBy(16.dp)
                 ) {
                     Text(
                         text = "결제수단 선택",
+                        modifier = Modifier.padding(bottom = 16.dp),
                         color = KorailTalkTheme.colors.black,
                         style = KorailTalkTheme.typography.title1
                     )
                     PaymentRadioButtonOption(
                         title = "간편결제",
-                        selected = false,
-                        onClick = { }
+                        selected = isEasyPaymentSectionVisible,
+                        onClick = { isEasyPaymentSectionVisible = !isEasyPaymentSectionVisible }
                     )
+                    Column(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(top = 16.dp)
+                            .showIf(isEasyPaymentSectionVisible)
+                    ) {
+                        PaymentSelectableOption(
+                            onClick = {},
+                            modifier = Modifier.fillMaxWidth(),
+                            content = {
+                                Row(
+                                    modifier = Modifier.padding(vertical = 10.dp),
+                                    verticalAlignment = Alignment.CenterVertically
+                                ) {
+                                    Image(
+                                        painter = painterResource(id = R.drawable.ic_payment_korail_logo),
+                                        contentDescription = null
+                                    )
+                                    Text(
+                                        text = "X",
+                                        modifier = Modifier.padding(horizontal = 4.dp),
+                                        color = KorailTalkTheme.colors.black,
+                                        style = KorailTalkTheme.typography.head5
+                                    )
+                                    Image(
+                                        painter = painterResource(id = R.drawable.img_payment_tosspay_logo),
+                                        contentDescription = null
+                                    )
+                                    Spacer(modifier = Modifier.width(10.dp))
+                                    Text(
+                                        text = "+ 결제수단 등록하기",
+                                        color = KorailTalkTheme.colors.grey400,
+                                        style = KorailTalkTheme.typography.caption2
+                                    )
+                                }
+                            }
+                        )
+
+                        Spacer(modifier = Modifier.height(8.dp))
+
+                        Row(
+                            modifier = Modifier.fillMaxWidth()
+                        ) {
+                            PaymentSelectableOption(
+                                onClick = {},
+                                modifier = Modifier.weight(1f),
+                                title = "레일 플러스 카드"
+                            )
+                            Spacer(modifier = Modifier.width(8.dp))
+                            PaymentSelectableOption(
+                                onClick = {},
+                                modifier = Modifier.weight(1f),
+                                title = "네이버페이 (머니)",
+                                content = {
+                                    Image(
+                                        painter = painterResource(id = R.drawable.ic_payment_easypayment_event),
+                                        contentDescription = null,
+                                        modifier = Modifier.padding(start = 8.dp)
+                                    )
+                                }
+                            )
+                        }
+
+                        Spacer(modifier = Modifier.height(8.dp))
+
+                        Row(
+                            modifier = Modifier.fillMaxWidth()
+                        ) {
+                            PaymentSelectableOption(
+                                onClick = {},
+                                modifier = Modifier.weight(1f),
+                                title = "제로페이카드",
+                            )
+                            Spacer(modifier = Modifier.width(8.dp))
+                            PaymentSelectableOption(
+                                onClick = {},
+                                modifier = Modifier.weight(1f),
+                                title = "네이버페이 (카드)",
+                            )
+                        }
+
+                        Spacer(modifier = Modifier.height(8.dp))
+
+                        Row(
+                            modifier = Modifier.fillMaxWidth()
+                        ) {
+                            PaymentSelectableOption(
+                                onClick = {},
+                                modifier = Modifier.weight(1f),
+                                title = "KB Pay",
+                            )
+                            Spacer(modifier = Modifier.width(8.dp))
+                            PaymentSelectableOption(
+                                onClick = {},
+                                modifier = Modifier.weight(1f),
+                                title = "토스페이",
+                            )
+                        }
+
+                        Spacer(modifier = Modifier.height(8.dp))
+
+                        Row(
+                            modifier = Modifier.fillMaxWidth()
+                        ) {
+                            PaymentSelectableOption(
+                                onClick = {},
+                                modifier = Modifier.weight(1f),
+                                title = "카카오페이",
+                            )
+                            Spacer(modifier = Modifier.width(8.dp))
+                            PaymentSelectableOption(
+                                onClick = {},
+                                modifier = Modifier.weight(1f),
+                                title = "신한SOL페이",
+                            )
+                        }
+
+                        Spacer(modifier = Modifier.height(8.dp))
+
+                        Row(
+                            modifier = Modifier.fillMaxWidth()
+                        ) {
+                            PaymentSelectableOption(
+                                onClick = {},
+                                modifier = Modifier.weight(1f),
+                                title = "PAYCO",
+                            )
+                            Spacer(modifier = Modifier.width(8.dp))
+                            PaymentSelectableOption(
+                                onClick = {},
+                                modifier = Modifier.weight(1f),
+                                title = "BC페이북",
+                            )
+                        }
+                    }
+                    Spacer(modifier = Modifier.height(16.dp))
+
                     PaymentRadioButtonOption(
                         title = "카드결제",
-                        selected = false,
-                        onClick = { }
+                        selected = isCardPaymentSectionVisible,
+                        onClick = { isCardPaymentSectionVisible = !isCardPaymentSectionVisible }
                     )
+                    Column(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(top = 16.dp)
+                            .showIf(isCardPaymentSectionVisible)
+                    ) {
+                        PaymentDropdownOption(
+                            title = "자주쓰는카드",
+                            onClick = {},
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(bottom = 8.dp),
+                            description = "직접입력",
+                            state = PaymentDropdownOptionType.SELECTED
+                        )
+                        Row(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(bottom = 8.dp),
+                        ) {
+                            PaymentTextField(
+                                title = "카드번호",
+                                hint = "0000 - 0000 - 0000 - 0000",
+                                value = cardNumber,
+                                onValueChange = { newValue -> cardNumber = newValue },
+                                modifier = Modifier.weight(1f),
+                            )
+                            Spacer(modifier = Modifier.width(4.dp))
+                            PaymentChipButton(
+                                title = "카드스캔",
+                                onClick = {}
+                            )
+                        }
+                        PaymentTextField(
+                            title = "유효기간",
+                            hint = "00 / 00",
+                            value = cardExpirationPeriod,
+                            onValueChange = { newValue -> cardExpirationPeriod = newValue },
+                            modifier = Modifier.padding(bottom = 8.dp)
+                        )
+                        PaymentTextField(
+                            title = "비밀번호",
+                            hint = "00",
+                            value = cardPassword,
+                            onValueChange = { newValue -> cardPassword = newValue },
+                            modifier = Modifier.padding(bottom = 8.dp),
+                            unit = "**"
+                        )
+                        PaymentDropdownOption(
+                            title = "카드종류",
+                            onClick = {},
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(bottom = 8.dp),
+                            description = "개인",
+                            state = PaymentDropdownOptionType.SELECTED
+                        )
+                        PaymentTextField(
+                            title = "인증번호",
+                            hint = "주민번호 앞 6자리",
+                            value = cardCertificationNumber,
+                            onValueChange = { newValue -> cardCertificationNumber = newValue },
+                            modifier = Modifier.padding(bottom = 8.dp)
+                        )
+                        PaymentDropdownOption(
+                            title = "할부기간",
+                            onClick = {},
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(bottom = 16.dp),
+                            description = "일시불",
+                            state = PaymentDropdownOptionType.SELECTED
+                        )
+                        Row(
+                            modifier = Modifier.fillMaxWidth(),
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            Image(
+                                painter = painterResource(id = if (isPrivacyChecked) R.drawable.ic_payment_privacy_selected else R.drawable.ic_payment_privacy_not_selected),
+                                contentDescription = null,
+                                modifier = Modifier
+                                    .padding(end = 8.dp)
+                                    .clickableWithoutRipple(
+                                        onClick = { isPrivacyChecked = !isPrivacyChecked }
+                                    )
+                            )
+                            Text(
+                                text = "개인정보 수집 및 이용동의",
+                                color = KorailTalkTheme.colors.grey800,
+                                style = KorailTalkTheme.typography.body2
+                            )
+                        }
+
+                    }
                 }
             }
 
@@ -396,7 +639,7 @@ fun PaymentScreen() {
                 Text(
                     text = "12,000원",
                     color = KorailTalkTheme.colors.white,
-                    style =  KorailTalkTheme.typography.head5
+                    style = KorailTalkTheme.typography.head5
                 )
             }
         }
