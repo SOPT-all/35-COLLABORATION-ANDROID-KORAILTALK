@@ -2,16 +2,22 @@ package com.sopt.korailtalk.presentation.ui.seatmap
 
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
+import javax.inject.Inject
 import kotlin.random.Random
 
-class SeatMapViewModel : ViewModel() {
+class SeatMapViewModel @Inject constructor(
+)  : ViewModel() {
 
     private var _seatsMapData = mutableStateOf<List<SeatMapData>>(emptyList())
     val seatsMapData: List<SeatMapData>
         get() = _seatsMapData.value
+    var selectedCoachId = mutableStateOf<Long?>(null)
+    var selectedSeatId = mutableStateOf<Long?>(null)
+    var showDialog = mutableStateOf(false)
 
     init {
         loadSeatsMapData()
+        loadInitCoachId()
     }
 
     private fun loadSeatsMapData() {
@@ -33,17 +39,21 @@ class SeatMapViewModel : ViewModel() {
         )
     }
 
-    // 선택된 Coach ID를 저장
-    var selectedCoachId = mutableStateOf<Long?>(null)
+    private fun loadInitCoachId() {
+        if (seatsMapData.isNotEmpty()) {
+            selectedCoachId.value = seatsMapData.first().coachId
+        }
+    }
 
-    // 선택 로직
     fun selectCoach(id: Long) {
         selectedCoachId.value = id
     }
 
-    var selectedSeatId = mutableStateOf<Long?>(null)
-
     fun selectSeat(id: Long?) {
         selectedSeatId.value = id
+    }
+
+    fun toggleDialog(show: Boolean) {
+        showDialog.value = show
     }
 }
