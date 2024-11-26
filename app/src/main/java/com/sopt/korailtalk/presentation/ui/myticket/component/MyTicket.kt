@@ -107,8 +107,7 @@ fun MyTicket(
                 MyTicketInfomation(
                     modifier = Modifier
                         .padding(start = 16.dp, end = 16.dp, top = 16.dp),
-                    coachesNumber = ticketData.coachesNumber,
-                    seatName = ticketData.seatName,
+                    ticketData = ticketData,
                 )
                 Row(
                     horizontalArrangement = Arrangement.spacedBy(4.dp, Alignment.Start),
