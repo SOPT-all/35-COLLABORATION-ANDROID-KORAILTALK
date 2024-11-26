@@ -8,6 +8,7 @@
     <string name="korailDialog_consentTitle">콘센트 확인</string>
     <string name="korailDialog_consentDescription">USB-A 타입의 포트 2개와 220V 콘센트 하나가 벽면에 제공되나, 모든 좌석에 제공되지 않으니 좌석을 확인하시기 바랍니다.</string>
     <string name="korailDialog_confirm">확인 완료</string>
+    <string name="korailDialog_ticketTitle">꼭 알아두세요!</string>
 
     <!-- SeatMapCoachSelector -->
     <string name="seatMapCoachSelector_coach">%1$s호차</string>
@@ -30,5 +31,47 @@
     <string name="seatmap_seat_description">좌석 이미지</string>
     <string name="seatmap_consent_description">콘센트 사진</string>
 
+    <!-- SeatMapScreen -->
+    <string name="seatMap_title">좌석 선택</string>
+    <string name="seatMap_date">2024.11.16 (토)</string>
+    <string name="seatMap_forward_active">선택가능 (순방향)</string>
+    <string name="seatMap_backward_actvie">선택가능 (역방향)</string>
+    <string name="seatMap_inactive">선택불가</string>
+    <string name="seatMap_choose">좌석을 선택해주세요</string>
+
+    <!-- TrainCheckScreen  -->
+    <string name="trainCheck_register">담아 두기</string>
+    <string name="trainCheck_pay">바로결제</string>
+    <string name="trainCheck_limit_time">"결제기한: "</string>
+    <string name="trainCheck_limit_time_notice">10분 이내 미결제시 승차권이 자동으로 취소됩니다.</string>
+    <string name="trainCheck_notice_title">주의사항</string>
+    <string name="trainCheck_notice_cancel">결제하지 않으면 예약이 취소됩니다.</string>
+    <string name="trainCheck_notice_confirm">승차권을 발권받은 스마트폰에서만 확인할 수 있습니다.</string>
+    <string name="trainCheck_notice_discount">할인승차권 이용시, 관련 신분증 또는 증명서를 소지하셔야 합니다.</string>
+    <string name="trainCheck_dialog_notice">승차권 환불(반환) 위약금을 반드시 확인하시기 바랍니다.</string>
+
+    <!-- TrainCheckDialogContent  -->
+    <string name="trainCheck_dialog_title">휴대폰 세부 승차기준</string>
+    <string name="trainCheck_dialog_content_number_one">1.</string>
+    <string name="trainCheck_dialog_content_number_two">2.</string>
+    <string name="trainCheck_dialog_content_number_three">3.</string>
+    <string name="trainCheck_dialog_content_number_four">4.</string>
+    <string name="trainCheck_dialog_content_number_five">5.</string>
+    <string name="trainCheck_dialog_content_number_six">6.</string>
+    <string name="trainCheck_dialog_content_number_seven">7.</string>
+    <string name="trainCheck_dialog_content_number_eight">8.</string>
+    <string name="trainCheck_dialog_content_first">코레일톡에서 구매한 승차권은 역창구에서 변경 시 할인이 취소 될 수 있습니다.</string>
+    <string name="trainCheck_dialog_content_second">할인 승차권의 할인율은 별도 공지없이 변경될 수 있습니다.</string>
+    <string name="trainCheck_dialog_content_third_start">할인은 운임에만 적용하고 요금은 미적용 (</string>
+    <string name="trainCheck_dialog_content_third_highlight">특실/우등실은 운임과 요금으로 구분</string>
+    <string name="trainCheck_dialog_content_third_end">)되며, 최저운임 이하로 할인하지 않습니다.</string>
+    <string name="trainCheck_dialog_content_fourth">승차 시 해당열차 승차권을 소지해야 하며, </string>
+    <string name="trainCheck_dialog_content_fourth_highlight"> 사진이나 캡쳐한 화면은 유효한 승차권이 아닙니다.</string>
+    <string name="trainCheck_dialog_content_fifth">반려동물은 다른 고객에게 불편을 주지 않도록 케이스 (이동장)에 반드시 넣어주시기 바라며, 신체 일부가 밖으로 나오지 않도록 해야 합니다.</string>
+    <string name="trainCheck_dialog_content_sixth">반려동물의 동반좌석이 필요한 경우에는 정상운임을 내고 좌석을 지정받아 이용할 수 있습니다.</string>
+    <string name="trainCheck_dialog_content_seventh">승차권을 2매 이상 구매할 시, 홈페이지•코레일톡•역 창구를 통해 동행자 마일리지 적립을 신청할 수 있습니다.</string>
+    <string name="trainCheck_dialog_content_eighth">전달하기 제외승차권</string>
+    <string name="trainCheck_dialog_content_eighth_one">- 회원 본인만 사용 가능한 할인 상품(힘내라청춘, 청소년 드림, 정기승차권 등)</string>
+    <string name="trainCheck_dialog_content_eighth_two">- 좌석을 지정하지 않는 입석, 자유석 승차권</string>
 
 </resources>
