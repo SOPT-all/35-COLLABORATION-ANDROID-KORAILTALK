@@ -7,15 +7,25 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.systemBars
+import androidx.compose.foundation.layout.windowInsetsPadding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -23,6 +33,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.sopt.korailtalk.R
 import com.sopt.korailtalk.presentation.ui.KorailRoundedButton
 import com.sopt.korailtalk.presentation.ui.KorailSingleActionTopAppBar
+import com.sopt.korailtalk.presentation.ui.myticket.component.CustomToast
 import com.sopt.korailtalk.presentation.ui.myticket.component.MyTicket
 import com.sopt.korailtalk.presentation.ui.myticket.component.MyTicketAdditionalService
 import com.sopt.korailtalk.presentation.ui.myticket.component.MyTicketAdditionalServiceType
@@ -35,12 +46,18 @@ import com.sopt.korailtalk.ui.theme.KorailTalkTheme
 fun MyTicketScreen(
     viewModel: MyTicketViewModel = hiltViewModel()
 ) {
+    var showToast by remember { mutableStateOf(false) }
+    val scrollState = rememberScrollState()
+
     Box(
         modifier = Modifier
             .fillMaxSize()
+            .windowInsetsPadding(WindowInsets.systemBars)
             .background(color = KorailTalkTheme.colors.grey100),
     ) {
-        Column {
+        Column(
+            modifier = Modifier.verticalScroll(scrollState)
+        ) {
             KorailSingleActionTopAppBar(
                 title = "나의 티켓",
                 backgroundColor = KorailTalkTheme.colors.blue01,
@@ -67,8 +84,6 @@ fun MyTicketScreen(
                     .roundedBackgroundWithBorder(
                         cornerRadius = 12.dp,
                         backgroundColor = KorailTalkTheme.colors.white,
-                        borderColor = KorailTalkTheme.colors.white,
-                        borderWidth = 0.dp
                     )
                     .padding(all = 16.dp),
                 verticalArrangement = Arrangement.spacedBy(8.dp)
@@ -108,9 +123,21 @@ fun MyTicketScreen(
                     cornerRadius = 26.dp,
                     backgroundColor = KorailTalkTheme.colors.white,
                     borderColor = KorailTalkTheme.colors.grey200,
-                    borderWidth = 1.dp
+                    borderWidth = 1.dp,
+                    onClick = {
+                        showToast = true
+                    }
                 )
+                if (showToast) {
+                    val myTicketToast = CustomToast(LocalContext.current)
+                    myTicketToast.ShowToast()
+                    showToast = false
+                }
             }
+            Spacer(
+                modifier = Modifier
+                    .height(60.dp)
+            )
         }
     }
 }
