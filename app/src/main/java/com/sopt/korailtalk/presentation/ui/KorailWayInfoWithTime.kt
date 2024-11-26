@@ -24,8 +24,9 @@ fun KorailWayInfoWithTime(
     arrivalPlace: String,
     departureTime: String,
     arrivalTime: String,
+    modifier: Modifier = Modifier
 ) {
-    Row(modifier = Modifier
+    Row(modifier = modifier
         .fillMaxWidth()
         .background(color = KorailTalkTheme.colors.white)
         .padding(23.dp),
