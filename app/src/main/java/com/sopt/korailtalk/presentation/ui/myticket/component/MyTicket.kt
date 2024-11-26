@@ -36,11 +36,12 @@ import com.sopt.korailtalk.ui.theme.KorailTalkTheme
 @Composable
 fun MyTicket(
     ticketData: TicketData,
+    modifier: Modifier = Modifier
 ) {
     val myTicketButtonText = MyTicketButtonType.entries.toTypedArray()
 
     Column(
-        modifier = Modifier.fillMaxWidth()
+        modifier = modifier.fillMaxWidth()
     ) {
         KorailTicketHeader(
             date = ticketData.date,
