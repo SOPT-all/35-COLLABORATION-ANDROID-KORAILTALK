@@ -19,9 +19,8 @@ import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.sopt.korailtalk.R
-import com.sopt.korailtalk.data.remote.model.response.TicketData
-import com.sopt.korailtalk.domain.type.MyTicketTabType
 import com.sopt.korailtalk.presentation.ui.KorailRoundedButton
 import com.sopt.korailtalk.presentation.ui.KorailSingleActionTopAppBar
 import com.sopt.korailtalk.presentation.ui.myticket.component.MyTicket
@@ -33,21 +32,9 @@ import com.sopt.korailtalk.ui.theme.COLLAVORATIONANDROIDKORAILTALKTheme
 import com.sopt.korailtalk.ui.theme.KorailTalkTheme
 
 @Composable
-fun MyTicketScreen() {
-    val myTicketTabText = MyTicketTabType.entries.toTypedArray()
-    val ticketDummy = TicketData(
-        departurePlace = "서울",
-        arrivalPlace = "부산",
-        date = "2024년 10월 30일 (수)",
-        trainName = "KTX 001",
-        departureTime = "09:30",
-        arrivalTime = "12:45",
-        seatName = "16A",
-        ticketPrice = 50000,
-        limitPaymentTime = "2024-11-30T18:00:00",
-        coachesNumber = 4
-    )
-
+fun MyTicketScreen(
+    viewModel: MyTicketViewModel = hiltViewModel()
+) {
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -59,13 +46,13 @@ fun MyTicketScreen() {
                 backgroundColor = KorailTalkTheme.colors.blue01,
                 iconId = R.drawable.ic_topappbar_menu_24,
             )
-            MyTicketTabBar(myTicketTabText = myTicketTabText)
+            MyTicketTabBar(myTicketTabText = viewModel.myTicketTabText)
             Spacer(
                 modifier = Modifier
                     .height(8.dp)
             )
             MyTicket(
-                ticketData = ticketDummy,
+                ticketData = viewModel.ticketDummy,
                 modifier = Modifier
                     .padding(horizontal = 8.dp)
             )
@@ -124,10 +111,7 @@ fun MyTicketScreen() {
                     borderWidth = 1.dp
                 )
             }
-
-
         }
-
     }
 }
 
