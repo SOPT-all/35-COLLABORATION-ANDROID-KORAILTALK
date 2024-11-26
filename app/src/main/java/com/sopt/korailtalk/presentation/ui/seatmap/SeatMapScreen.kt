@@ -2,6 +2,7 @@ package com.sopt.korailtalk.presentation.ui.seatmap
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -29,10 +30,18 @@ import com.sopt.korailtalk.R
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.ui.draw.clip
+import com.sopt.korailtalk.presentation.ui.KorailDialog
 import com.sopt.korailtalk.presentation.ui.KorailDoubleActionTopAppBar
 import com.sopt.korailtalk.presentation.ui.KorailRoundedButton
 import com.sopt.korailtalk.presentation.ui.KorailWayInfo
 import com.sopt.korailtalk.presentation.ui.seatmap.component.SeatMapCoachSelector
+import com.sopt.korailtalk.presentation.ui.seatmap.component.SeatMapSeatSelector
+import com.sopt.korailtalk.presentation.util.roundedBackgroundWithBorder
 import com.sopt.korailtalk.ui.theme.KorailTalkTheme
 
 @Composable
@@ -41,7 +50,6 @@ fun SeatMapScreen(
     arrivalPlace: String,
     viewModel: SeatMapViewModel = viewModel()
 ) {
-
     Column(
         modifier = Modifier.fillMaxSize()
             .background(KorailTalkTheme.colors.white),
@@ -75,11 +83,56 @@ fun SeatMapScreen(
                 val coach = viewModel.seatsMapData[index]
                 SeatMapCoachSelector(
                     coachId = coach.coachId,
-                    leftSeats = coach.seats.size,
+                    leftSeats = coach.leftSeats,
                     isSelected = coach.coachId == viewModel.selectedCoachId.value,
                     onSelectionChange = viewModel::selectCoach
                 )
             }
+        }
+
+        Row(modifier = Modifier.padding(horizontal = 16.dp, vertical = 14.dp)){
+            Column(
+                modifier = Modifier.padding(end = 12.dp)
+            ) {
+                Row {
+                    Image(painter = painterResource(R.drawable.ic_seatmap_forward),
+                        contentDescription = "순방향 이미지",
+                        modifier = Modifier.padding(end = 3.dp))
+                    Text(text = "선택가능 (순방향)",
+                        color = KorailTalkTheme.colors.grey600,
+                        style = KorailTalkTheme.typography.caption2)
+                }
+                Row {
+                    Image(painter = painterResource(R.drawable.ic_seatmap_backward),
+                        contentDescription = "역방향 이미지",
+                        modifier = Modifier.padding(end = 3.dp))
+                    Text(text = "선택가능 (역방향)",
+                        color = KorailTalkTheme.colors.grey600,
+                        style = KorailTalkTheme.typography.caption2)
+                }
+            }
+            Row {
+                Image(painter = painterResource(R.drawable.ic_seatmap_none),
+                    contentDescription = "선택불가 이미지",
+                    modifier = Modifier.padding(end = 3.dp))
+                Text(text = "선택불가",
+                    color = KorailTalkTheme.colors.grey600,
+                    style = KorailTalkTheme.typography.caption2)
+            }
+            Spacer(modifier = Modifier.weight(1f))
+            Row (
+                modifier = Modifier
+                    .roundedBackgroundWithBorder(14.dp, KorailTalkTheme.colors.white,
+                        KorailTalkTheme.colors.grey300, 2.dp)
+                    .padding(vertical = 6.dp, horizontal = 8.dp)
+            ){
+                Image(painter = painterResource(R.drawable.ic_seatmap_consent),
+                    contentDescription = "콘센트 이미지")
+                Text(text = "콘센트 확인",
+                    color = KorailTalkTheme.colors.blue01,
+                    style = KorailTalkTheme.typography.caption1)
+            }
+
         }
 
         Column(modifier = Modifier
@@ -91,8 +144,9 @@ fun SeatMapScreen(
                 modifier = Modifier.fillMaxWidth()
             ){
                 Pillar() // 왼쪽 기둥
-                Seats(viewModel.selectedCoachId,
-                    modifier = Modifier.weight(1f))  // 좌석 영역
+                Seats(selectedCoachId = viewModel.selectedCoachId,
+                    viewModel = viewModel,
+                    modifier = Modifier.weight(1f)) // 좌석 영역
                 Pillar() // 오른쪽 기둥
             }
         }
@@ -133,21 +187,40 @@ fun SeatMapScreen(
 }
 
 @Composable
-fun Seats(selectedCoachId: MutableState<Long?>, modifier: Modifier) {
-    Column(modifier = modifier){
-        repeat(50) { index ->
-            Row(modifier = Modifier.padding(horizontal = 16.dp, vertical = 6.dp)) {
-                // 이 text가 컴포넌트화 될 Seat 입니다!
-                Text(text = "${index + 1}A", modifier = Modifier.padding(8.dp))
-                Text(text = "${index + 1}B", modifier = Modifier.padding(8.dp))
-                Image(painter = painterResource(R.drawable.ic_seat_direction),
-                    contentDescription = "열차 운행 방향")
-                Text(text = "${index + 1}C", modifier = Modifier.padding(8.dp))
-                Text(text = "${index + 1}D", modifier = Modifier.padding(8.dp))
+fun Seats(selectedCoachId: MutableState<Long?>, viewModel: SeatMapViewModel, modifier: Modifier) {
+    Column(modifier = modifier.padding(horizontal = 16.dp)) {
+        viewModel.seatsMapData.find { it.coachId == selectedCoachId.value }?.seats?.reversed()?.let { seats ->
+            seats.chunked(4).forEach { rowSeats ->
+                Row(
+                    horizontalArrangement = Arrangement.SpaceBetween,  // 좌석 사이에 공간을 균등하게 배분
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    rowSeats.forEachIndexed { index, seat ->
+                        SeatMapSeatSelector(
+                            seatId = seat.seatId,
+                            seatName = seat.seatName,
+                            direction = seat.direction,
+                            isSold = seat.isSold,
+                            isSelected = viewModel.selectedSeatId.value == seat.seatId,
+                            onSelectionChange = { id ->
+                                viewModel.selectSeat(id)
+                            }
+                        )
+
+                        if (index == 1) {  // 첫 번째와 두 번째 좌석 사이
+                            Image(
+                                painter = painterResource(id = R.drawable.ic_seat_direction),
+                                contentDescription = "열차 진행 방향",
+                                modifier = Modifier.padding(horizontal = 4.dp)
+                            )
+                        }
+                    }
+                }
             }
         }
     }
 }
+
 
 @Composable
 fun Pillar() {
@@ -156,15 +229,17 @@ fun Pillar() {
             modifier = Modifier
                 .height(48.dp)
                 .fillMaxWidth()
+                .clip(shape = RoundedCornerShape(4.dp))
                 .background(KorailTalkTheme.colors.blue06)
         )
 
-        repeat(5) {
+        repeat(6) {
             Spacer(modifier = Modifier.height(32.dp))
             Box(
                 modifier = Modifier
                     .height(92.dp)
                     .fillMaxWidth()
+                    .clip(shape = RoundedCornerShape(4.dp))
                     .background(KorailTalkTheme.colors.blue06)
             )
         }
