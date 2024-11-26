@@ -21,7 +21,7 @@ fun KorailTicketHeader(
 ) {
     Box(modifier = Modifier
         .fillMaxWidth()
-        .background(color = KorailTalkTheme.colors.blue02,
+        .background(color = KorailTalkTheme.colors.blue03,
             shape = RoundedCornerShape(
                 topStart = 12.dp,
                 topEnd = 12.dp))
@@ -31,11 +31,10 @@ fun KorailTicketHeader(
             style = typography.title3,
             color = KorailTalkTheme.colors.white)
 
-        // KorailChip 정의되는 부분, trainName을 전달합니다.
-        /* KorailChip(
-            trainName = trainName,
+        KorailChip(
+            text = trainName,
             modifier = Modifier.align(Alignment.CenterEnd)
-        ) */
+        )
     }
 }
 
