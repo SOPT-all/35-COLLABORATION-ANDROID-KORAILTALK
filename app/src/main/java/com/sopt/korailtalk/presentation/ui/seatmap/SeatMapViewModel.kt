@@ -2,6 +2,7 @@ package com.sopt.korailtalk.presentation.ui.seatmap
 
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
+import kotlin.random.Random
 
 class SeatMapViewModel : ViewModel() {
 
@@ -14,43 +15,21 @@ class SeatMapViewModel : ViewModel() {
     }
 
     private fun loadSeatsMapData() {
+        val seats = arrayListOf<SeatData>()
+        for (i in 1..60) {
+            val seatId = i.toLong()
+            val seatName = "${(i - 1) / 4 + 1}${charArrayOf('A', 'B', 'C', 'D')[(i - 1) % 4]}"
+            val direction = i <= 30
+            val isSold = Random.nextBoolean()  // 무작위로 판매 상태 결정
+
+            seats.add(SeatData(seatId, seatName, direction, isSold))
+        }
         _seatsMapData.value = listOf(
-            SeatMapData(1L, 40, arrayListOf(
-                SeatData(1, "1A", true, false),
-                SeatData(2, "1B", true, false),
-                SeatData(3, "1C", true, false),
-                SeatData(4, "1D", true, false)
-            )),
-            SeatMapData(2L, 40, arrayListOf(
-                SeatData(5, "2A", true, false),
-                SeatData(6, "2B", true, false),
-                SeatData(7, "2C", true, false),
-                SeatData(8, "2D", true, false)
-            )),
-            SeatMapData(3L, 40, arrayListOf(
-                SeatData(9, "3A", true, false),
-                SeatData(10, "3B", true, false),
-                SeatData(11, "3C", true, false),
-                SeatData(12, "3D", true, false)
-            )),
-            SeatMapData(4L, 40, arrayListOf(
-                SeatData(13, "4A", true, false),
-                SeatData(14, "4B", true, false),
-                SeatData(15, "4C", true, false),
-                SeatData(16, "4D", true, false)
-            )),
-            SeatMapData(5L, 40, arrayListOf(
-                SeatData(17, "5A", true, false),
-                SeatData(18, "5B", true, false),
-                SeatData(19, "5C", true, false),
-                SeatData(20, "5D", true, false)
-            )),
-            SeatMapData(6L, 40, arrayListOf(
-                SeatData(21, "5A", true, false),
-                SeatData(22, "5B", true, false),
-                SeatData(23, "5C", true, false),
-                SeatData(24, "5D", true, false)
-            ))
+            SeatMapData(1L, 40, seats),
+            SeatMapData(2L, 40, arrayListOf()),
+            SeatMapData(3L, 40, arrayListOf()),
+            SeatMapData(4L, 40, arrayListOf()),
+            SeatMapData(5L, 40, arrayListOf())
         )
     }
 
@@ -60,5 +39,11 @@ class SeatMapViewModel : ViewModel() {
     // 선택 로직
     fun selectCoach(id: Long) {
         selectedCoachId.value = id
+    }
+
+    var selectedSeatId = mutableStateOf<Long?>(null)
+
+    fun selectSeat(id: Long?) {
+        selectedSeatId.value = id
     }
 }
