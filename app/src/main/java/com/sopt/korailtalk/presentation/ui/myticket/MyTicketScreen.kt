@@ -37,6 +37,7 @@ import com.sopt.korailtalk.presentation.ui.myticket.component.CustomToast
 import com.sopt.korailtalk.presentation.ui.myticket.component.MyTicket
 import com.sopt.korailtalk.presentation.ui.myticket.component.MyTicketAdditionalService
 import com.sopt.korailtalk.presentation.ui.myticket.component.MyTicketAdditionalServiceType
+import com.sopt.korailtalk.presentation.ui.myticket.component.MyTicketNotificationBar
 import com.sopt.korailtalk.presentation.ui.myticket.component.MyTicketTabBar
 import com.sopt.korailtalk.presentation.util.roundedBackgroundWithBorder
 import com.sopt.korailtalk.ui.theme.COLLAVORATIONANDROIDKORAILTALKTheme
@@ -134,6 +135,7 @@ fun MyTicketScreen(
                     showToast = false
                 }
             }
+            MyTicketNotificationBar()
             Spacer(
                 modifier = Modifier
                     .height(60.dp)
