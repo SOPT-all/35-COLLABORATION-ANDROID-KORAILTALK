@@ -6,18 +6,6 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class TrainSearchResponseDto(
-    @SerialName("data")
-    val data: Data
-)
-
-@Serializable
-data class Data(
-    @SerialName("timetables")
-    val timetables: List<Timetable?>
-)
-
-@Serializable
-data class Timetable(
     @SerialName("timetableId")
     val timetableId: Long?,
     @SerialName("trainName")

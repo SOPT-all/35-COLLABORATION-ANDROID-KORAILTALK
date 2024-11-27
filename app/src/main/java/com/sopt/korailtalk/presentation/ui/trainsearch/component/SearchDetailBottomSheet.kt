@@ -30,7 +30,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.sopt.korailtalk.R
-import com.sopt.korailtalk.data.remote.model.response.Timetable
+import com.sopt.korailtalk.domain.model.TrainInformation
 import com.sopt.korailtalk.presentation.ui.KorailBottomSheet
 import com.sopt.korailtalk.presentation.ui.KorailChip
 import com.sopt.korailtalk.presentation.ui.KorailRoundedButton
@@ -44,7 +44,7 @@ fun SearchDetailBottomSheet(
     isOpenBottomSheet: Boolean,
     sheetState: SheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true),
     date: String,
-    trainData: Timetable,
+    trainData: TrainInformation,
     onSelectSeatClick: () -> Unit,
     onAutoSeatClick: () -> Unit,
     onDismissRequest: () -> Unit = {},
@@ -232,7 +232,7 @@ private fun SearchTrainInfoDropDown(
 @Composable
 fun ShowSearchDetailBottomSheet() {
     var isOpenBottomSheet by rememberSaveable { mutableStateOf(false) }
-    val trainDummy = Timetable(
+    val trainDummy = TrainInformation(
         timetableId = 1,
         trainName = "KTX 001",
         departureTime = "05:13",

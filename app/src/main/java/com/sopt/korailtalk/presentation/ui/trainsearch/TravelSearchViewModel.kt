@@ -1,7 +1,7 @@
 package com.sopt.korailtalk.presentation.ui.trainsearch
 
 import androidx.lifecycle.ViewModel
-import com.sopt.korailtalk.data.remote.model.response.Timetable
+import com.sopt.korailtalk.domain.model.TrainInformation
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -40,7 +40,7 @@ class TravelSearchViewModel @Inject constructor(
         "11.28 (목)",
         "11.29 (금)"
     )
-    val trainDummy = Timetable(
+    val trainDummy = TrainInformation(
         timetableId = 1,
         trainName = "KTX 001",
         departureTime = "05:13",
