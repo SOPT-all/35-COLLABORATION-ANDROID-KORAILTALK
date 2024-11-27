@@ -78,7 +78,7 @@ fun KorailOptionBottomSheetItem(
 
 @Composable
 fun TrainSelectContent() {
-    var activeIndex by remember { mutableIntStateOf(-1) }
+    var activeIndex by remember { mutableIntStateOf(0) }
 
     val options = SearchTrainType.entries.toTypedArray()
 
@@ -97,7 +97,7 @@ fun TrainSelectContent() {
 
 @Composable
 fun SeatSelectContent() {
-    var activeIndex by remember { mutableIntStateOf(-1) }
+    var activeIndex by remember { mutableIntStateOf(0) }
 
     val options = SearchCarType.entries.toTypedArray()
 
@@ -116,7 +116,7 @@ fun SeatSelectContent() {
 
 @Composable
 fun WaySelectContent() {
-    var activeIndex by remember { mutableIntStateOf(-1) }
+    var activeIndex by remember { mutableIntStateOf(0) }
 
     val options = SearchWayType.entries.toTypedArray()
 

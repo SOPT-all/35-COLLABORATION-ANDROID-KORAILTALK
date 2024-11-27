@@ -5,16 +5,20 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.systemBars
+import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -45,19 +49,20 @@ import com.sopt.korailtalk.ui.theme.KorailTalkTheme
 fun TrainSearchScreen(
     viewModel: TravelSearchViewModel = hiltViewModel()
 ) {
-
     var showDateChip by remember { mutableStateOf(false) }
     var showTrainBottomSheet by remember { mutableStateOf(false) }
     var showSeatBottomSheet by remember { mutableStateOf(false) }
     var showWayBottomSheet by remember { mutableStateOf(false) }
     var isOpenBottomSheet by rememberSaveable { mutableStateOf(false) }
 
-    repeat(0) {
-        viewModel.trainDummyList.add(viewModel.trainDummy)
-    }
+    val selectedTime by viewModel.selectDate.collectAsState()
+    val nextDay by viewModel.nextDate.collectAsState()
 
     Box(
-        modifier = Modifier.fillMaxSize(),
+        modifier = Modifier
+            .fillMaxSize()
+            .windowInsetsPadding(WindowInsets.systemBars)
+            .background(color = KorailTalkTheme.colors.white),
     ) {
         Column {
             KorailDoubleActionTopAppBar(
@@ -71,7 +76,7 @@ fun TrainSearchScreen(
                 arrivalPlace = "부산"
             )
             SearchTrainFilter(
-                date = "2024.${viewModel.selectDate.value}",
+                date = "2024.${selectedTime}",
                 isPressed = showDateChip,
                 onDateClick = {
                     showDateChip = !showDateChip
@@ -95,6 +100,7 @@ fun TrainSearchScreen(
                 ) {
                     SearchTrainDateChipGroup(
                         chipList = viewModel.chipList,
+                        selectedTime = selectedTime,
                         onActivedChange = { date ->
                             viewModel.setDate(date = date)
                         }
@@ -125,7 +131,7 @@ fun TrainSearchScreen(
                     .height(22.dp)
             )
             KorailRoundedButton(
-                title = "다음날 (11월 17일) 조회하기",
+                title = "다음날 (11월 ${nextDay}일) 조회하기",
                 modifier = Modifier
                     .height((LocalConfiguration.current.screenHeightDp * 0.064).dp)
                     .fillMaxWidth()
@@ -138,6 +144,7 @@ fun TrainSearchScreen(
                 borderWidth = 1.dp,
                 onClick = {
                     viewModel.setDate(date = "11.17 (일)")
+                    viewModel.setNextDate()
                 }
             )
             Spacer(
@@ -161,7 +168,7 @@ fun TrainSearchScreen(
 
     KorailBottomSheet(
         isOpenBottomSheet = showSeatBottomSheet,
-        sheetState = rememberModalBottomSheetState(),
+        sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true),
         title = "좌석형태",
         content = {
             SeatSelectContent()

@@ -14,14 +14,21 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.sopt.korailtalk.R
 import com.sopt.korailtalk.data.remote.model.response.Timetable
 import com.sopt.korailtalk.domain.type.CarType
+import com.sopt.korailtalk.domain.type.SearchTrainStateType
 import com.sopt.korailtalk.presentation.ui.KorailChip
 import com.sopt.korailtalk.presentation.util.clickableWithoutRipple
 import com.sopt.korailtalk.presentation.util.roundedBackgroundWithBorder
@@ -35,6 +42,8 @@ fun SearchTrainInfoItem(
     onBasicCarClick: () -> Unit = {},
     onSpecialCarClick: () -> Unit = {}
 ) {
+    var basicCarState by remember { mutableStateOf(SearchTrainStateType.SALE) }
+
     Row(
         modifier = modifier
             .background(color = KorailTalkTheme.colors.white)
@@ -62,8 +71,11 @@ fun SearchTrainInfoItem(
         SearchTrainSelectButton(
             trainType = CarType.BASIC.text,
             trainCost = timetable.standardPrice,
-            isSold = timetable.isStandardSold,
-            onButtonClick = onBasicCarClick
+            state = basicCarState,
+            onButtonClick = {
+                basicCarState = SearchTrainStateType.ACTIVE
+                onBasicCarClick()
+            }
         )
         Spacer(
             modifier = Modifier
@@ -73,7 +85,7 @@ fun SearchTrainInfoItem(
             SearchTrainSelectButton(
                 trainType = CarType.SPECIAL.text,
                 trainCost = timetable.premiumPrice,
-                isSold = timetable.isPremiumSold,
+                state = if (timetable.isPremiumSold) SearchTrainStateType.SALE else SearchTrainStateType.SOLD_OUT,
                 onButtonClick = onSpecialCarClick
             )
         } else {
@@ -81,7 +93,8 @@ fun SearchTrainInfoItem(
                 painter = painterResource(R.drawable.ic_search_soldout),
                 contentDescription = "매진",
                 modifier = Modifier
-                    .padding(horizontal = 8.dp)
+                    .width((LocalConfiguration.current.screenWidthDp * 0.214).dp),
+                contentScale = ContentScale.FillWidth
             )
         }
 
@@ -92,7 +105,7 @@ fun SearchTrainInfoItem(
 private fun SearchTrainSelectButton(
     trainType: String,
     trainCost: Int?,
-    isSold: Boolean,
+    state: SearchTrainStateType,
     onButtonClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -100,14 +113,22 @@ private fun SearchTrainSelectButton(
         modifier = modifier
             .roundedBackgroundWithBorder(
                 cornerRadius = 12.dp,
-                backgroundColor = if (isSold) KorailTalkTheme.colors.white else KorailTalkTheme.colors.grey300,
-                borderColor = if (isSold) KorailTalkTheme.colors.blue02 else KorailTalkTheme.colors.grey400,
+                backgroundColor = when (state) {
+                    SearchTrainStateType.SALE -> KorailTalkTheme.colors.white // 판매 중
+                    SearchTrainStateType.SOLD_OUT -> KorailTalkTheme.colors.grey300 // 매진
+                    SearchTrainStateType.ACTIVE -> KorailTalkTheme.colors.blue06 // 활성화 상태
+                },
+                borderColor = when (state) {
+                    SearchTrainStateType.SALE -> KorailTalkTheme.colors.blue02 // 판매 중
+                    SearchTrainStateType.SOLD_OUT -> KorailTalkTheme.colors.grey400 // 매진
+                    SearchTrainStateType.ACTIVE -> KorailTalkTheme.colors.blue02 // 활성화 상태
+                },
                 borderWidth = 1.dp
             )
             .clickableWithoutRipple {
                 onButtonClick()
             }
-            .padding(horizontal = 20.dp, vertical = 14.dp),
+            .padding(horizontal = 9.dp, vertical = 14.dp),
         contentAlignment = Alignment.Center
     ) {
         Column(
@@ -116,12 +137,20 @@ private fun SearchTrainSelectButton(
         ) {
             Text(
                 text = trainType,
-                color = if (isSold) KorailTalkTheme.colors.blue02 else KorailTalkTheme.colors.grey400,
+                color = when (state) {
+                    SearchTrainStateType.SALE -> KorailTalkTheme.colors.blue02 // 판매 중
+                    SearchTrainStateType.SOLD_OUT -> KorailTalkTheme.colors.grey400 // 매진
+                    SearchTrainStateType.ACTIVE -> KorailTalkTheme.colors.blue02 // 활성화 상태
+                },
                 style = KorailTalkTheme.typography.caption2
             )
             Text(
                 text = "${trainCost}원",
-                color = if (isSold) KorailTalkTheme.colors.black else KorailTalkTheme.colors.grey400,
+                color = when (state) {
+                    SearchTrainStateType.SALE -> KorailTalkTheme.colors.black // 판매 중
+                    SearchTrainStateType.SOLD_OUT -> KorailTalkTheme.colors.grey400 // 매진
+                    SearchTrainStateType.ACTIVE -> KorailTalkTheme.colors.black // 활성화 상태
+                },
                 style = KorailTalkTheme.typography.body2
             )
         }

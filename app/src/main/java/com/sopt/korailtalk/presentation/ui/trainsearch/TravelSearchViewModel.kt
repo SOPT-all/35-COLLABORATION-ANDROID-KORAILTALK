@@ -1,20 +1,27 @@
 package com.sopt.korailtalk.presentation.ui.trainsearch
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.sopt.korailtalk.data.remote.model.response.Timetable
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import javax.inject.Inject
 
 @HiltViewModel
 class TravelSearchViewModel @Inject constructor(
 ) : ViewModel() {
-    private val _selectDate = MutableLiveData("11.16 (토)")
-    val selectDate: LiveData<String> get() = _selectDate
+    private val _selectDate = MutableStateFlow("11.16 (토)")
+    val selectDate: StateFlow<String> = _selectDate
+
+    private val _nextDate = MutableStateFlow(17)
+    val nextDate: StateFlow<Int> = _nextDate
 
     fun setDate(date: String) {
         _selectDate.value = date
+    }
+
+    fun setNextDate() {
+        _nextDate.value++
     }
 
     val chipList = listOf(
@@ -44,6 +51,7 @@ class TravelSearchViewModel @Inject constructor(
         isPremiumSold = false,
         travelTime = 2,
     )
-    val trainDummyList = mutableListOf<Timetable>()
+    val trainDummyList =
+        listOf(trainDummy, trainDummy, trainDummy, trainDummy)
 
 }

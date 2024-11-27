@@ -12,10 +12,6 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
@@ -56,11 +52,10 @@ fun SearchTrainDateChip(
 @Composable
 fun SearchTrainDateChipGroup(
     chipList: List<String>,
+    selectedTime: String,
     modifier: Modifier = Modifier,
     onActivedChange: (String) -> Unit = {}
-    ) {
-    var selectedTime by remember { mutableStateOf<String?>("11.16 (토)") }
-
+) {
     LazyRow(
         contentPadding = PaddingValues(horizontal = 16.dp),
         horizontalArrangement = Arrangement.spacedBy(8.dp),
@@ -71,8 +66,7 @@ fun SearchTrainDateChipGroup(
                 date = chipTime,
                 isActive = selectedTime == chipTime,
                 onActivedChange = {
-                    onActivedChange(selectedTime!!)
-                    selectedTime = if (selectedTime == chipTime) null else chipTime
+                    onActivedChange(chipTime)
                 }
             )
         }
@@ -93,7 +87,8 @@ fun ShowSearchTrainDateChip() {
             val chipList = listOf("11:08", "11:18", "11:28", "11:38")
 
             SearchTrainDateChipGroup(
-                chipList = chipList
+                chipList = chipList,
+                selectedTime = "11.16 (토)"
             )
         }
     }
