@@ -33,7 +33,6 @@
 
     <!-- SeatMapScreen -->
     <string name="seatMap_title">좌석 선택</string>
-    <string name="seatMap_date">2024.11.16 (토)</string>
     <string name="seatMap_forward_active">선택가능 (순방향)</string>
     <string name="seatMap_backward_actvie">선택가능 (역방향)</string>
     <string name="seatMap_inactive">선택불가</string>
