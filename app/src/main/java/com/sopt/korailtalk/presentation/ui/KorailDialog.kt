@@ -19,6 +19,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
+import androidx.compose.ui.window.DialogProperties
 import com.sopt.korailtalk.R
 import com.sopt.korailtalk.ui.theme.KorailTalkTheme
 import com.sopt.korailtalk.ui.theme.KorailTalkTheme.typography
@@ -31,8 +32,11 @@ fun KorailDialog(
 ) {
     Dialog(
         onDismissRequest = {},
+        properties = DialogProperties(usePlatformDefaultWidth = false)
     ) {
-        Column(modifier = Modifier.fillMaxWidth()
+        Column(modifier = Modifier
+            .fillMaxWidth()
+            .padding(horizontal = 14.dp)
             .clip(RoundedCornerShape(12.dp))
             .background(color = KorailTalkTheme.colors.white)
         ){
@@ -83,7 +87,7 @@ fun KorailDialogPreview(){
                         )
                         Image(
                             painter = painterResource(R.drawable.img_outlet),
-                            contentDescription = "콘센트 사진",
+                            contentDescription = stringResource(R.string.seatmap_consent_description),
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .aspectRatio(1.23f)

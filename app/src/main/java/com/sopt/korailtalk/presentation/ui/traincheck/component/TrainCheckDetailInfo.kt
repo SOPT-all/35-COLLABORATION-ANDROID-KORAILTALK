@@ -32,7 +32,7 @@ fun TrainCheckDetailInfo(
     }
 
     Row(
-        modifier = Modifier.fillMaxWidth().background(KorailTalkTheme.colors.white)
+        modifier = Modifier.fillMaxWidth().background(KorailTalkTheme.colors.white).padding(top=8.dp)
     ) {
         Image(
             painter = painterResource(id = image),

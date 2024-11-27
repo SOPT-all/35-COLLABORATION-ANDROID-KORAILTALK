@@ -11,6 +11,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -39,7 +40,9 @@ fun KorailWayInfoWithTime(
                 textAlign = TextAlign.Center
             )
             Text(text = departureTime,
-                modifier = Modifier.fillMaxWidth().padding(top = 4.dp),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(top = 4.dp),
                 color = KorailTalkTheme.colors.grey600,
                 style = typography.body3,
                 textAlign = TextAlign.Center
@@ -47,7 +50,7 @@ fun KorailWayInfoWithTime(
         }
         Image(
             painter = painterResource(id = R.drawable.ic_arrow_circle),
-            contentDescription = "열차 조회 화살표",
+            contentDescription = stringResource(R.string.korailWayInfo_arrow_description),
             modifier = Modifier.padding(horizontal = 26.dp)
         )
         Column(
@@ -59,7 +62,9 @@ fun KorailWayInfoWithTime(
                 textAlign = TextAlign.Center
             )
             Text(text = arrivalTime,
-                modifier = Modifier.fillMaxWidth().padding(top = 4.dp),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(top = 4.dp),
                 style = typography.body3,
                 color = KorailTalkTheme.colors.grey600,
                 textAlign = TextAlign.Center
