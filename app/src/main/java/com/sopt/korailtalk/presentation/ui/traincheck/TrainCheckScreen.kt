@@ -61,7 +61,7 @@ fun TrainCheckScreen() {
                 .clip(shape = RoundedCornerShape(12.dp))
                 .background(color = KorailTalkTheme.colors.white)
             ) {
-                KorailTicketHeader("2024년 10월 30일 (수)", viewModel.ticketDummy.trainName)
+                KorailTicketHeader(viewModel.ticketDummy.date, viewModel.ticketDummy.trainName)
 
                 KorailWayInfoWithTime(viewModel.ticketDummy.departurePlace,
                     viewModel.ticketDummy.arrivalPlace,
@@ -121,7 +121,7 @@ fun TrainCheckScreen() {
                                 style = typography.caption1
                             )
                             Text(
-                                text = "16시 01분",
+                                text = viewModel.ticketDummy.limitPaymentTime,
                                 modifier = Modifier.padding(start = 4.dp, bottom = 4.dp),
                                 color = KorailTalkTheme.colors.purple02,
                                 style = typography.caption1

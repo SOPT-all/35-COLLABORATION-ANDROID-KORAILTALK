@@ -5,6 +5,8 @@ import androidx.lifecycle.ViewModel
 import com.sopt.korailtalk.data.remote.model.response.TicketData
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 
 @HiltViewModel
 class TrainCheckViewModel @Inject constructor(
@@ -20,9 +22,15 @@ class TrainCheckViewModel @Inject constructor(
         arrivalTime = "12:45",
         seatName = "16A",
         ticketPrice = 50000,
-        limitPaymentTime = "2024-11-30T18:00:00",
+        limitPaymentTime = formatDate(),
         coachesNumber = 4
     )
+
+    fun formatDate(): String{
+        val limitPaymentTime = "2024-11-30T18:00:00"
+        val formatter = DateTimeFormatter.ofPattern("HH시 mm분")
+        return LocalDateTime.parse(limitPaymentTime).format(formatter)
+    }
 
     fun toggleDialog(show: Boolean) {
         showDialog.value = show
