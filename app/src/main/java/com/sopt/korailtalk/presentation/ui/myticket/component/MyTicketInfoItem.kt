@@ -2,21 +2,30 @@ package com.sopt.korailtalk.presentation.ui.myticket.component
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Text
+import androidx.compose.material3.VerticalDivider
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.sopt.korailtalk.R
+import com.sopt.korailtalk.data.remote.model.response.TicketData
 import com.sopt.korailtalk.ui.theme.COLLAVORATIONANDROIDKORAILTALKTheme
 import com.sopt.korailtalk.ui.theme.KorailTalkTheme
 
@@ -27,9 +36,10 @@ fun MyTicketInfoItem(
     modifier: Modifier = Modifier
 ) {
     Column(
-        verticalArrangement = Arrangement.SpaceEvenly,
+        verticalArrangement = Arrangement.Top,
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = modifier
+            .height((LocalConfiguration.current.screenHeightDp * 0.104).dp)
     ) {
         Text(
             text = title,
@@ -37,19 +47,25 @@ fun MyTicketInfoItem(
                 color = KorailTalkTheme.colors.black
             ),
         )
-        content()
+        Box(
+            modifier = Modifier
+                .fillMaxHeight(),
+            contentAlignment = Alignment.Center
+        ) {
+            content()
+        }
     }
 }
 
 @Composable
 fun MyTicketInfomation(
-    coachesNumber: Int,
-    seatName: String,
+    ticketData: TicketData,
     modifier: Modifier = Modifier
 ) {
     Row(
         modifier = modifier
-            .fillMaxWidth(),
+            .fillMaxWidth()
+            .height(IntrinsicSize.Min),
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically,
     ) {
@@ -57,7 +73,7 @@ fun MyTicketInfomation(
             title = "승차권",
             content = {
                 Column(
-                    verticalArrangement = Arrangement.spacedBy(2.dp, Alignment.CenterVertically),
+                    verticalArrangement = Arrangement.spacedBy(2.dp, Alignment.Top),
                     horizontalAlignment = Alignment.CenterHorizontally,
                 ) {
                     Image(
@@ -74,6 +90,10 @@ fun MyTicketInfomation(
                 }
             },
         )
+        VerticalDivider(
+            thickness = 2.dp,
+            color = KorailTalkTheme.colors.grey100
+        )
         MyTicketInfoItem(
             title = "호차번호",
             content = {
@@ -81,7 +101,7 @@ fun MyTicketInfomation(
                     verticalAlignment = Alignment.CenterVertically,
                 ) {
                     Text(
-                        text = coachesNumber.toString(),
+                        text = ticketData.coachesNumber.toString(),
                         style = KorailTalkTheme.typography.head2.copy(
                             color = KorailTalkTheme.colors.blue02
                         )
@@ -95,6 +115,10 @@ fun MyTicketInfomation(
                 }
             },
         )
+        VerticalDivider(
+            thickness = 2.dp,
+            color = KorailTalkTheme.colors.grey100
+        )
         MyTicketInfoItem(
             title = "좌석번호",
             content = {
@@ -103,7 +127,7 @@ fun MyTicketInfomation(
                     horizontalAlignment = Alignment.CenterHorizontally,
                 ) {
                     Text(
-                        text = seatName,
+                        text = ticketData.seatName,
                         style = KorailTalkTheme.typography.head2.copy(
                             color = KorailTalkTheme.colors.blue02
                         )
@@ -117,12 +141,19 @@ fun MyTicketInfomation(
                 }
             },
         )
+        VerticalDivider(
+            thickness = 2.dp,
+            color = KorailTalkTheme.colors.grey100
+        )
         MyTicketInfoItem(
             title = "운임영수증",
             content = {
                 Image(
                     painter = painterResource(R.drawable.img_ticket_qr),
-                    contentDescription = stringResource(R.string.my_ticket_receipt)
+                    contentDescription = stringResource(R.string.my_ticket_receipt),
+                    modifier = Modifier
+                        .width((LocalConfiguration.current.screenWidthDp * 0.133).dp),
+                    contentScale = ContentScale.FillWidth
                 )
             },
         )
@@ -140,8 +171,18 @@ fun ShowMyTicketInfomation() {
             verticalArrangement = Arrangement.spacedBy(space = 5.dp)
         ) {
             MyTicketInfomation(
-                coachesNumber = 4,
-                seatName = "16A"
+                ticketData = TicketData(
+                    departurePlace = "서울",
+                    arrivalPlace = "부산",
+                    date = "2024년 10월 30일 (수)",
+                    trainName = "KTX 001",
+                    departureTime = "09:30",
+                    arrivalTime = "12:45",
+                    seatName = "16A",
+                    ticketPrice = 50000,
+                    limitPaymentTime = "2024-11-30T18:00:00",
+                    coachesNumber = 4
+                )
             )
         }
     }
