@@ -61,9 +61,12 @@ fun TrainCheckScreen() {
                 .clip(shape = RoundedCornerShape(12.dp))
                 .background(color = KorailTalkTheme.colors.white)
             ) {
-                KorailTicketHeader("2024년 10월 30일 (수)", "KTX 001")
+                KorailTicketHeader("2024년 10월 30일 (수)", viewModel.ticketDummy.trainName)
 
-                KorailWayInfoWithTime("서울", "부산", "18:32", "19:54")
+                KorailWayInfoWithTime(viewModel.ticketDummy.departurePlace,
+                    viewModel.ticketDummy.arrivalPlace,
+                    viewModel.ticketDummy.departureTime,
+                    viewModel.ticketDummy.arrivalTime)
 
                 HorizontalDivider(modifier = Modifier
                     .fillMaxWidth()
@@ -78,12 +81,19 @@ fun TrainCheckScreen() {
                         )
                     }
                     TrainCheckDetailInfo(R.string.trainCheckDetailInfo_seat) {
-                        Text(text = "7호차 16A",
+                        Text(text = buildAnnotatedString {
+                            append(viewModel.ticketDummy.coachesNumber.toString())
+                            append("호차 ")
+                            append(viewModel.ticketDummy.seatName)
+                        },
                             color = KorailTalkTheme.colors.black,
                             style = typography.body1)
                     }
                     TrainCheckDetailInfo(R.string.trainCheckDetailInfo_ticketPrice) {
-                        Text(text = "12,500원",
+                        Text(text = buildAnnotatedString {
+                            append(viewModel.ticketDummy.ticketPrice.toString())
+                            append("원")
+                        },
                             color = KorailTalkTheme.colors.purple04,
                             style = typography.head5)
                     }

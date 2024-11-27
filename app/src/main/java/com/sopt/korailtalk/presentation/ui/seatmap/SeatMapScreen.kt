@@ -47,6 +47,7 @@ import com.sopt.korailtalk.ui.theme.KorailTalkTheme.typography
 fun SeatMapScreen(
     departPlace: String,
     arrivalPlace: String,
+    date: String
 ) {
     val viewModel: SeatMapViewModel = viewModel()
     val showDialog = viewModel.showDialog
@@ -67,7 +68,7 @@ fun SeatMapScreen(
         KorailWayInfo(departPlace, arrivalPlace)
 
         Text(
-            text = stringResource(R.string.seatMap_date),
+            text = date,
             modifier = Modifier
                 .fillMaxWidth()
                 .background(color = KorailTalkTheme.colors.blue07)
@@ -296,6 +297,6 @@ fun Pillar() {
 @Preview
 @Composable
 fun SeatMapScreenPreview(){
-    SeatMapScreen("서울", "부산")
+    SeatMapScreen("서울", "부산", "2024.11.16 (토)")
 }
 
