@@ -4,7 +4,7 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class SeatsResponseDto(
+data class LeftSeatsResponseDto(
     @SerialName("coaches") val coaches: ArrayList<SeatMapData>
 )
 
