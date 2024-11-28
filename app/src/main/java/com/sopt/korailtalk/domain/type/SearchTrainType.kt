@@ -1,18 +1,18 @@
 package com.sopt.korailtalk.domain.type
 
 enum class SearchTrainType (
-    val trainType: String,
+    val text: String,
 ){
     ALL(
-        trainType = "모든열차"
+        text = "모든열차"
     ),
     KTX(
-        trainType = "KTX"
+        text = "KTX"
     ),
     ITX(
-        trainType = "ITX"
+        text = "ITX"
     ),
     MUGUNGHWA(
-        trainType = "무궁화"
+        text = "무궁화"
     )
 }

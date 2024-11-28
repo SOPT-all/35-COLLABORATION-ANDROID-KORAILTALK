@@ -10,16 +10,22 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.sopt.korailtalk.R
+import com.sopt.korailtalk.presentation.util.clickableWithoutRipple
 import com.sopt.korailtalk.ui.theme.KorailTalkTheme
 
 @Composable
 fun SearchFilterItem(
     filterName: String,
-    modifier: Modifier = Modifier
-) {
+    modifier: Modifier = Modifier,
+    onFilterClick: () -> Unit = {}
+    ) {
     Row(
         horizontalArrangement = Arrangement.spacedBy(4.dp, Alignment.CenterHorizontally),
         verticalAlignment = Alignment.CenterVertically,
+        modifier = modifier
+            .clickableWithoutRipple {
+                onFilterClick()
+            }
     ) {
         Text(
             text = filterName,
