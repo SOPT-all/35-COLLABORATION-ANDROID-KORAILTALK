@@ -22,6 +22,7 @@ import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.sopt.korailtalk.presentation.ui.KorailWayInfoPreview
 import com.sopt.korailtalk.presentation.util.roundedBackgroundWithBorder
 import com.sopt.korailtalk.ui.theme.COLLAVORATIONANDROIDKORAILTALKTheme
 import com.sopt.korailtalk.ui.theme.KorailTalkTheme
@@ -77,7 +78,7 @@ fun PaymentTextField(
                             if (value.isBlank()) {
                                 Text(
                                     text = hint,
-                                    color = KorailTalkTheme.colors.grey400,
+                                    color = if(unit.isNotBlank()) KorailTalkTheme.colors.grey300 else KorailTalkTheme.colors.grey400,
                                     style = KorailTalkTheme.typography.body2
                                 )
                             }
