@@ -83,4 +83,6 @@ dependencies {
     implementation(libs.retrofit)
     implementation(libs.retrofit.kotlin.serialization.converter)
     implementation(libs.kotlinx.serialization.json)
+    // Lottie
+    implementation(libs.lottie.compose)
 }
