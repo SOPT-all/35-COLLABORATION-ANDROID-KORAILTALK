@@ -241,7 +241,9 @@ fun SeatMapScreen(
                 contentColor = KorailTalkTheme.colors.white,
                 cornerRadius = 26.dp,
                 backgroundColor = KorailTalkTheme.colors.blue03,
-                onClick = { } // 승차권 확인으로 이동합니다.
+                onClick = {
+                    viewModel.selectSeat(userId, timetableId)
+                } // 승차권 확인으로 이동합니다.
             )
             Spacer(modifier = Modifier.weight(1f))
             }
@@ -250,7 +252,7 @@ fun SeatMapScreen(
 }
 
 @Composable
-fun Seats(selectedCoachId: MutableState<Long?>, viewModel: SeatMapViewModel, modifier: Modifier) {
+fun Seats(selectedCoachId: MutableState<Long>, viewModel: SeatMapViewModel, modifier: Modifier) {
     // StateFlow에서 상태를 수집
     val seatsMapData by viewModel.seatsMapData.collectAsState()
 

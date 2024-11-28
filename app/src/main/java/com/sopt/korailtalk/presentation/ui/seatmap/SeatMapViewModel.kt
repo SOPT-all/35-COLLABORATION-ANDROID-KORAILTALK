@@ -4,31 +4,36 @@ import android.util.Log
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.sopt.korailtalk.domain.model.SeatData
 import com.sopt.korailtalk.domain.model.SeatMapData
+import com.sopt.korailtalk.domain.model.SeatSelecting
+import com.sopt.korailtalk.domain.model.SeatTicket
 import com.sopt.korailtalk.domain.repository.SeatsRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
-import kotlin.random.Random
 
 @HiltViewModel
 class SeatMapViewModel @Inject constructor(
     private val seatsRepository: SeatsRepository
 )  : ViewModel() {
 
-    var selectedCoachId = mutableStateOf<Long?>(null)
+    var selectedCoachId = mutableStateOf<Long>(1)
     var selectedSeatId = mutableStateOf<Long?>(null)
     var showDialog = mutableStateOf(false)
 
     private var _leftSeatsState = MutableStateFlow<LeftSeatsState>(LeftSeatsState.Idle)
     val leftSeatsState: StateFlow<LeftSeatsState> = _leftSeatsState
 
+    private var _seatSelectingState = MutableStateFlow<SeatSelectingState>(SeatSelectingState.Idle)
+    val seatSelectingState: StateFlow<SeatSelectingState> = _seatSelectingState
+
     private val _seatsMapData = MutableStateFlow<ArrayList<SeatMapData>>(arrayListOf())
-    val seatsMapData: StateFlow<ArrayList<SeatMapData>>
-        get() = _seatsMapData
+    val seatsMapData: StateFlow<ArrayList<SeatMapData>> get() = _seatsMapData
+
+    private val _ticketId = MutableStateFlow<Int>(1)
+    val ticketId: StateFlow<Int> get() = _ticketId
 
     private fun loadInitCoachId() {
         viewModelScope.launch {
@@ -51,6 +56,30 @@ class SeatMapViewModel @Inject constructor(
                 },
                 onFailure = { throwable ->
                     _leftSeatsState.value = LeftSeatsState.Failure(throwable.message ?: "알 수 없는 오류")
+                    Log.e("SeatMapViewModel", "로드 실패: ${throwable.message}")
+                }
+            )
+        }
+    }
+
+    fun selectSeat(userId: Long, timetableId: Long){
+        _seatSelectingState.value = SeatSelectingState.Loading
+        viewModelScope.launch{
+            val result = seatsRepository.selectSeat(userId,
+                SeatSelecting(
+                    isAuto = false,
+                    timetableId = timetableId,
+                    coachId = selectedCoachId.value,
+                    seatId = selectedSeatId.value,
+                    price = 1000)
+            )
+            result.fold(
+                onSuccess = { seatTicket ->
+                    _ticketId.value = seatTicket.ticketId
+                    _seatSelectingState.value = SeatSelectingState.Success(seatTicket.ticketId)
+                    Log.d("SeatMapViewModel", "${_ticketId.value}")},
+                onFailure = { throwable ->
+                    _seatSelectingState.value = SeatSelectingState.Failure(throwable.message ?: "알 수 없는 오류")
                     Log.e("SeatMapViewModel", "로드 실패: ${throwable.message}")
                 }
             )

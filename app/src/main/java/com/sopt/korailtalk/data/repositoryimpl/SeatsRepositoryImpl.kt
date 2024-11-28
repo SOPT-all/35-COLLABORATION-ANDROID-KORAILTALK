@@ -6,6 +6,7 @@ import com.sopt.korailtalk.data.remote.datasource.SeatsRemoteDataSource
 import com.sopt.korailtalk.data.remote.util.handleApiResponse
 import com.sopt.korailtalk.domain.model.LeftSeats
 import com.sopt.korailtalk.domain.model.SeatSelecting
+import com.sopt.korailtalk.domain.model.SeatTicket
 import com.sopt.korailtalk.domain.repository.SeatsRepository
 import javax.inject.Inject
 
@@ -19,9 +20,14 @@ class SeatsRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun selectSeat(seatSelecting: SeatSelecting): Result<Unit> {
+    override suspend fun selectSeat(userId: Long, seatSelecting: SeatSelecting): Result<SeatTicket> {
         return runCatching {
-            seatsRemoteDataSource.selectSeat(seatSelectingRequestDto = seatSelecting.toData())
+            // post에 대한 response를 확인
+            val response = seatsRemoteDataSource.selectSeat(userId, seatSelecting.toData())
+            // 받은 response를 domain의 데이터로 저장
+            val ticketId = response.data?.ticketId ?: throw IllegalStateException("ticketId가 비어있음")
+            // ticketId Int형으로 저장
+            SeatTicket(ticketId = ticketId)
         }
     }
 }
