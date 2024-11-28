@@ -38,6 +38,8 @@ import com.sopt.korailtalk.ui.theme.KorailTalkTheme
 @Composable
 fun SearchTrainInfoItem(
     timetable: TrainInformation,
+    standardPrice: String?,
+    premiumPrice: String?,
     modifier: Modifier = Modifier,
     onBasicCarClick: () -> Unit = {},
     onSpecialCarClick: () -> Unit = {}
@@ -70,7 +72,7 @@ fun SearchTrainInfoItem(
         )
         SearchTrainSelectButton(
             trainType = CarType.BASIC.text,
-            trainCost = timetable.standardPrice,
+            trainCost = standardPrice,
             state = basicCarState,
             onButtonClick = {
                 basicCarState = SearchTrainStateType.ACTIVE
@@ -84,7 +86,7 @@ fun SearchTrainInfoItem(
         if (timetable.isPremiumSold) {
             SearchTrainSelectButton(
                 trainType = CarType.SPECIAL.text,
-                trainCost = timetable.premiumPrice,
+                trainCost = premiumPrice,
                 state = if (timetable.isPremiumSold) SearchTrainStateType.SALE else SearchTrainStateType.SOLD_OUT,
                 onButtonClick = onSpecialCarClick
             )
@@ -104,7 +106,7 @@ fun SearchTrainInfoItem(
 @Composable
 private fun SearchTrainSelectButton(
     trainType: String,
-    trainCost: Int?,
+    trainCost: String?,
     state: SearchTrainStateType,
     onButtonClick: () -> Unit,
     modifier: Modifier = Modifier
@@ -195,11 +197,15 @@ fun ShowSearchTrainInfoItem() {
                 modifier = Modifier
                     .fillMaxWidth(),
                 timetable = trainDummy,
+                standardPrice = "",
+                premiumPrice = ""
             )
             SearchTrainInfoItem(
                 timetable = trainDummy2,
                 modifier = Modifier
                     .fillMaxWidth(),
+                standardPrice = "",
+                premiumPrice = ""
             )
         }
     }

@@ -5,6 +5,7 @@ import com.sopt.korailtalk.domain.model.TrainInformation
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import java.text.DecimalFormat
 import javax.inject.Inject
 
 @HiltViewModel
@@ -54,4 +55,8 @@ class TravelSearchViewModel @Inject constructor(
     val trainDummyList =
         listOf(trainDummy, trainDummy, trainDummy, trainDummy)
 
+    fun formatPrice(amount: Int): String {
+        val formatter = DecimalFormat("#,###")
+        return formatter.format(amount)
+    }
 }

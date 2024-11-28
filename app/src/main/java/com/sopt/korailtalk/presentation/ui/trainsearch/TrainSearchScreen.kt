@@ -113,6 +113,8 @@ fun TrainSearchScreen(
                         modifier = Modifier
                             .fillMaxWidth(),
                         timetable = item,
+                        standardPrice = viewModel.formatPrice(item.standardPrice),
+                        premiumPrice = viewModel.formatPrice(item.premiumPrice),
                         onBasicCarClick = {
                             isOpenBottomSheet = true
                         },
