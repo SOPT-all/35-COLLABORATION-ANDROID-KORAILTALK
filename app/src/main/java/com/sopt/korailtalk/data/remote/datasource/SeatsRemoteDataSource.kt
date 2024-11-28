@@ -5,7 +5,7 @@ import com.sopt.korailtalk.data.remote.model.request.SeatSelectingRequestDto
 import com.sopt.korailtalk.data.remote.model.response.LeftSeatsResponseDto
 
 
-interface LeftSeatsRemoteDataSource {
+interface SeatsRemoteDataSource {
     suspend fun getLeftSeats(userId: Long, timetableId: Long): ApiResponse<LeftSeatsResponseDto>
     suspend fun selectSeat(seatSelectingRequestDto: SeatSelectingRequestDto): ApiResponse<Unit>
 }

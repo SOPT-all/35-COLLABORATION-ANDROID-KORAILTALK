@@ -1,6 +1,6 @@
 package com.sopt.korailtalk.domain.model
 
-data class SeatSelectingRequestDto(
+data class SeatSelecting(
     val isAuto: Boolean,
     val timetableId: Long,
     val coachId: Long,

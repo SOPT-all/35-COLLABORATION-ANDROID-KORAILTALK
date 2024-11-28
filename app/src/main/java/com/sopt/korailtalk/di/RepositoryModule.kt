@@ -1,7 +1,9 @@
 package com.sopt.korailtalk.di
 
 import com.sopt.korailtalk.data.repositoryimpl.ExampleRepositoryImpl
+import com.sopt.korailtalk.data.repositoryimpl.SeatsRepositoryImpl
 import com.sopt.korailtalk.domain.repository.ExampleRepository
+import com.sopt.korailtalk.domain.repository.SeatsRepository
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -16,4 +18,10 @@ abstract class RepositoryModule {
     abstract fun bindExampleRepository(
         exampleRepositoryImpl: ExampleRepositoryImpl
     ): ExampleRepository
+
+    @Binds
+    @Singleton
+    abstract fun bindSeatsRepository(
+        seatsRepositoryImpl: SeatsRepositoryImpl
+    ): SeatsRepository
 }
