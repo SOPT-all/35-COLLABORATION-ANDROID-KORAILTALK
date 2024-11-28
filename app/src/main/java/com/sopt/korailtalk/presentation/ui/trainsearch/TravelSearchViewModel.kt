@@ -1,16 +1,49 @@
 package com.sopt.korailtalk.presentation.ui.trainsearch
 
 import androidx.lifecycle.ViewModel
-import com.sopt.korailtalk.domain.model.TrainInformation
+import androidx.lifecycle.viewModelScope
+import com.sopt.korailtalk.domain.model.TimeTable
+import com.sopt.korailtalk.domain.repository.TrainSearchRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.launch
 import java.text.DecimalFormat
 import javax.inject.Inject
 
 @HiltViewModel
 class TravelSearchViewModel @Inject constructor(
+    private val trainSearchRepository: TrainSearchRepository
 ) : ViewModel() {
+    private val _timeTableState = MutableStateFlow<TimeTableState>(TimeTableState.Idle)
+    val timeTableState: StateFlow<TimeTableState> get() = _timeTableState
+
+    fun getTimeTableData(
+        userId: Long,
+        date: String,
+        departurePlace: String,
+        arrivalPlace: String
+    ) {
+        viewModelScope.launch {
+            _timeTableState.value = TimeTableState.Loading
+
+            val result = trainSearchRepository.getTimeTableData(
+                userId = userId,
+                date = date,
+                departurePlace = departurePlace,
+                arrivalPlace = arrivalPlace
+            )
+            _timeTableState.value = result.fold(
+                onSuccess = {
+                    TimeTableState.Success(it)
+                },
+                onFailure = { error ->
+                    TimeTableState.Failure(error.message.orEmpty())
+                }
+            )
+        }
+    }
+
     private val _selectDate = MutableStateFlow("11.16 (토)")
     val selectDate: StateFlow<String> = _selectDate
 
@@ -41,7 +74,7 @@ class TravelSearchViewModel @Inject constructor(
         "11.28 (목)",
         "11.29 (금)"
     )
-    val trainDummy = TrainInformation(
+    val trainDummy = TimeTable(
         timetableId = 1,
         trainName = "KTX 001",
         departureTime = "05:13",

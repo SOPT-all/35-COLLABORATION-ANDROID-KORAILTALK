@@ -1,6 +1,6 @@
 package com.sopt.korailtalk.domain.model
 
-data class TrainInformation(
+data class TimeTable(
     val timetableId: Long,
     val trainName: String,
     val departureTime: String,
