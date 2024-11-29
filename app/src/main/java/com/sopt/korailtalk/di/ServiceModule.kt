@@ -3,6 +3,8 @@ package com.sopt.korailtalk.di
 import com.sopt.korailtalk.data.remote.service.ExampleService
 import com.sopt.korailtalk.data.remote.service.PaymentService
 import com.sopt.korailtalk.data.remote.service.TrainSearchService
+import com.sopt.korailtalk.data.remote.service.SeatsService
+import com.sopt.korailtalk.data.remote.service.TicketService
 import com.sopt.korailtalk.di.qualifier.KorailTalk
 import dagger.Module
 import dagger.Provides
@@ -28,4 +30,14 @@ object ServiceModule {
     @Singleton
     fun provideTrainSearchService(@KorailTalk retrofit: Retrofit): TrainSearchService =
         retrofit.create(TrainSearchService::class.java)
+        
+    @Provides
+    @Singleton
+    fun provideSeatsService(@KorailTalk retrofit: Retrofit): SeatsService =
+        retrofit.create(SeatsService::class.java)
+
+    @Provides
+    @Singleton
+    fun provideTicketService(@KorailTalk retrofit: Retrofit): TicketService =
+        retrofit.create(TicketService::class.java)
 }

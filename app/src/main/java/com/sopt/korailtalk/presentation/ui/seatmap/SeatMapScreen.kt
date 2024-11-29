@@ -1,5 +1,6 @@
 package com.sopt.korailtalk.presentation.ui.seatmap
 
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -18,8 +19,7 @@ import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalConfiguration
@@ -47,10 +47,29 @@ import com.sopt.korailtalk.ui.theme.KorailTalkTheme.typography
 fun SeatMapScreen(
     departPlace: String,
     arrivalPlace: String,
-    date: String
+    date: String,
+    userId: Long = 1,
+    timetableId: Long = 1
 ) {
     val viewModel: SeatMapViewModel = viewModel()
     val showDialog = viewModel.showDialog
+    val seatsMapData by viewModel.seatsMapData.collectAsState()
+
+    LaunchedEffect(true) {
+        viewModel.getLeftSeats(userId, timetableId)
+    }
+
+    LaunchedEffect(viewModel.leftSeatsState) {
+        snapshotFlow { viewModel.leftSeatsState.value }
+            .collect { state ->
+                when (state) {
+                    is LeftSeatsState.Loading -> { Log.d("SeatMapScreen", "로딩 중") }
+                    is LeftSeatsState.Success -> { Log.d("SeatMapScreen", "${state.data}") }
+                    is LeftSeatsState.Failure -> { Log.e("SeatMapScreen", state.message) }
+                    else -> { }
+                }
+            }
+    }
 
     Column(
         modifier = Modifier
@@ -79,12 +98,13 @@ fun SeatMapScreen(
 
         LazyRow(
             modifier = Modifier
+                .fillMaxWidth()
                 .background(KorailTalkTheme.colors.grey100)
                 .padding(vertical = 8.dp),
             contentPadding = PaddingValues(horizontal = 12.dp)
         ) {
-            items(viewModel.seatsMapData.size) { index ->
-                val coach = viewModel.seatsMapData[index]
+            items(seatsMapData.size) { index ->
+                val coach = seatsMapData[index]
                 SeatMapCoachSelector(
                     coachId = coach.coachId,
                     leftSeats = coach.leftSeats,
@@ -221,7 +241,9 @@ fun SeatMapScreen(
                 contentColor = KorailTalkTheme.colors.white,
                 cornerRadius = 26.dp,
                 backgroundColor = KorailTalkTheme.colors.blue03,
-                onClick = { } // 승차권 확인으로 이동합니다.
+                onClick = {
+                    viewModel.selectSeat(userId, timetableId)
+                } // 승차권 확인으로 이동합니다.
             )
             Spacer(modifier = Modifier.weight(1f))
             }
@@ -230,10 +252,13 @@ fun SeatMapScreen(
 }
 
 @Composable
-fun Seats(selectedCoachId: MutableState<Long?>, viewModel: SeatMapViewModel, modifier: Modifier) {
+fun Seats(selectedCoachId: MutableState<Long>, viewModel: SeatMapViewModel, modifier: Modifier) {
+    // StateFlow에서 상태를 수집
+    val seatsMapData by viewModel.seatsMapData.collectAsState()
+
     Column(modifier = modifier.padding(horizontal = 16.dp)) {
-        // 해당 coachId의 seats 데이터를 호출, 15부터 위에서 아래로 출력
-        viewModel.seatsMapData.find { it.coachId == selectedCoachId.value }?.seats?.reversed()?.let { seats ->
+        // 선택된 coachId에 따른 좌석 데이터 찾기
+        seatsMapData.find { it.coachId == selectedCoachId.value }?.seats?.reversed()?.let { seats ->
             // 한 줄의 4개씩 배치
             seats.chunked(4).forEach { rowSeats ->
                 Row(
@@ -254,7 +279,8 @@ fun Seats(selectedCoachId: MutableState<Long?>, viewModel: SeatMapViewModel, mod
                             }
                         )
 
-                        if (index == 1) {  // 좌석 2와 3 사이
+                        // 좌석 2와 3 사이 이미지 배치
+                        if (index == 1) {
                             Image(
                                 painter = painterResource(id = R.drawable.ic_seat_direction),
                                 contentDescription = "열차 진행 방향",
