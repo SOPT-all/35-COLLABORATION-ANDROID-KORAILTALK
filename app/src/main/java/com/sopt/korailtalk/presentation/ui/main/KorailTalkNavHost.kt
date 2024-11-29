@@ -8,8 +8,10 @@ import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.navArgument
 import com.sopt.korailtalk.presentation.ui.myticket.MyTicketScreen
 import com.sopt.korailtalk.presentation.ui.payment.PaymentRoute
 import com.sopt.korailtalk.presentation.ui.seatmap.SeatMapScreen
@@ -37,23 +39,35 @@ fun KorailTalkNavHost(
                 route = "train_search"
             ) {
                 TrainSearchScreen(
-                    navigateToSeatMap = { navController.navigateToSeatMap() },
-                    navigateToTrainCheck = { navController.navigateToTrainCheck() }
+                    navigateToSeatMap = { timetableId -> navController.navigateToSeatMap(timetableId) },
+                    navigateToTrainCheck = { ticketId -> navController.navigateToTrainCheck(ticketId) }
                 )
             }
 
             composable(
-                route = "seat_map"
-            ) {
+                route = "seat_map/{ticketId}",
+                arguments = listOf (
+                    navArgument("ticketId") { type = NavType.LongType }
+                )
+            ) { backStackEntry ->
+                val ticketId = backStackEntry.arguments?.getLong("ticketId") ?: 1
                 SeatMapScreen(
-                    navigateToTrainCheck = { navController.navigateToTrainCheck() }
+                    navigateToTrainCheck = { navController.navigateToTrainCheck(
+                        ticketId = ticketId
+                    )
+                    }
                 )
             }
 
             composable(
-                route = "train_check"
-            ) {
+                route = "train_check/{ticketId}",
+                arguments = listOf(
+                    navArgument("ticketId") { type = NavType.LongType }
+                )
+            ) { backStackEntry ->
+                val ticketId = backStackEntry.arguments?.getLong("ticketId") ?: 10
                 TrainCheckScreen(
+                    ticketId = ticketId,
                     navigateToPayment = { navController.navigateToPayment() }
                 )
             }

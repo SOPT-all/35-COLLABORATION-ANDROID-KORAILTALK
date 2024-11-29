@@ -20,7 +20,7 @@ class SeatMapViewModel @Inject constructor(
 )  : ViewModel() {
 
     var selectedCoachId = mutableStateOf<Long>(1)
-    var selectedSeatId = mutableStateOf<Long?>(null)
+    var selectedSeatId = mutableStateOf<Long?>(1)
     var showDialog = mutableStateOf(false)
 
     private var _leftSeatsState = MutableStateFlow<LeftSeatsState>(LeftSeatsState.Idle)
@@ -32,8 +32,8 @@ class SeatMapViewModel @Inject constructor(
     private val _seatsMapData = MutableStateFlow<ArrayList<SeatMapData>>(arrayListOf())
     val seatsMapData: StateFlow<ArrayList<SeatMapData>> get() = _seatsMapData
 
-    private val _ticketId = MutableStateFlow<Int>(1)
-    val ticketId: StateFlow<Int> get() = _ticketId
+    private val _ticketId = MutableStateFlow<Long>(1)
+    val ticketId: StateFlow<Long> = _ticketId
 
     private fun loadInitCoachId() {
         viewModelScope.launch {
@@ -62,27 +62,21 @@ class SeatMapViewModel @Inject constructor(
         }
     }
 
-    fun selectSeat(userId: Long, timetableId: Long){
+    fun selectSeat(userId: Long, timetableId: Long = 1){
         _seatSelectingState.value = SeatSelectingState.Loading
         viewModelScope.launch{
             val result = seatsRepository.selectSeat(userId,
                 SeatSelecting(
                     isAuto = false,
                     timetableId = timetableId,
-                    coachId =
-                    selectedCoachId.value,
+                    coachId = 1,
                     seatId = selectedSeatId.value,
-                    price = 1000)
+                    price = 1000
+                )
             )
-            result.fold(
-                onSuccess = { seatTicket ->
-                    _ticketId.value = seatTicket.ticketId
-                    _seatSelectingState.value = SeatSelectingState.Success(seatTicket.ticketId)
-                    Log.d("SeatMapViewModel", "${_ticketId.value}")},
-                onFailure = { throwable ->
-                    _seatSelectingState.value = SeatSelectingState.Failure(throwable.message ?: "알 수 없는 오류")
-                    Log.e("SeatMapViewModel", "로드 실패: ${_seatSelectingState.value}")
-                }
+            _seatSelectingState.value = result.fold(
+                onSuccess = { SeatSelectingState.Success(it.ticketId) },
+                onFailure = { SeatSelectingState.Failure(it.message ?: "") }
             )
         }
     }

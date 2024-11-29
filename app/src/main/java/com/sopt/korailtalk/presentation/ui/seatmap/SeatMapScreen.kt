@@ -32,6 +32,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.stringResource
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.sopt.korailtalk.presentation.ui.KorailDialog
 import com.sopt.korailtalk.presentation.ui.KorailDoubleActionTopAppBar
 import com.sopt.korailtalk.presentation.ui.KorailRoundedButton
@@ -45,16 +46,29 @@ import com.sopt.korailtalk.ui.theme.KorailTalkTheme.typography
 
 @Composable
 fun SeatMapScreen(
+    viewModel: SeatMapViewModel = hiltViewModel(),
     departPlace: String = "서울",
     arrivalPlace: String = "부산",
     date: String = "2024.11.16",
     userId: Long = 1,
     timetableId: Long = 1,
-    navigateToTrainCheck: () -> Unit,
+    navigateToTrainCheck: (Long) -> Unit,
 ) {
-    val viewModel: SeatMapViewModel = viewModel()
     val showDialog = viewModel.showDialog
     val seatsMapData by viewModel.seatsMapData.collectAsState()
+    val selectedSeatId by viewModel.selectedSeatId
+    var ticketId: Long = 1
+    val seatSelectingState = viewModel.seatSelectingState.collectAsState().value
+
+    val onSeatSelectClick = {
+        viewModel.selectSeat(userId = 1, timetableId = 1)
+        when(seatSelectingState) {
+            is SeatSelectingState.Success -> { ticketId = seatSelectingState.data
+            navigateToTrainCheck(ticketId)
+            }
+            else -> {}
+        }
+    }
 
     LaunchedEffect(true) {
         viewModel.getLeftSeats(userId, timetableId)
@@ -242,9 +256,7 @@ fun SeatMapScreen(
                 contentColor = KorailTalkTheme.colors.white,
                 cornerRadius = 26.dp,
                 backgroundColor = KorailTalkTheme.colors.blue03,
-                onClick = {
-                    viewModel.selectSeat(userId, timetableId)
-                } // 승차권 확인으로 이동합니다.
+                onClick = onSeatSelectClick
             )
             Spacer(modifier = Modifier.weight(1f))
             }
@@ -319,11 +331,5 @@ fun Pillar() {
             )
         }
     }
-}
-
-@Preview
-@Composable
-fun SeatMapScreenPreview(){
-    SeatMapScreen("서울", "부산", "2024.11.16 (토)", navigateToTrainCheck = {})
 }
 
