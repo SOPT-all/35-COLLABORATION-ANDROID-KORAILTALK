@@ -33,7 +33,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.sopt.korailtalk.R
 import com.sopt.korailtalk.presentation.ui.KorailRoundedButton
 import com.sopt.korailtalk.presentation.ui.KorailSingleActionTopAppBar
-import com.sopt.korailtalk.presentation.ui.myticket.component.CustomToast
+import com.sopt.korailtalk.presentation.ui.KorailToast
 import com.sopt.korailtalk.presentation.ui.myticket.component.MyTicket
 import com.sopt.korailtalk.presentation.ui.myticket.component.MyTicketAdditionalService
 import com.sopt.korailtalk.presentation.ui.myticket.component.MyTicketAdditionalServiceType
@@ -130,8 +130,10 @@ fun MyTicketScreen(
                     }
                 )
                 if (showToast) {
-                    val myTicketToast = CustomToast(LocalContext.current)
-                    myTicketToast.ShowToast()
+                    val myTicketToast = KorailToast(LocalContext.current)
+                    myTicketToast.ShowToast(
+                        msg = "승차권 상세정보를 로딩중입니다"
+                    )
                     showToast = false
                 }
             }

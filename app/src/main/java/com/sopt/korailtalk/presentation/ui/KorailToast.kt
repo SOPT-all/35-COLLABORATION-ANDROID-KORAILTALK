@@ -1,4 +1,4 @@
-package com.sopt.korailtalk.presentation.ui.myticket.component
+package com.sopt.korailtalk.presentation.ui
 
 import android.content.Context
 import android.widget.Toast
@@ -23,7 +23,8 @@ import com.sopt.korailtalk.ui.theme.COLLAVORATIONANDROIDKORAILTALKTheme
 import com.sopt.korailtalk.ui.theme.KorailTalkTheme
 
 @Composable
-fun MyTicketToast(
+fun CustomToast(
+    msg: String,
     modifier: Modifier = Modifier
 ) {
     Row(
@@ -36,7 +37,7 @@ fun MyTicketToast(
         verticalAlignment = Alignment.CenterVertically,
     ) {
         Text(
-            text = "승차권 상세정보를 로딩중입니다",
+            text = msg,
             style = KorailTalkTheme.typography.title3.copy(
                 color = KorailTalkTheme.colors.white
             )
@@ -44,16 +45,19 @@ fun MyTicketToast(
     }
 }
 
-class CustomToast(context: Context) : Toast(context) {
+class KorailToast(context: Context) : Toast(context) {
     @Composable
     fun ShowToast(
+        msg: String,
         duration: Int = LENGTH_SHORT
     ) {
         val context = LocalContext.current
         val views = ComposeView(context)
 
         views.setContent {
-            MyTicketToast()
+            CustomToast(
+                msg = msg
+            )
         }
 
         views.setViewTreeLifecycleOwner(LocalLifecycleOwner.current)
@@ -68,8 +72,10 @@ class CustomToast(context: Context) : Toast(context) {
 
 @Preview(showBackground = true)
 @Composable
-fun ShowMyTicketToast() {
+fun ShowKorailToast() {
     COLLAVORATIONANDROIDKORAILTALKTheme {
-        MyTicketToast()
+        CustomToast(
+            msg = "승차권 상세정보를 로딩중입니다"
+        )
     }
 }
