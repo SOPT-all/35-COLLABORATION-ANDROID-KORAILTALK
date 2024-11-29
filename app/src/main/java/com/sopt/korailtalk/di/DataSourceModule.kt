@@ -10,7 +10,6 @@ import com.sopt.korailtalk.data.remote.datasourceimpl.PaymentRemoteDataSourceImp
 import com.sopt.korailtalk.data.remote.datasourceimpl.TrainSearchRemoteDataSourceImpl
 import com.sopt.korailtalk.data.remote.datasource.SeatsRemoteDataSource
 import com.sopt.korailtalk.data.remote.datasource.TicketRemoteDataSource
-import com.sopt.korailtalk.data.remote.datasourceimpl.ExampleRemoteDataSourceImpl
 import com.sopt.korailtalk.data.remote.datasourceimpl.SeatsRemoteDataSourceImpl
 import com.sopt.korailtalk.data.remote.datasourceimpl.TicketRemoteDataSourceImpl
 import dagger.Binds

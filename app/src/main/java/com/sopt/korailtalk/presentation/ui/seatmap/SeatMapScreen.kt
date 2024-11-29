@@ -45,11 +45,12 @@ import com.sopt.korailtalk.ui.theme.KorailTalkTheme.typography
 
 @Composable
 fun SeatMapScreen(
-    departPlace: String,
-    arrivalPlace: String,
-    date: String,
+    departPlace: String = "서울",
+    arrivalPlace: String = "부산",
+    date: String = "2024.11.16",
     userId: Long = 1,
-    timetableId: Long = 1
+    timetableId: Long = 1,
+    navigateToTrainCheck: () -> Unit,
 ) {
     val viewModel: SeatMapViewModel = viewModel()
     val showDialog = viewModel.showDialog
@@ -323,6 +324,6 @@ fun Pillar() {
 @Preview
 @Composable
 fun SeatMapScreenPreview(){
-    SeatMapScreen("서울", "부산", "2024.11.16 (토)")
+    SeatMapScreen("서울", "부산", "2024.11.16 (토)", navigateToTrainCheck = {})
 }
 

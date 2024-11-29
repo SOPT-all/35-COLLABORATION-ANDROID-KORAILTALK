@@ -13,9 +13,9 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -26,37 +26,152 @@ import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.sopt.korailtalk.R
 import com.sopt.korailtalk.domain.type.PaymentDropdownOptionType
 import com.sopt.korailtalk.domain.type.PaymentSelectableOptionType
 import com.sopt.korailtalk.presentation.ui.KorailRoundedButton
 import com.sopt.korailtalk.presentation.ui.KorailSingleActionTopAppBar
+import com.sopt.korailtalk.presentation.ui.payment.component.bottomsheet.PaymentCardTypeBottomSheet
 import com.sopt.korailtalk.presentation.ui.payment.component.PaymentChipButton
 import com.sopt.korailtalk.presentation.ui.payment.component.PaymentDropdownOption
 import com.sopt.korailtalk.presentation.ui.payment.component.PaymentHorizontalDiver
+import com.sopt.korailtalk.presentation.ui.payment.component.bottomsheet.PaymentInstallmentBottomSheet
+import com.sopt.korailtalk.presentation.ui.payment.component.bottomsheet.PaymentLPointBottomSheet
+import com.sopt.korailtalk.presentation.ui.payment.component.bottomsheet.PaymentPatriotBottomSheet
 import com.sopt.korailtalk.presentation.ui.payment.component.PaymentRadioButtonOption
+import com.sopt.korailtalk.presentation.ui.payment.component.bottomsheet.PaymentRecentCardBottomSheet
 import com.sopt.korailtalk.presentation.ui.payment.component.PaymentSelectableOption
+import com.sopt.korailtalk.presentation.ui.payment.component.PaymentSquareButton
 import com.sopt.korailtalk.presentation.ui.payment.component.PaymentTextField
 import com.sopt.korailtalk.presentation.util.clickableWithoutRipple
 import com.sopt.korailtalk.presentation.util.showIf
+import com.sopt.korailtalk.presentation.util.toKoreanCurrency
 import com.sopt.korailtalk.ui.theme.COLLAVORATIONANDROIDKORAILTALKTheme
 import com.sopt.korailtalk.ui.theme.KorailTalkTheme
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun PaymentScreen() {
-    var isKtxMileageSectionVisible by remember { mutableStateOf(false) }
-    var isDiscountCouponSectionVisible by remember { mutableStateOf(false) }
-    var isPointUsageSectionVisible by remember { mutableStateOf(false) }
-    var isEasyPaymentSectionVisible by remember { mutableStateOf(false) }
-    var isCardPaymentSectionVisible by remember { mutableStateOf(true) }
-    var isPrivacyChecked by remember { mutableStateOf(false) }
+fun PaymentRoute(
+    paymentViewModel: PaymentViewModel = hiltViewModel(),
+    navigateToMyTicket: () -> Unit,
+) {
+    PaymentScreen(
+        priceBeforeDiscount = paymentViewModel.priceBeforeDiscount.collectAsState().value,
+        priceAfterDiscount = paymentViewModel.priceAfterDiscount.collectAsState().value,
+        discount = paymentViewModel.discount.collectAsState().value,
+        updateDiscount = { newValue -> paymentViewModel.updateDiscount(newValue.toInt()) },
+        isKTXMileageSectionSelected = paymentViewModel.isKtxMileageSectionSelected.collectAsState().value,
+        onKTXMileageSectionStateChange = { paymentViewModel.changeKTXMileageSectionState() },
+        ktxMileage = paymentViewModel.ktxMileage.collectAsState().value,
+        updateKTXMileage = { newValue -> paymentViewModel.updateKTXMileage(newValue) },
+        isDiscountCouponSectionSelected = paymentViewModel.isDiscountCouponSectionSelected.collectAsState().value,
+        onDiscountCouponSectionStateChange = { paymentViewModel.changeDiscountCouponSectionState() },
+        showPatriotBottomSheet = paymentViewModel.showPatriotBottomSheet.collectAsState().value,
+        onPatriotBottomSheetStateChange = { paymentViewModel.changePatriotBottomSheet() },
+        patriotNumber = paymentViewModel.patriotNumber.collectAsState().value,
+        updatePatriotNumber = { newValue -> paymentViewModel.updatePatriotNumber(newValue) },
+        patriotPassword = paymentViewModel.patriotPassword.collectAsState().value,
+        updatePatriotPassword = { newValue -> paymentViewModel.updatePatriotPassword(newValue)},
+        patriotCertificationNumber = paymentViewModel.patriotCertificationNumber.collectAsState().value,
+        updatePatriotCertificationNumber = { newValue -> paymentViewModel.updatePatriotCertificationNumber(newValue) },
+        isPointUsageSectionSelected = paymentViewModel.isPointUsageSectionSelected.collectAsState().value,
+        onPointUsageSectionStateChange = { paymentViewModel.changePointUsageSectionState() },
+        showLPointBottomSheet = paymentViewModel.showLPointBottomSheet.collectAsState().value,
+        onLPointBottomSheetStateChange = { paymentViewModel.changeLPointBottomSheet() },
+        pointPassword = paymentViewModel.pointPassword.collectAsState().value,
+        updatePointPassword = { newValue -> paymentViewModel.updatePointPassword(newValue) },
+        onGetLPointClick = { paymentViewModel.getLPoint()},
+        lPointState = paymentViewModel.lPointState.collectAsState().value,
+        lPoint = paymentViewModel.lPoint.collectAsState().value,
+        updateLPoint = { newValue -> paymentViewModel.updateLPoint(newValue) },
+        isLPointPrivacyChecked = paymentViewModel.isLPointPrivacyChecked.collectAsState().value,
+        onLPointPrivacyCheckedStateChange = { paymentViewModel.changeLPointPrivacyCheckedState() },
+        isEasyPaymentSectionSelected = paymentViewModel.isEasyPaymentSectionSelected.collectAsState().value,
+        onEasyPaymentSectionStateChange = { paymentViewModel.changeEasyPaymentSectionState() },
+        isKaKaoPaySelected = paymentViewModel.isKaKaoPaySelected.collectAsState().value,
+        onKaKaoPayClick = { paymentViewModel.changeKaKaoPayState() },
+        isCardPaymentSectionSelected = paymentViewModel.isCardPaymentSectionSelected.collectAsState().value,
+        onCardPaymentSectionStateChange = { paymentViewModel.changeCardPaymentSectionState() },
+        showRecentCardBottomSheet = paymentViewModel.showRecentCardBottomSheet.collectAsState().value,
+        onRecentCardBottomSheetStateChange = { paymentViewModel.changeRecentCardBottomSheet() },
+        cardNumber = paymentViewModel.cardNumber.collectAsState().value,
+        updateCardNumber = { newValue -> paymentViewModel.updateCardNumber(newValue) },
+        cardExpirationPeriod = paymentViewModel.cardExpirationPeriod.collectAsState().value,
+        updateCardExpirationPeriod = { newValue -> paymentViewModel.updateCardExpirationPeriod(newValue) },
+        cardPassword = paymentViewModel.cardPassword.collectAsState().value,
+        updateCardPassword = { newValue -> paymentViewModel.updateCardPassword(newValue) },
+        showCardTypeBottomSheet = paymentViewModel.showCardTypeBottomSheet.collectAsState().value,
+        onCardTypeBottomSheetStateChange = { paymentViewModel.changeCardTypeBottomSheet() },
+        cardCertificationNumber = paymentViewModel.cardCertificationNumber.collectAsState().value,
+        updateCardCertificationNumber = { newValue -> paymentViewModel.updateCardCertificationNumber(newValue) },
+        showInstallmentBottomSheet = paymentViewModel.showInstallmentBottomSheet.collectAsState().value,
+        onInstallmentBottomSheetChange = { paymentViewModel.changeInstallmentBottomSheet() },
+        isCardPaymentPrivacyChecked = paymentViewModel.isCardPaymentPrivacyChecked.collectAsState().value,
+        onCardPaymentPrivacyCheckedStateChange = { paymentViewModel.changeCardPaymentPrivacyCheckedState() },
+        ticketBuyingState = paymentViewModel.ticketBuyingState.collectAsState().value,
+        onTicketBuyingClick = { paymentViewModel.buyTicket() }
+    )
+}
 
-    var ktxMileage by remember { mutableStateOf("") }
-    var cardNumber by remember { mutableStateOf("") }
-    var cardExpirationPeriod by remember { mutableStateOf("") }
-    var cardPassword by remember { mutableStateOf("") }
-    var cardCertificationNumber by remember { mutableStateOf("") }
+@Composable
+fun PaymentScreen(
+    priceBeforeDiscount: Int,
+    priceAfterDiscount: Int,
+    discount: Int,
+    updateDiscount: (String) -> Unit,
+    isKTXMileageSectionSelected: Boolean,
+    onKTXMileageSectionStateChange: () -> Unit,
+    ktxMileage: String,
+    updateKTXMileage: (String) -> Unit,
+    isDiscountCouponSectionSelected: Boolean,
+    onDiscountCouponSectionStateChange: () -> Unit,
+    showPatriotBottomSheet: Boolean,
+    onPatriotBottomSheetStateChange: () -> Unit,
+    patriotNumber: String,
+    updatePatriotNumber: (String) -> Unit,
+    patriotPassword: String,
+    updatePatriotPassword: (String) -> Unit,
+    patriotCertificationNumber: String,
+    updatePatriotCertificationNumber: (String) -> Unit,
+    isPointUsageSectionSelected: Boolean,
+    onPointUsageSectionStateChange: () -> Unit,
+    showLPointBottomSheet: Boolean,
+    onLPointBottomSheetStateChange: () -> Unit,
+    pointPassword: String,
+    updatePointPassword: (String) -> Unit,
+    onGetLPointClick: () -> Unit,
+    lPointState: LPointState,
+    lPoint: String,
+    updateLPoint: (String) -> Unit,
+    isLPointPrivacyChecked: Boolean,
+    onLPointPrivacyCheckedStateChange: () -> Unit,
+    isEasyPaymentSectionSelected: Boolean,
+    onEasyPaymentSectionStateChange: () -> Unit,
+    isKaKaoPaySelected: PaymentSelectableOptionType,
+    onKaKaoPayClick: () -> Unit,
+    isCardPaymentSectionSelected: Boolean,
+    onCardPaymentSectionStateChange: () -> Unit,
+    showRecentCardBottomSheet: Boolean,
+    onRecentCardBottomSheetStateChange: () -> Unit,
+    cardNumber: String,
+    updateCardNumber: (String) -> Unit,
+    cardExpirationPeriod: String,
+    updateCardExpirationPeriod: (String) -> Unit,
+    cardPassword: String,
+    updateCardPassword: (String) -> Unit,
+    showCardTypeBottomSheet: Boolean,
+    onCardTypeBottomSheetStateChange: () -> Unit,
+    cardCertificationNumber: String,
+    updateCardCertificationNumber: (String) -> Unit,
+    showInstallmentBottomSheet: Boolean,
+    onInstallmentBottomSheetChange: ()  -> Unit,
+    isCardPaymentPrivacyChecked: Boolean,
+    onCardPaymentPrivacyCheckedStateChange: () -> Unit,
+    ticketBuyingState: TicketBuyingState,
+    onTicketBuyingClick: () -> Unit,
+) {
+    var patriotDescription by remember { mutableStateOf("") }
+    var patriotApplyState by remember { mutableStateOf(PaymentDropdownOptionType.UNSELECTED) }
 
     Column(
         modifier = Modifier.fillMaxSize(),
@@ -87,7 +202,7 @@ fun PaymentScreen() {
                         )
                         Spacer(modifier = Modifier.weight(1f))
                         Text(
-                            text = "12,500원",
+                            text = priceBeforeDiscount.toKoreanCurrency(),
                             color = KorailTalkTheme.colors.purple04,
                             style = KorailTalkTheme.typography.head3
                         )
@@ -116,28 +231,29 @@ fun PaymentScreen() {
                     )
                     PaymentRadioButtonOption(
                         title = "KTX 마일리지",
-                        selected = isKtxMileageSectionVisible,
-                        onClick = { isKtxMileageSectionVisible = !isKtxMileageSectionVisible }
+                        selected = isKTXMileageSectionSelected,
+                        onClick = onKTXMileageSectionStateChange
                     )
                     Column(
                         modifier = Modifier
                             .fillMaxWidth()
                             .padding(top = 12.dp)
-                            .showIf(isKtxMileageSectionVisible)
+                            .showIf(isKTXMileageSectionSelected)
                     ) {
                         Row {
                             PaymentTextField(
                                 title = "마일리지",
                                 hint = "2000",
                                 value = ktxMileage,
-                                onValueChange = { newValue -> ktxMileage = newValue },
+                                onValueChange = updateKTXMileage,
                                 modifier = Modifier.weight(1f),
-                                unit = "점"
+                                unit = "점",
+                                isNumber = true,
                             )
                             Spacer(modifier = Modifier.width(4.dp))
                             PaymentChipButton(
                                 title = "전액적용",
-                                onClick = {}
+                                onClick = { updateKTXMileage("2000") }
                             )
                         }
                         Spacer(modifier = Modifier.height(12.dp))
@@ -155,19 +271,19 @@ fun PaymentScreen() {
                             style = KorailTalkTheme.typography.caption4
                         )
                     }
+
                     Spacer(modifier = Modifier.height(16.dp))
+
                     PaymentRadioButtonOption(
                         title = "할인쿠폰",
-                        selected = isDiscountCouponSectionVisible,
-                        onClick = {
-                            isDiscountCouponSectionVisible = !isDiscountCouponSectionVisible
-                        }
+                        selected = isDiscountCouponSectionSelected,
+                        onClick = onDiscountCouponSectionStateChange
                     )
                     Column(
                         modifier = Modifier
                             .fillMaxWidth()
                             .padding(top = 12.dp)
-                            .showIf(isDiscountCouponSectionVisible)
+                            .showIf(isDiscountCouponSectionSelected)
                     ) {
                         PaymentDropdownOption(
                             title = "할인쿠폰",
@@ -177,11 +293,11 @@ fun PaymentScreen() {
                         Spacer(modifier = Modifier.height(8.dp))
 
                         PaymentDropdownOption(
-                            title = "국가유공자",
-                            onClick = {},
+                            title = "국가유공자 할인",
+                            onClick = onPatriotBottomSheetStateChange,
                             modifier = Modifier.fillMaxWidth(),
-                            description = "500원 할인",
-                            state = PaymentDropdownOptionType.APPLIED
+                            description = patriotDescription,
+                            state = patriotApplyState
                         )
                         Spacer(modifier = Modifier.height(8.dp))
 
@@ -222,17 +338,17 @@ fun PaymentScreen() {
                     Spacer(modifier = Modifier.height(16.dp))
                     PaymentRadioButtonOption(
                         title = "포인트 사용",
-                        selected = isPointUsageSectionVisible,
-                        onClick = { isPointUsageSectionVisible = !isPointUsageSectionVisible }
+                        selected = isPointUsageSectionSelected,
+                        onClick = onPointUsageSectionStateChange
                     )
                     Column(
                         modifier = Modifier
                             .fillMaxWidth()
                             .padding(top = 12.dp)
-                            .showIf(isPointUsageSectionVisible)
+                            .showIf(isPointUsageSectionSelected)
                     ) {
                         PaymentSelectableOption(
-                            onClick = {},
+                            onClick = onLPointBottomSheetStateChange,
                             modifier = Modifier.fillMaxWidth(),
                             title = "L.POINT",
                         )
@@ -276,7 +392,7 @@ fun PaymentScreen() {
 
             item { PaymentHorizontalDiver() }
 
-            item {
+            item { // 결제수단 선택 Section
                 Column(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -290,14 +406,14 @@ fun PaymentScreen() {
                     )
                     PaymentRadioButtonOption(
                         title = "간편결제",
-                        selected = isEasyPaymentSectionVisible,
-                        onClick = { isEasyPaymentSectionVisible = !isEasyPaymentSectionVisible }
+                        selected = isEasyPaymentSectionSelected,
+                        onClick = onEasyPaymentSectionStateChange
                     )
                     Column(
                         modifier = Modifier
                             .fillMaxWidth()
                             .padding(top = 16.dp)
-                            .showIf(isEasyPaymentSectionVisible)
+                            .showIf(isEasyPaymentSectionSelected)
                     ) {
                         PaymentSelectableOption(
                             onClick = {},
@@ -398,9 +514,10 @@ fun PaymentScreen() {
                             modifier = Modifier.fillMaxWidth()
                         ) {
                             PaymentSelectableOption(
-                                onClick = {},
+                                onClick = onKaKaoPayClick,
                                 modifier = Modifier.weight(1f),
                                 title = "카카오페이",
+                                state = isKaKaoPaySelected
                             )
                             Spacer(modifier = Modifier.width(8.dp))
                             PaymentSelectableOption(
@@ -432,18 +549,18 @@ fun PaymentScreen() {
 
                     PaymentRadioButtonOption(
                         title = "카드결제",
-                        selected = isCardPaymentSectionVisible,
-                        onClick = { isCardPaymentSectionVisible = !isCardPaymentSectionVisible }
+                        selected = isCardPaymentSectionSelected,
+                        onClick = onCardPaymentSectionStateChange
                     )
                     Column(
                         modifier = Modifier
                             .fillMaxWidth()
                             .padding(top = 16.dp)
-                            .showIf(isCardPaymentSectionVisible)
+                            .showIf(isCardPaymentSectionSelected)
                     ) {
                         PaymentDropdownOption(
                             title = "자주쓰는카드",
-                            onClick = {},
+                            onClick = onRecentCardBottomSheetStateChange,
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .padding(bottom = 8.dp),
@@ -459,7 +576,7 @@ fun PaymentScreen() {
                                 title = "카드번호",
                                 hint = "0000 - 0000 - 0000 - 0000",
                                 value = cardNumber,
-                                onValueChange = { newValue -> cardNumber = newValue },
+                                onValueChange = updateCardNumber,
                                 modifier = Modifier.weight(1f),
                             )
                             Spacer(modifier = Modifier.width(4.dp))
@@ -472,20 +589,20 @@ fun PaymentScreen() {
                             title = "유효기간",
                             hint = "00 / 00",
                             value = cardExpirationPeriod,
-                            onValueChange = { newValue -> cardExpirationPeriod = newValue },
+                            onValueChange = updateCardExpirationPeriod,
                             modifier = Modifier.padding(bottom = 8.dp)
                         )
                         PaymentTextField(
                             title = "비밀번호",
                             hint = "00",
                             value = cardPassword,
-                            onValueChange = { newValue -> cardPassword = newValue },
+                            onValueChange = updateCardPassword,
                             modifier = Modifier.padding(bottom = 8.dp),
                             unit = "**"
                         )
                         PaymentDropdownOption(
                             title = "카드종류",
-                            onClick = {},
+                            onClick = onCardTypeBottomSheetStateChange,
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .padding(bottom = 8.dp),
@@ -496,12 +613,12 @@ fun PaymentScreen() {
                             title = "인증번호",
                             hint = "주민번호 앞 6자리",
                             value = cardCertificationNumber,
-                            onValueChange = { newValue -> cardCertificationNumber = newValue },
+                            onValueChange = updateCardCertificationNumber,
                             modifier = Modifier.padding(bottom = 8.dp)
                         )
                         PaymentDropdownOption(
                             title = "할부기간",
-                            onClick = {},
+                            onClick = onInstallmentBottomSheetChange,
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .padding(bottom = 16.dp),
@@ -513,13 +630,11 @@ fun PaymentScreen() {
                             verticalAlignment = Alignment.CenterVertically
                         ) {
                             Image(
-                                painter = painterResource(id = if (isPrivacyChecked) R.drawable.ic_payment_privacy_selected else R.drawable.ic_payment_privacy_not_selected),
+                                painter = painterResource(id = if (isCardPaymentPrivacyChecked) R.drawable.ic_payment_privacy_selected else R.drawable.ic_payment_privacy_not_selected),
                                 contentDescription = null,
                                 modifier = Modifier
                                     .padding(end = 8.dp)
-                                    .clickableWithoutRipple(
-                                        onClick = { isPrivacyChecked = !isPrivacyChecked }
-                                    )
+                                    .clickableWithoutRipple(onClick = onCardPaymentPrivacyCheckedStateChange)
                             )
                             Text(
                                 text = "개인정보 수집 및 이용동의",
@@ -534,7 +649,7 @@ fun PaymentScreen() {
 
             item { PaymentHorizontalDiver() }
 
-            item {
+            item { // 결제 상세 Section
                 Column(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -569,7 +684,7 @@ fun PaymentScreen() {
                         )
                         Spacer(modifier = Modifier.weight(1f))
                         Text(
-                            text = "12,500원",
+                            text = priceBeforeDiscount.toKoreanCurrency(),
                             color = KorailTalkTheme.colors.black,
                             style = KorailTalkTheme.typography.title3
                         )
@@ -585,7 +700,7 @@ fun PaymentScreen() {
                         )
                         Spacer(modifier = Modifier.weight(1f))
                         Text(
-                            text = "500원",
+                            text = discount.toKoreanCurrency(),
                             color = KorailTalkTheme.colors.black,
                             style = KorailTalkTheme.typography.title3
                         )
@@ -609,7 +724,7 @@ fun PaymentScreen() {
                         )
                         Spacer(modifier = Modifier.weight(1f))
                         Text(
-                            text = "12,000원",
+                            text = priceAfterDiscount.toKoreanCurrency(),
                             color = KorailTalkTheme.colors.purple04,
                             style = KorailTalkTheme.typography.head5
                         )
@@ -637,7 +752,7 @@ fun PaymentScreen() {
                 )
                 Spacer(modifier = Modifier.weight(1f))
                 Text(
-                    text = "12,000원",
+                    text = priceAfterDiscount.toKoreanCurrency(),
                     color = KorailTalkTheme.colors.white,
                     style = KorailTalkTheme.typography.head5
                 )
@@ -651,12 +766,63 @@ fun PaymentScreen() {
                 .height((LocalConfiguration.current.screenHeightDp * 0.064).dp)
                 .fillMaxWidth()
                 .padding(horizontal = 10.dp),
-            enabled = true,
+            enabled = isCardPaymentPrivacyChecked,
             contentColor = KorailTalkTheme.colors.white,
             cornerRadius = 26.dp,
             backgroundColor = KorailTalkTheme.colors.purple03,
         )
         Spacer(modifier = Modifier.height(10.dp))
+
+        PaymentPatriotBottomSheet(
+            showPatriotBottomSheet = showPatriotBottomSheet,
+            onPatriotBottomSheetStateChange = onPatriotBottomSheetStateChange,
+            patriotNumber = patriotNumber,
+            updatePatriotNumber = updatePatriotNumber,
+            patriotPassword = patriotPassword,
+            updatePatriotPassword = updatePatriotPassword,
+            patriotCertificationNumber = patriotCertificationNumber,
+            updatePatriotCertificationNumber = updatePatriotCertificationNumber,
+            applyPatriotDiscount = {
+                patriotDescription = "500원 할인"
+                patriotApplyState = PaymentDropdownOptionType.APPLIED
+                onPatriotBottomSheetStateChange()
+                updateDiscount("500")
+            }
+        )
+
+        PaymentLPointBottomSheet(
+            showLPointBottomSheet = showLPointBottomSheet,
+            onLPointBottomSheetStateChange = onLPointBottomSheetStateChange,
+            pointPassword = pointPassword,
+            updatePointPassword = updatePointPassword,
+            onGetLPointClick = onGetLPointClick,
+            lPoint = lPoint,
+            availableLPoint = when(lPointState) {
+                is LPointState.Success -> lPointState.data.point
+                else -> 0
+            },
+            updateLPoint = updateLPoint,
+            isLPointPrivacyChecked = isLPointPrivacyChecked,
+            onLPointPrivacyCheckedStateChange = onLPointPrivacyCheckedStateChange,
+            applyLPointDiscount = {
+                updateDiscount(lPoint)
+                onLPointBottomSheetStateChange()
+            }
+        )
+
+        PaymentRecentCardBottomSheet(
+            showRecentCardBottomSheet = showRecentCardBottomSheet,
+            onRecentCardBottomSheetStateChange = onRecentCardBottomSheetStateChange
+        )
+        PaymentCardTypeBottomSheet(
+            showCardTypeBottomSheet = showCardTypeBottomSheet,
+            onCardTypeBottomSheetStateChange = onCardTypeBottomSheetStateChange
+        )
+
+        PaymentInstallmentBottomSheet(
+            showInstallmentBottomSheet = showInstallmentBottomSheet,
+            onInstallmentBottomSheetChange = onInstallmentBottomSheetChange
+        )
     }
 }
 
@@ -664,6 +830,6 @@ fun PaymentScreen() {
 @Composable
 fun ShowPaymentScreen() {
     COLLAVORATIONANDROIDKORAILTALKTheme {
-        PaymentScreen()
+
     }
 }

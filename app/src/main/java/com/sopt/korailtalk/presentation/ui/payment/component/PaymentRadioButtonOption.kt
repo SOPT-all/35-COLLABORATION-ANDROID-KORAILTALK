@@ -44,7 +44,7 @@ fun PaymentRadioButtonOption(
                     color = KorailTalkTheme.colors.grey200,
                     shape = CircleShape
                 )
-                .clickable(onClick = onClick),
+                .clickableWithoutRipple(onClick = onClick),
             contentAlignment = Alignment.Center
         ) {
             if (selected) {

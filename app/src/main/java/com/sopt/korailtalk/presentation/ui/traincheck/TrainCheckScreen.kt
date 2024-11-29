@@ -42,8 +42,9 @@ import com.sopt.korailtalk.ui.theme.KorailTalkTheme.typography
 
 @Composable
 fun TrainCheckScreen(
-    userId: Long,
-    ticketId: Long
+    userId: Long = 1,
+    ticketId: Long = 1,
+    navigateToPayment: () -> Unit,
 ) {
     val viewModel: TrainCheckViewModel = viewModel()
     val showDialog = viewModel.showDialog
@@ -209,5 +210,5 @@ fun TrainCheckScreen(
 @Preview
 @Composable
 fun TrainCheckScreenPreview(){
-    TrainCheckScreen(1, 2)
+    TrainCheckScreen(1, 2, navigateToPayment = {})
 }

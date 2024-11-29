@@ -8,7 +8,6 @@ import com.sopt.korailtalk.domain.repository.PaymentRepository
 import com.sopt.korailtalk.domain.repository.TrainSearchRepository
 import com.sopt.korailtalk.data.repositoryimpl.SeatsRepositoryImpl
 import com.sopt.korailtalk.data.repositoryimpl.TicketRepositoryImpl
-import com.sopt.korailtalk.domain.repository.ExampleRepository
 import com.sopt.korailtalk.domain.repository.SeatsRepository
 import com.sopt.korailtalk.domain.repository.TicketRepository
 import dagger.Binds
