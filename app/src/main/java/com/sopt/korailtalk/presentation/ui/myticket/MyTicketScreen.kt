@@ -18,6 +18,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -33,7 +34,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.sopt.korailtalk.R
 import com.sopt.korailtalk.presentation.ui.KorailRoundedButton
 import com.sopt.korailtalk.presentation.ui.KorailSingleActionTopAppBar
-import com.sopt.korailtalk.presentation.ui.myticket.component.CustomToast
+import com.sopt.korailtalk.presentation.ui.KorailToast
 import com.sopt.korailtalk.presentation.ui.myticket.component.MyTicket
 import com.sopt.korailtalk.presentation.ui.myticket.component.MyTicketAdditionalService
 import com.sopt.korailtalk.presentation.ui.myticket.component.MyTicketAdditionalServiceType
@@ -49,6 +50,8 @@ fun MyTicketScreen(
 ) {
     var showToast by remember { mutableStateOf(false) }
     val scrollState = rememberScrollState()
+
+    val ticketData by viewModel.ticketData.collectAsState()
 
     Box(
         modifier = Modifier
@@ -70,7 +73,7 @@ fun MyTicketScreen(
                     .height(8.dp)
             )
             MyTicket(
-                ticketData = viewModel.ticketDummy,
+                ticketData = ticketData,
                 modifier = Modifier
                     .padding(horizontal = 8.dp)
             )
@@ -130,8 +133,10 @@ fun MyTicketScreen(
                     }
                 )
                 if (showToast) {
-                    val myTicketToast = CustomToast(LocalContext.current)
-                    myTicketToast.ShowToast()
+                    val myTicketToast = KorailToast(LocalContext.current)
+                    myTicketToast.ShowToast(
+                        msg = "승차권 상세정보를 로딩중입니다"
+                    )
                     showToast = false
                 }
             }
