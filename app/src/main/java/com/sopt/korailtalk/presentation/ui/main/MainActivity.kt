@@ -14,23 +14,23 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import com.sopt.korailtalk.presentation.ui.seatmap.SeatMapScreenPreview
-import com.sopt.korailtalk.presentation.ui.traincheck.TrainCheckScreen
-import com.sopt.korailtalk.presentation.ui.traincheck.TrainCheckScreenPreview
-import com.sopt.korailtalk.ui.theme.KorailTalkTheme
+import androidx.navigation.compose.rememberNavController
 import com.sopt.korailtalk.ui.theme.COLLAVORATIONANDROIDKORAILTALKTheme
+import com.sopt.korailtalk.ui.theme.KorailTalkTheme
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        enableEdgeToEdge()
         setContent {
             COLLAVORATIONANDROIDKORAILTALKTheme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Greeting(
-                        name = "코레일톡 기초세팅",
-                        modifier = Modifier.padding(innerPadding)
+                val navController = rememberNavController()
+                Scaffold { paddingValues ->
+                    KorailTalkNavHost(
+                        navController = navController,
+                        modifier = Modifier.padding(paddingValues)
                     )
                 }
             }
@@ -38,21 +38,10 @@ class MainActivity : ComponentActivity() {
     }
 }
 
-@Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Box(
-        modifier = Modifier.fillMaxSize(),
-        contentAlignment = Alignment.Center
-    ) {
-        TrainCheckScreenPreview()
-
-    }
-}
-
 @Preview(showBackground = true)
 @Composable
 fun GreetingPreview() {
     COLLAVORATIONANDROIDKORAILTALKTheme {
-        Greeting("Android")
+
     }
 }

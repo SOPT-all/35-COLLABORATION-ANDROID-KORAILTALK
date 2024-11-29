@@ -49,7 +49,9 @@ import com.sopt.korailtalk.ui.theme.KorailTalkTheme
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TrainSearchScreen(
-    viewModel: TravelSearchViewModel = hiltViewModel()
+    viewModel: TravelSearchViewModel = hiltViewModel(),
+    navigateToSeatMap: () -> Unit,
+    navigateToTrainCheck: () -> Unit,
 ) {
     val timeTableState by viewModel.timeTableState.collectAsState()
 
@@ -244,6 +246,6 @@ fun TrainSearchScreen(
 @Composable
 fun GreetingPreview() {
     COLLAVORATIONANDROIDKORAILTALKTheme {
-        TrainSearchScreen()
+        TrainSearchScreen(navigateToTrainCheck = {}, navigateToSeatMap = {})
     }
 }
