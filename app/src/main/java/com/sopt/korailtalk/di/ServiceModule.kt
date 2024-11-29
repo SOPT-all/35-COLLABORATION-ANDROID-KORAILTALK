@@ -1,6 +1,8 @@
 package com.sopt.korailtalk.di
 
 import com.sopt.korailtalk.data.remote.service.ExampleService
+import com.sopt.korailtalk.data.remote.service.PaymentService
+import com.sopt.korailtalk.data.remote.service.TrainSearchService
 import com.sopt.korailtalk.data.remote.service.SeatsService
 import com.sopt.korailtalk.data.remote.service.TicketService
 import com.sopt.korailtalk.di.qualifier.KorailTalk
@@ -19,6 +21,16 @@ object ServiceModule {
     fun provideExampleService(@KorailTalk retrofit: Retrofit): ExampleService =
         retrofit.create(ExampleService::class.java)
 
+    @Provides
+    @Singleton
+    fun providePaymentService(@KorailTalk retrofit: Retrofit): PaymentService =
+        retrofit.create(PaymentService::class.java)
+
+    @Provides
+    @Singleton
+    fun provideTrainSearchService(@KorailTalk retrofit: Retrofit): TrainSearchService =
+        retrofit.create(TrainSearchService::class.java)
+        
     @Provides
     @Singleton
     fun provideSeatsService(@KorailTalk retrofit: Retrofit): SeatsService =
