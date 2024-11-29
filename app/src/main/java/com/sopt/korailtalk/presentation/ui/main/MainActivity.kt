@@ -14,6 +14,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import com.sopt.korailtalk.presentation.ui.seatmap.SeatMapScreenPreview
+import com.sopt.korailtalk.presentation.ui.traincheck.TrainCheckScreen
+import com.sopt.korailtalk.presentation.ui.traincheck.TrainCheckScreenPreview
 import com.sopt.korailtalk.ui.theme.KorailTalkTheme
 import com.sopt.korailtalk.ui.theme.COLLAVORATIONANDROIDKORAILTALKTheme
 import dagger.hilt.android.AndroidEntryPoint
@@ -22,7 +25,6 @@ import dagger.hilt.android.AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
         setContent {
             COLLAVORATIONANDROIDKORAILTALKTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
@@ -42,36 +44,7 @@ fun Greeting(name: String, modifier: Modifier = Modifier) {
         modifier = Modifier.fillMaxSize(),
         contentAlignment = Alignment.Center
     ) {
-        Column {
-            Text(
-                text = "$name!",
-                style = KorailTalkTheme.typography.head1.copy(
-                    color = KorailTalkTheme.colors.transparentBlue50
-                ),
-                modifier = modifier
-            )
-            Text(
-                text = "$name!",
-                style = KorailTalkTheme.typography.title1.copy(
-                    color = KorailTalkTheme.colors.blue01
-                ),
-                modifier = modifier
-            )
-            Text(
-                text = "$name!",
-                style = KorailTalkTheme.typography.body3.copy(
-                    color = KorailTalkTheme.colors.purple01
-                ),
-                modifier = modifier
-            )
-            Text(
-                text = "$name!",
-                style = KorailTalkTheme.typography.caption1.copy(
-                    color = KorailTalkTheme.colors.grey600
-                ),
-                modifier = modifier
-            )
-        }
+        TrainCheckScreenPreview()
 
     }
 }

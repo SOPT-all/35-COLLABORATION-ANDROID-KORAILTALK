@@ -1,7 +1,7 @@
 package com.sopt.korailtalk.presentation.ui.myticket
 
 import androidx.lifecycle.ViewModel
-import com.sopt.korailtalk.data.remote.model.response.TicketData
+import com.sopt.korailtalk.domain.model.TicketData
 import com.sopt.korailtalk.domain.type.MyTicketTabType
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
