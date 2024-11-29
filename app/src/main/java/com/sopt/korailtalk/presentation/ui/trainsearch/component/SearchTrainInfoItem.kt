@@ -26,7 +26,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.sopt.korailtalk.R
-import com.sopt.korailtalk.domain.model.TrainInformation
+import com.sopt.korailtalk.domain.model.TimeTable
 import com.sopt.korailtalk.domain.type.CarType
 import com.sopt.korailtalk.domain.type.SearchTrainStateType
 import com.sopt.korailtalk.presentation.ui.KorailChip
@@ -37,7 +37,7 @@ import com.sopt.korailtalk.ui.theme.KorailTalkTheme
 
 @Composable
 fun SearchTrainInfoItem(
-    timetable: TrainInformation,
+    timetable: TimeTable,
     standardPrice: String?,
     premiumPrice: String?,
     modifier: Modifier = Modifier,
@@ -170,7 +170,7 @@ fun ShowSearchTrainInfoItem() {
                 .padding(vertical = 16.dp),
             verticalArrangement = Arrangement.spacedBy(space = 5.dp)
         ) {
-            val trainDummy = TrainInformation(
+            val trainDummy = TimeTable(
                 timetableId = 1,
                 trainName = "KTX 001",
                 departureTime = "05:13",
@@ -181,7 +181,7 @@ fun ShowSearchTrainInfoItem() {
                 isPremiumSold = false,
                 travelTime = 2,
             )
-            val trainDummy2 = TrainInformation(
+            val trainDummy2 = TimeTable(
                 timetableId = 1,
                 trainName = "KTX 001",
                 departureTime = "05:13",

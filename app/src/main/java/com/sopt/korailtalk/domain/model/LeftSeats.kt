@@ -1,4 +1,8 @@
-package com.sopt.korailtalk.presentation.ui.seatmap
+package com.sopt.korailtalk.domain.model
+
+data class LeftSeats(
+    val coaches: ArrayList<SeatMapData>
+)
 
 data class SeatMapData (
     val coachId: Long,

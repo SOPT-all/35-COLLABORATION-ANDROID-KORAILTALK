@@ -14,6 +14,9 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -38,9 +41,17 @@ import com.sopt.korailtalk.ui.theme.KorailTalkTheme
 import com.sopt.korailtalk.ui.theme.KorailTalkTheme.typography
 
 @Composable
-fun TrainCheckScreen() {
+fun TrainCheckScreen(
+    userId: Long,
+    ticketId: Long
+) {
     val viewModel: TrainCheckViewModel = viewModel()
     val showDialog = viewModel.showDialog
+    val ticketData by viewModel.ticketData.collectAsState()
+
+    LaunchedEffect(true) {
+        viewModel.getTicketInformation(userId, ticketId)
+    }
 
     Column(
         modifier = Modifier
@@ -61,12 +72,12 @@ fun TrainCheckScreen() {
                 .clip(shape = RoundedCornerShape(12.dp))
                 .background(color = KorailTalkTheme.colors.white)
             ) {
-                KorailTicketHeader(viewModel.ticketDummy.date, viewModel.ticketDummy.trainName)
+                KorailTicketHeader(ticketData.date, ticketData.trainName)
 
-                KorailWayInfoWithTime(viewModel.ticketDummy.departurePlace,
-                    viewModel.ticketDummy.arrivalPlace,
-                    viewModel.ticketDummy.departureTime,
-                    viewModel.ticketDummy.arrivalTime)
+                KorailWayInfoWithTime(ticketData.departurePlace,
+                    ticketData.arrivalPlace,
+                    ticketData.departureTime,
+                    ticketData.arrivalTime)
 
                 HorizontalDivider(modifier = Modifier
                     .fillMaxWidth()
@@ -82,16 +93,16 @@ fun TrainCheckScreen() {
                     }
                     TrainCheckDetailInfo(R.string.trainCheckDetailInfo_seat) {
                         Text(text = buildAnnotatedString {
-                            append(viewModel.ticketDummy.coachesNumber.toString())
+                            append(ticketData.coachesNumber.toString())
                             append("호차 ")
-                            append(viewModel.ticketDummy.seatName)
+                            append(ticketData.seatName)
                         },
                             color = KorailTalkTheme.colors.black,
                             style = typography.body1)
                     }
                     TrainCheckDetailInfo(R.string.trainCheckDetailInfo_ticketPrice) {
                         Text(text = buildAnnotatedString {
-                            append(viewModel.ticketDummy.ticketPrice.toString())
+                            append(ticketData.ticketPrice.toString())
                             append("원")
                         },
                             color = KorailTalkTheme.colors.purple04,
@@ -121,7 +132,7 @@ fun TrainCheckScreen() {
                                 style = typography.caption1
                             )
                             Text(
-                                text = viewModel.ticketDummy.limitPaymentTime,
+                                text = ticketData.limitPaymentTime,
                                 modifier = Modifier.padding(start = 4.dp, bottom = 4.dp),
                                 color = KorailTalkTheme.colors.purple02,
                                 style = typography.caption1
@@ -198,5 +209,5 @@ fun TrainCheckScreen() {
 @Preview
 @Composable
 fun TrainCheckScreenPreview(){
-    TrainCheckScreen()
+    TrainCheckScreen(1, 2)
 }

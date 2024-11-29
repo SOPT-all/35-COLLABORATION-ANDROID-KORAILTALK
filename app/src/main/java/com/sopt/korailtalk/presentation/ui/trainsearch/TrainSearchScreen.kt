@@ -1,5 +1,6 @@
 package com.sopt.korailtalk.presentation.ui.trainsearch
 
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -18,6 +19,7 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -49,6 +51,8 @@ import com.sopt.korailtalk.ui.theme.KorailTalkTheme
 fun TrainSearchScreen(
     viewModel: TravelSearchViewModel = hiltViewModel()
 ) {
+    val timeTableState by viewModel.timeTableState.collectAsState()
+
     var showDateChip by remember { mutableStateOf(false) }
     var showTrainBottomSheet by remember { mutableStateOf(false) }
     var showSeatBottomSheet by remember { mutableStateOf(false) }
@@ -57,6 +61,35 @@ fun TrainSearchScreen(
 
     val selectedTime by viewModel.selectDate.collectAsState()
     val nextDay by viewModel.nextDate.collectAsState()
+    val timeTableList by viewModel.timeTableList.collectAsState()
+
+    LaunchedEffect(Unit) {
+        viewModel.getTimeTableData(
+            userId = 1,
+            date = "2024.11.16",
+            departurePlace = "서울",
+            arrivalPlace = "부산"
+        )
+    }
+
+    when (val state = timeTableState) {
+        is TimeTableState.Idle -> {
+            Log.d("TrainSearchScreen", "Idle")
+        }
+
+        is TimeTableState.Loading -> {
+            Log.d("TrainSearchScreen", "loading")
+        }
+
+        is TimeTableState.Success -> {
+            Log.d("TrainSearchScreen", "${state.data}")
+        }
+
+        is TimeTableState.Failure -> {
+            Log.d("TrainSearchScreen", "Failure")
+
+        }
+    }
 
     Box(
         modifier = Modifier
@@ -107,8 +140,9 @@ fun TrainSearchScreen(
                     )
                 }
             }
+
             LazyColumn {
-                itemsIndexed(items = viewModel.trainDummyList) { index, item ->
+                itemsIndexed(items = timeTableList) { index, item ->
                     SearchTrainInfoItem(
                         modifier = Modifier
                             .fillMaxWidth(),
@@ -128,6 +162,7 @@ fun TrainSearchScreen(
                     )
                 }
             }
+
             Spacer(
                 modifier = Modifier
                     .height(22.dp)
