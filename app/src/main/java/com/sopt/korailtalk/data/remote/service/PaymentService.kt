@@ -10,13 +10,13 @@ import retrofit2.http.PATCH
 import retrofit2.http.Query
 
 interface PaymentService {
-    @GET("/users/points")
+    @GET("users/points")
     suspend fun getLpoint(
         @Header("userId") userId: Long,
         @Query("pointPassword") pointPassword: Int
     ): ApiResponse<LPointResponseDto>
 
-    @PATCH("/tickets")
+    @PATCH("tickets")
     suspend fun buyTicket(
         @Body ticketBuyingRequestDto: TicketBuyingRequestDto
     ): ApiResponse<Unit>
