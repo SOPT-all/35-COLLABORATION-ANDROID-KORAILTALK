@@ -1,5 +1,5 @@
 package com.sopt.korailtalk.domain.model
 
 data class SeatTicket (
-    val ticketId: Int
+    val ticketId: Long
 )

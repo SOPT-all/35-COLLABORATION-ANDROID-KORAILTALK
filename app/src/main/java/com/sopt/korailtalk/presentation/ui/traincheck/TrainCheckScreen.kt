@@ -17,16 +17,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
-import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.sopt.korailtalk.R
 import com.sopt.korailtalk.presentation.ui.KorailDialog
@@ -42,16 +40,16 @@ import com.sopt.korailtalk.ui.theme.KorailTalkTheme.typography
 
 @Composable
 fun TrainCheckScreen(
+    trainCheckViewModel: TrainCheckViewModel = hiltViewModel(),
     userId: Long = 1,
-    ticketId: Long = 1,
+    ticketId: Long,
     navigateToPayment: () -> Unit,
 ) {
-    val viewModel: TrainCheckViewModel = viewModel()
-    val showDialog = viewModel.showDialog
-    val ticketData by viewModel.ticketData.collectAsState()
+    val showDialog = trainCheckViewModel.showDialog
+    val ticketData by trainCheckViewModel.ticketData.collectAsState()
 
     LaunchedEffect(true) {
-        viewModel.getTicketInformation(userId, ticketId)
+        trainCheckViewModel.getTicketInformation(userId, ticketId)
     }
 
     Column(
@@ -193,7 +191,7 @@ fun TrainCheckScreen(
                 contentColor = KorailTalkTheme.colors.white,
                 cornerRadius = 26.dp,
                 backgroundColor = KorailTalkTheme.colors.blue03,
-                onClick = { viewModel.toggleDialog(true) }
+                onClick = { trainCheckViewModel.toggleDialog(true) }
             )
         }
     }
@@ -202,13 +200,7 @@ fun TrainCheckScreen(
         KorailDialog(
             title = stringResource(R.string.trainCheck_dialog_title),
             content = { TrainCheckDialogContent()},
-            onConfirm = { viewModel.toggleDialog(false) }
+            onConfirm = { trainCheckViewModel.toggleDialog(false) }
         )
     }
-}
-
-@Preview
-@Composable
-fun TrainCheckScreenPreview(){
-    TrainCheckScreen(1, 2, navigateToPayment = {})
 }

@@ -1,9 +1,13 @@
 package com.sopt.korailtalk.presentation.ui.trainsearch
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.sopt.korailtalk.domain.model.SeatSelecting
 import com.sopt.korailtalk.domain.model.TimeTable
+import com.sopt.korailtalk.domain.repository.SeatsRepository
 import com.sopt.korailtalk.domain.repository.TrainSearchRepository
+import com.sopt.korailtalk.presentation.ui.seatmap.SeatSelectingState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -20,6 +24,16 @@ class TravelSearchViewModel @Inject constructor(
 
     private val _timeTableList = MutableStateFlow<ArrayList<TimeTable>>(arrayListOf())
     val timeTableList: StateFlow<ArrayList<TimeTable>> get() = _timeTableList
+
+    private val _timetableId = MutableStateFlow<Long>(1)
+    val timetableId: StateFlow<Long> = _timetableId
+
+    private val _seatSelectingState = MutableStateFlow<SeatSelectingState>(SeatSelectingState.Idle)
+    val seatSelectingState: StateFlow<SeatSelectingState> = _seatSelectingState
+
+    private val _ticketId = MutableStateFlow<Long>(1)
+    val ticketId: StateFlow<Long> = _ticketId
+
 
     fun getTimeTableData(
         userId: Long,
@@ -94,5 +108,25 @@ class TravelSearchViewModel @Inject constructor(
     fun formatPrice(amount: Int): String {
         val formatter = DecimalFormat("#,###")
         return formatter.format(amount)
+    }
+
+    fun onAutoSeatClick() {
+        _seatSelectingState.value = SeatSelectingState.Loading
+        viewModelScope.launch{
+            val result = trainSearchRepository.selectSeat(
+                userId = 1,
+                seatSelecting = SeatSelecting(
+                    isAuto = true,
+                    timetableId = 1,
+                    coachId = 1,
+                    seatId = null,
+                    price = 1000
+                )
+            )
+            _seatSelectingState.value = result.fold(
+                onSuccess = { SeatSelectingState.Success(it.ticketId) },
+                onFailure = { SeatSelectingState.Failure(it.message ?: "몰라") }
+            )
+        }
     }
 }

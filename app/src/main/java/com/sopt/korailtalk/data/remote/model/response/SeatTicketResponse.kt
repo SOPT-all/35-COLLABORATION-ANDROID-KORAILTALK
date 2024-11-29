@@ -5,5 +5,5 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class SeatTicketResponse(
-    @SerialName("ticketId") val ticketId: Int
+    @SerialName("ticketId") val ticketId: Long
 )
