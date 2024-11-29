@@ -56,7 +56,7 @@ class SeatMapViewModel @Inject constructor(
                 },
                 onFailure = { throwable ->
                     _leftSeatsState.value = LeftSeatsState.Failure(throwable.message ?: "알 수 없는 오류")
-                    Log.e("SeatMapViewModel", "로드 실패: ${throwable.message}")
+                    Log.e("SeatMapViewModel", "로드 실패: ${_leftSeatsState.value}")
                 }
             )
         }
@@ -69,7 +69,8 @@ class SeatMapViewModel @Inject constructor(
                 SeatSelecting(
                     isAuto = false,
                     timetableId = timetableId,
-                    coachId = selectedCoachId.value,
+                    coachId =
+                    selectedCoachId.value,
                     seatId = selectedSeatId.value,
                     price = 1000)
             )
@@ -80,7 +81,7 @@ class SeatMapViewModel @Inject constructor(
                     Log.d("SeatMapViewModel", "${_ticketId.value}")},
                 onFailure = { throwable ->
                     _seatSelectingState.value = SeatSelectingState.Failure(throwable.message ?: "알 수 없는 오류")
-                    Log.e("SeatMapViewModel", "로드 실패: ${throwable.message}")
+                    Log.e("SeatMapViewModel", "로드 실패: ${_seatSelectingState.value}")
                 }
             )
         }

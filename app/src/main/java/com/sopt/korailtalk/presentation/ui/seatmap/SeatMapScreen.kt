@@ -63,7 +63,7 @@ fun SeatMapScreen(
         snapshotFlow { viewModel.leftSeatsState.value }
             .collect { state ->
                 when (state) {
-                    is LeftSeatsState.Loading -> { Log.d("SeatMapScreen", "Loading seats data...") }
+                    is LeftSeatsState.Loading -> { Log.d("SeatMapScreen", "로딩 중") }
                     is LeftSeatsState.Success -> { Log.d("SeatMapScreen", "${state.data}") }
                     is LeftSeatsState.Failure -> { Log.e("SeatMapScreen", state.message) }
                     else -> { }

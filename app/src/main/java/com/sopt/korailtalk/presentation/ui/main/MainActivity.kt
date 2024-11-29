@@ -15,6 +15,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.sopt.korailtalk.presentation.ui.seatmap.SeatMapScreenPreview
+import com.sopt.korailtalk.presentation.ui.traincheck.TrainCheckScreen
 import com.sopt.korailtalk.presentation.ui.traincheck.TrainCheckScreenPreview
 import com.sopt.korailtalk.ui.theme.KorailTalkTheme
 import com.sopt.korailtalk.ui.theme.COLLAVORATIONANDROIDKORAILTALKTheme

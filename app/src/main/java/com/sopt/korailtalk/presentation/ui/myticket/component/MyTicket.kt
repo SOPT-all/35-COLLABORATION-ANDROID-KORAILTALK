@@ -24,7 +24,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.sopt.korailtalk.R
-import com.sopt.korailtalk.data.remote.model.response.TicketData
+import com.sopt.korailtalk.domain.model.TicketData
 import com.sopt.korailtalk.domain.type.MyTicketButtonType
 import com.sopt.korailtalk.presentation.ui.KorailRoundedButton
 import com.sopt.korailtalk.presentation.ui.KorailTicketHeader
