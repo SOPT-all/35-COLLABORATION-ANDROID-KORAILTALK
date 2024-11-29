@@ -39,7 +39,7 @@ class MyTicketViewModel @Inject constructor(
     )
     val ticketData: StateFlow<TicketData> get() = _ticketData
 
-    fun getTicketInformation(userId: Long, ticketId: Long) {
+    fun getTicketInformation(userId: Long = 1, ticketId: Long) {
         _myTicketState.value = MyTicketState.Loading
         viewModelScope.launch {
             val result = ticketRepository.getTicketInformation(userId = userId, ticketId = ticketId)
