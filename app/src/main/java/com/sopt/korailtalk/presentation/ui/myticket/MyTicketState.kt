@@ -1,6 +1,6 @@
 package com.sopt.korailtalk.presentation.ui.myticket
 
-import com.sopt.korailtalk.data.remote.model.response.TicketData
+import com.sopt.korailtalk.domain.model.TicketData
 
 sealed class MyTicketState {
     data object Idle: MyTicketState()

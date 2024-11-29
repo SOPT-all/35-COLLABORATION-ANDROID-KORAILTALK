@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.sopt.korailtalk.domain.model.TicketData
+import com.sopt.korailtalk.domain.repository.TicketRepository
 import com.sopt.korailtalk.domain.type.MyTicketTabType
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -15,7 +16,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class MyTicketViewModel @Inject constructor(
-   private val ticketRepository: TicketRepository
+    private val ticketRepository: TicketRepository
 ) : ViewModel()  {
     val myTicketTabText = MyTicketTabType.entries.toTypedArray()
 
