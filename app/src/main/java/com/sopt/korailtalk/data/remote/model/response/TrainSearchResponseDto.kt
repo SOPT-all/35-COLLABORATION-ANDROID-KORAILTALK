@@ -6,7 +6,7 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class TrainSearchResponseDto(
-    @SerialName("timetables") val timeTables: List<TimeTable>
+    @SerialName("timetables") val timetables: List<TimeTable>
 ) {
     @Serializable
     data class TimeTable(

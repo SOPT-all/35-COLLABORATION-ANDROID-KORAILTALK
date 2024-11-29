@@ -1,6 +1,6 @@
 package com.sopt.korailtalk.domain.repository
 
-import com.sopt.korailtalk.domain.model.TimeTable
+import com.sopt.korailtalk.domain.model.TimeTables
 
 interface TrainSearchRepository {
     suspend fun getTimeTableData(
@@ -8,5 +8,5 @@ interface TrainSearchRepository {
         date: String,
         departurePlace: String,
         arrivalPlace: String
-    ): Result<List<TimeTable>>
+    ): Result<TimeTables>
 }

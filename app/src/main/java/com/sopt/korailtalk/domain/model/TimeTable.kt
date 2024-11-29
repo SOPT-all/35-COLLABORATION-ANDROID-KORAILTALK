@@ -1,5 +1,10 @@
 package com.sopt.korailtalk.domain.model
 
+
+data class TimeTables(
+   val timetables: ArrayList<TimeTable>
+)
+
 data class TimeTable(
     val timetableId: Long,
     val trainName: String,
@@ -10,4 +15,4 @@ data class TimeTable(
     val isStandardSold: Boolean,
     val isPremiumSold: Boolean,
     val travelTime: Int,
-    )
+)

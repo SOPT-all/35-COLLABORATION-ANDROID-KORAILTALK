@@ -1,5 +1,6 @@
 package com.sopt.korailtalk.presentation.ui.trainsearch
 
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -51,7 +52,7 @@ fun TrainSearchScreen(
     viewModel: TravelSearchViewModel = hiltViewModel()
 ) {
     val timeTableState by viewModel.timeTableState.collectAsState()
-    
+
     var showDateChip by remember { mutableStateOf(false) }
     var showTrainBottomSheet by remember { mutableStateOf(false) }
     var showSeatBottomSheet by remember { mutableStateOf(false) }
@@ -60,14 +61,34 @@ fun TrainSearchScreen(
 
     val selectedTime by viewModel.selectDate.collectAsState()
     val nextDay by viewModel.nextDate.collectAsState()
+    val timeTableList by viewModel.timeTableList.collectAsState()
 
-    LaunchedEffect (Unit){
+    LaunchedEffect(Unit) {
         viewModel.getTimeTableData(
             userId = 1,
             date = "2024.11.16",
             departurePlace = "서울",
             arrivalPlace = "부산"
         )
+    }
+
+    when (val state = timeTableState) {
+        is TimeTableState.Idle -> {
+            Log.d("TrainSearchScreen", "Idle")
+        }
+
+        is TimeTableState.Loading -> {
+            Log.d("TrainSearchScreen", "loading")
+        }
+
+        is TimeTableState.Success -> {
+            Log.d("TrainSearchScreen", "${state.data}")
+        }
+
+        is TimeTableState.Failure -> {
+            Log.d("TrainSearchScreen", "Failure")
+
+        }
     }
 
     Box(
@@ -119,33 +140,27 @@ fun TrainSearchScreen(
                     )
                 }
             }
-            when (val state = timeTableState) {
-                is TimeTableState.Idle -> {}
-                is TimeTableState.Loading -> {}
-                is TimeTableState.Success -> {
-                    LazyColumn {
-                        itemsIndexed(items = state.data) { index, item ->
-                            SearchTrainInfoItem(
-                                modifier = Modifier
-                                    .fillMaxWidth(),
-                                timetable = item,
-                                standardPrice = viewModel.formatPrice(item.standardPrice),
-                                premiumPrice = viewModel.formatPrice(item.premiumPrice),
-                                onBasicCarClick = {
-                                    isOpenBottomSheet = true
-                                },
-                                onSpecialCarClick = {
-                                    isOpenBottomSheet = true
-                                }
-                            )
-                            HorizontalDivider(
-                                thickness = 2.dp,
-                                color = KorailTalkTheme.colors.grey200
-                            )
+
+            LazyColumn {
+                itemsIndexed(items = timeTableList) { index, item ->
+                    SearchTrainInfoItem(
+                        modifier = Modifier
+                            .fillMaxWidth(),
+                        timetable = item,
+                        standardPrice = viewModel.formatPrice(item.standardPrice),
+                        premiumPrice = viewModel.formatPrice(item.premiumPrice),
+                        onBasicCarClick = {
+                            isOpenBottomSheet = true
+                        },
+                        onSpecialCarClick = {
+                            isOpenBottomSheet = true
                         }
-                    }
+                    )
+                    HorizontalDivider(
+                        thickness = 2.dp,
+                        color = KorailTalkTheme.colors.grey200
+                    )
                 }
-                is TimeTableState.Failure -> {}
             }
 
             Spacer(

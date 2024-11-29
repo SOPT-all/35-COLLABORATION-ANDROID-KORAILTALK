@@ -16,7 +16,10 @@ class TravelSearchViewModel @Inject constructor(
     private val trainSearchRepository: TrainSearchRepository
 ) : ViewModel() {
     private val _timeTableState = MutableStateFlow<TimeTableState>(TimeTableState.Idle)
-    val timeTableState: StateFlow<TimeTableState> get() = _timeTableState
+    val timeTableState: StateFlow<TimeTableState> = _timeTableState
+
+    private val _timeTableList = MutableStateFlow<ArrayList<TimeTable>>(arrayListOf())
+    val timeTableList: StateFlow<ArrayList<TimeTable>> get() = _timeTableList
 
     fun getTimeTableData(
         userId: Long,
@@ -24,9 +27,8 @@ class TravelSearchViewModel @Inject constructor(
         departurePlace: String,
         arrivalPlace: String
     ) {
+        _timeTableState.value = TimeTableState.Loading
         viewModelScope.launch {
-            _timeTableState.value = TimeTableState.Loading
-
             val result = trainSearchRepository.getTimeTableData(
                 userId = userId,
                 date = date,
@@ -35,6 +37,7 @@ class TravelSearchViewModel @Inject constructor(
             )
             _timeTableState.value = result.fold(
                 onSuccess = {
+                    _timeTableList.value = it.timetables
                     TimeTableState.Success(it)
                 },
                 onFailure = { error ->
