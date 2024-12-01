@@ -39,7 +39,7 @@ fun MyTicketInfoItem(
         verticalArrangement = Arrangement.Top,
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = modifier
-            .height((LocalConfiguration.current.screenHeightDp * 0.104).dp)
+            .height((LocalConfiguration.current.screenHeightDp * 0.106).dp)
     ) {
         Text(
             text = title,
