@@ -71,6 +71,8 @@ fun SearchTrainInfoItem(
                 .weight(1f)
         )
         SearchTrainSelectButton(
+            modifier = Modifier
+                .width((LocalConfiguration.current.screenWidthDp * 0.214).dp),
             trainType = CarType.BASIC.text,
             trainCost = standardPrice,
             state = basicCarState,
@@ -85,6 +87,8 @@ fun SearchTrainInfoItem(
         )
         if (timetable.isPremiumSold) {
             SearchTrainSelectButton(
+                modifier = Modifier
+                    .width((LocalConfiguration.current.screenWidthDp * 0.214).dp),
                 trainType = CarType.SPECIAL.text,
                 trainCost = premiumPrice,
                 state = if (timetable.isPremiumSold) SearchTrainStateType.SALE else SearchTrainStateType.SOLD_OUT,
