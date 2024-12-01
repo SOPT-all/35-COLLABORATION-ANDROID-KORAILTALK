@@ -37,6 +37,23 @@ class TravelSearchViewModel @Inject constructor(
     private val _nextDate = MutableStateFlow(17)
     val nextDate: StateFlow<Int> = _nextDate
 
+    private val _selectedTimeTable = MutableStateFlow(TimeTables.TimeTable(
+        timetableId = 1,
+        trainName = "",
+        departureTime = "",
+        arrivalTime = "",
+        standardPrice = 1,
+        premiumPrice = 1,
+        isStandardSold = false,
+        isPremiumSold = false,
+        travelTime = 1
+    ))
+    val selectedTimeTable: StateFlow<TimeTables.TimeTable> = _selectedTimeTable
+
+    fun updateTimeTable(timeTable: TimeTables.TimeTable) {
+        _selectedTimeTable.value = timeTable
+    }
+
     val chipList = listOf(
         "11.16 (토)",
         "11.17 (일)",
@@ -53,19 +70,6 @@ class TravelSearchViewModel @Inject constructor(
         "11.28 (목)",
         "11.29 (금)"
     )
-    val trainDummy = TimeTables.TimeTable(
-        timetableId = 1,
-        trainName = "KTX 001",
-        departureTime = "05:13",
-        arrivalTime = "07:49",
-        standardPrice = 12300,
-        premiumPrice = 15000,
-        isStandardSold = true,
-        isPremiumSold = false,
-        travelTime = 2,
-    )
-    val trainDummyList =
-        listOf(trainDummy, trainDummy, trainDummy, trainDummy)
 
     fun getTimeTableData(
         userId: Long,

@@ -60,6 +60,8 @@ fun TrainSearchScreen(
     val selectedTime by viewModel.selectDate.collectAsState()
     val nextDay by viewModel.nextDate.collectAsState()
     val timeTables by viewModel.timeTables.collectAsState()
+    val selectedTimeTable by viewModel.selectedTimeTable.collectAsState()
+
     var timetableId by remember { mutableLongStateOf(1) }
     var showDateChip by remember { mutableStateOf(false) }
     var showTrainBottomSheet by remember { mutableStateOf(false) }
@@ -156,6 +158,7 @@ fun TrainSearchScreen(
                         standardPrice = viewModel.formatPrice(item.standardPrice),
                         premiumPrice = viewModel.formatPrice(item.premiumPrice),
                         onBasicCarClick = {
+                            viewModel.updateTimeTable(item)
                             isOpenBottomSheet = true
                         },
                         onSpecialCarClick = {
@@ -236,7 +239,7 @@ fun TrainSearchScreen(
     SearchDetailBottomSheet(
         isOpenBottomSheet = isOpenBottomSheet,
         date = "2024.11.16 (토)",
-        trainData = viewModel.trainDummy,
+        trainData = selectedTimeTable,
         onSelectSeatClick = onSelectSeatClick,
         onAutoSeatClick = onAutoSeatClick,
         onDismissRequest = {

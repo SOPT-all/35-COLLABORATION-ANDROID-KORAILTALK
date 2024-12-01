@@ -54,6 +54,7 @@ fun MyTicketScreen(
     val scrollState = rememberScrollState()
 
     LaunchedEffect(Unit) {
+        showToast = true
         viewModel.getTicketInformation(userId = 1, ticketId = ticketId)
     }
 
@@ -134,14 +135,12 @@ fun MyTicketScreen(
                     backgroundColor = KorailTalkTheme.colors.white,
                     borderColor = KorailTalkTheme.colors.grey200,
                     borderWidth = 1.dp,
-                    onClick = {
-                        showToast = true
-                    }
+                    onClick = {}
                 )
                 if (showToast) {
                     val myTicketToast = KorailToast(LocalContext.current)
                     myTicketToast.ShowToast(
-                        msg = "승차권 상세정보를 로딩중입니다"
+                        msg = "승차권 상세정보를 로딩중입니다",
                     )
                     showToast = false
                 }

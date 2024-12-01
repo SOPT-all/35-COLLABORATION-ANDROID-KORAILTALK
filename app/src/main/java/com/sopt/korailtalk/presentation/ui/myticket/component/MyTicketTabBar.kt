@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.material3.Tab
 import androidx.compose.material3.TabRow
 import androidx.compose.material3.TabRowDefaults
@@ -44,14 +45,16 @@ fun MyTicketTabBar(
             Tab(
                 selected = selectedTabIndex == index,
                 onClick = { selectedTabIndex = index },
-                text = {
-                    Text(
-                        text = tab.text,
-                        style = KorailTalkTheme.typography.title1,
-                        color = if (selectedTabIndex == index) KorailTalkTheme.colors.blue01 else KorailTalkTheme.colors.grey400,
-                    )
-                }
-            )
+                modifier = Modifier.wrapContentWidth(),
+            ) {
+                Text(
+                    text = tab.text,
+                    style = KorailTalkTheme.typography.title1,
+                    color = if (selectedTabIndex == index) KorailTalkTheme.colors.blue01 else KorailTalkTheme.colors.grey400,
+                    modifier = Modifier
+                        .padding(vertical = 16.dp)
+                )
+            }
         }
 
     }

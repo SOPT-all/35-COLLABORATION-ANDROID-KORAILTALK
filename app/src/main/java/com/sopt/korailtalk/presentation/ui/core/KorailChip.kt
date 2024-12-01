@@ -28,7 +28,7 @@ fun KorailChip(
         horizontalArrangement = Arrangement.Center,
         verticalAlignment = Alignment.CenterVertically,
         modifier = modifier
-            .width((LocalConfiguration.current.screenWidthDp * 0.256).dp)
+            .width((LocalConfiguration.current.screenWidthDp * 0.300).dp)
             .background(
                 color = KorailTalkTheme.colors.blue02,
                 shape = RoundedCornerShape(size = 10.dp)

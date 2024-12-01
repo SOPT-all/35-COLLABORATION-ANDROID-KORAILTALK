@@ -79,7 +79,7 @@ fun SearchDetailBottomSheet(
             SearchWayInfoWithTravelTime(
                 departureTime = trainData.departureTime,
                 arrivalTime = trainData.arrivalTime,
-                travelTime = trainData.travelTime,
+                travelTime = formatTravelTime(trainData.travelTime),
             )
             Column(
                 modifier = Modifier
@@ -151,6 +151,18 @@ fun SearchDetailBottomSheet(
         },
         onDismissRequest = onDismissRequest
     )
+}
+
+fun formatTravelTime(travelTime: Int): String {
+    val hours = travelTime / 60
+    val minutes = travelTime % 60
+
+    return when {
+        hours > 0 && minutes > 0 -> "${hours}시간 ${minutes}분"
+        hours > 0 -> "${hours}시간"
+        minutes > 0 -> "${minutes}분"
+        else -> "0분"
+    }
 }
 
 @Composable
