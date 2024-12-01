@@ -16,11 +16,19 @@
 ## 📱 *****Demonstration*****
 | `열차조회`  | `좌석선택` | `승차권 확인` |
 |:---------:|:-------:|:-----------:|
-| <img width="250" src=""/> | <img width="250" src=""/> | <img width="250" src=""/> |
+| <img width="250" src=""/> | <img width="250" src="https://github.com/user-attachments/assets/92309299-a892-4fe8-ba19-3d2fd514c2aa"/> | <img width="250" src="https://github.com/user-attachments/assets/6e321a05-d693-4ec6-b0ca-e2c007982865"/> |
 | `결제하기1` | `결제하기2` | `나의티켓` |     
 | <img width="250" src="https://github.com/user-attachments/assets/0aab19e2-0d0b-4b26-8ca5-519a6f3c1381"/> | <img width="250" src="https://github.com/user-attachments/assets/0fd7b2fd-9b84-4111-a384-03abdf56b2e4"/> | <img width="250" src=""/> |
 
 <br>
+
+
+
+
+
+
+
+
 
 ## 🔎 **UI Design**
 [ UI 설계 바로가기 ](https://noble-nephew-f49.notion.site/13b76e79e16480d88c6de94818fc107f?pvs=4)
