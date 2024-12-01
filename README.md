@@ -13,6 +13,22 @@
 
 <br>
 
+## 📱 *****Demonstration*****
+| `열차조회`  | `좌석선택` | `승차권 확인` |
+|:---------:|:-------:|:-----------:|
+| <img width="250" src=""/> | <img width="250" src=""/> | <img width="250" src=""/> |
+| `결제하기1` | `결제하기2` | `나의티켓` |     
+| <img width="250" src="https://github.com/user-attachments/assets/0aab19e2-0d0b-4b26-8ca5-519a6f3c1381"/> | <img width="250" src="https://github.com/user-attachments/assets/0fd7b2fd-9b84-4111-a384-03abdf56b2e4"/> | <img width="250" src=""/> |
+
+<br>
+
+## 🔎 **UI Design**
+[ UI 설계 바로가기 ](https://noble-nephew-f49.notion.site/13b76e79e16480d88c6de94818fc107f?pvs=4)
+
+
+## 🗣️ **Proceedings**
+[ 회의록 바로가기 ](https://noble-nephew-f49.notion.site/13b76e79e1648009be1cd1cad3bdc07f?v=6795a51d3d74421c91a30de5b6332c16&pvs=4)
+
 ## 🤙 **Ground Rules**
 ```
 
