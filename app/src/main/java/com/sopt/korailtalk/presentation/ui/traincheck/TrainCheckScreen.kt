@@ -22,16 +22,14 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.buildAnnotatedString
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.viewmodel.compose.viewModel
 import com.sopt.korailtalk.R
-import com.sopt.korailtalk.presentation.ui.KorailDialog
-import com.sopt.korailtalk.presentation.ui.KorailRoundedButton
-import com.sopt.korailtalk.presentation.ui.KorailSingleActionTopAppBar
-import com.sopt.korailtalk.presentation.ui.KorailTicketHeader
-import com.sopt.korailtalk.presentation.ui.KorailWayInfoWithTime
+import com.sopt.korailtalk.presentation.ui.core.KorailDialog
+import com.sopt.korailtalk.presentation.ui.core.KorailRoundedButton
+import com.sopt.korailtalk.presentation.ui.core.KorailSingleActionTopAppBar
+import com.sopt.korailtalk.presentation.ui.core.KorailTicketHeader
+import com.sopt.korailtalk.presentation.ui.core.KorailWayInfoWithTime
 import com.sopt.korailtalk.presentation.ui.traincheck.component.TrainCheckDetailInfo
 import com.sopt.korailtalk.presentation.ui.traincheck.component.TrainCheckDialogContent
 import com.sopt.korailtalk.presentation.ui.traincheck.component.TrainCheckNotice
@@ -43,12 +41,12 @@ fun TrainCheckScreen(
     trainCheckViewModel: TrainCheckViewModel = hiltViewModel(),
     userId: Long = 1,
     ticketId: Long,
-    navigateToPayment: () -> Unit,
+    navigateToPayment: (Long) -> Unit,
 ) {
     val showDialog = trainCheckViewModel.showDialog
     val ticketData by trainCheckViewModel.ticketData.collectAsState()
 
-    LaunchedEffect(true) {
+    LaunchedEffect(Unit) {
         trainCheckViewModel.getTicketInformation(userId, ticketId)
     }
 
@@ -200,7 +198,10 @@ fun TrainCheckScreen(
         KorailDialog(
             title = stringResource(R.string.trainCheck_dialog_title),
             content = { TrainCheckDialogContent()},
-            onConfirm = { trainCheckViewModel.toggleDialog(false) }
+            onConfirm = {
+                trainCheckViewModel.toggleDialog(false)
+                navigateToPayment(ticketId)
+            }
         )
     }
 }

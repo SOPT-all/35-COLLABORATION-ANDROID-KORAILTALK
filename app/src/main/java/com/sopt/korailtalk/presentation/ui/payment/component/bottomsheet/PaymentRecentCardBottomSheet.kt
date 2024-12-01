@@ -8,8 +8,8 @@ import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import com.sopt.korailtalk.domain.type.RecentCardType
-import com.sopt.korailtalk.presentation.ui.KorailBottomSheet
-import com.sopt.korailtalk.presentation.ui.KorailOptionBottomSheetItem
+import com.sopt.korailtalk.presentation.ui.core.KorailBottomSheet
+import com.sopt.korailtalk.presentation.ui.core.KorailOptionBottomSheetItem
 import com.sopt.korailtalk.ui.theme.KorailTalkTheme
 
 @OptIn(ExperimentalMaterial3Api::class)

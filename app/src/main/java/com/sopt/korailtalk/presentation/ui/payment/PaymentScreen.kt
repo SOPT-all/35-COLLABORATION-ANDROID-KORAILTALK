@@ -30,8 +30,8 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.sopt.korailtalk.R
 import com.sopt.korailtalk.domain.type.PaymentDropdownOptionType
 import com.sopt.korailtalk.domain.type.PaymentSelectableOptionType
-import com.sopt.korailtalk.presentation.ui.KorailRoundedButton
-import com.sopt.korailtalk.presentation.ui.KorailSingleActionTopAppBar
+import com.sopt.korailtalk.presentation.ui.core.KorailRoundedButton
+import com.sopt.korailtalk.presentation.ui.core.KorailSingleActionTopAppBar
 import com.sopt.korailtalk.presentation.ui.payment.component.bottomsheet.PaymentCardTypeBottomSheet
 import com.sopt.korailtalk.presentation.ui.payment.component.PaymentChipButton
 import com.sopt.korailtalk.presentation.ui.payment.component.PaymentDropdownOption
@@ -42,7 +42,6 @@ import com.sopt.korailtalk.presentation.ui.payment.component.bottomsheet.Payment
 import com.sopt.korailtalk.presentation.ui.payment.component.PaymentRadioButtonOption
 import com.sopt.korailtalk.presentation.ui.payment.component.bottomsheet.PaymentRecentCardBottomSheet
 import com.sopt.korailtalk.presentation.ui.payment.component.PaymentSelectableOption
-import com.sopt.korailtalk.presentation.ui.payment.component.PaymentSquareButton
 import com.sopt.korailtalk.presentation.ui.payment.component.PaymentTextField
 import com.sopt.korailtalk.presentation.util.clickableWithoutRipple
 import com.sopt.korailtalk.presentation.util.showIf
@@ -53,7 +52,8 @@ import com.sopt.korailtalk.ui.theme.KorailTalkTheme
 @Composable
 fun PaymentRoute(
     paymentViewModel: PaymentViewModel = hiltViewModel(),
-    navigateToMyTicket: () -> Unit,
+    ticketId: Long,
+    navigateToMyTicket: (Long) -> Unit,
 ) {
     PaymentScreen(
         priceBeforeDiscount = paymentViewModel.priceBeforeDiscount.collectAsState().value,
@@ -109,7 +109,10 @@ fun PaymentRoute(
         isCardPaymentPrivacyChecked = paymentViewModel.isCardPaymentPrivacyChecked.collectAsState().value,
         onCardPaymentPrivacyCheckedStateChange = { paymentViewModel.changeCardPaymentPrivacyCheckedState() },
         ticketBuyingState = paymentViewModel.ticketBuyingState.collectAsState().value,
-        onTicketBuyingClick = { paymentViewModel.buyTicket() }
+        onTicketBuyingClick = {
+            paymentViewModel.buyTicket(ticketId = ticketId)
+            navigateToMyTicket(ticketId)
+        }
     )
 }
 
@@ -172,8 +175,10 @@ fun PaymentScreen(
 ) {
     var patriotDescription by remember { mutableStateOf("") }
     var patriotApplyState by remember { mutableStateOf(PaymentDropdownOptionType.UNSELECTED) }
+    var lPointDiscountState by remember { mutableStateOf(PaymentSelectableOptionType.ENABLED) }
 
     Column(
+
         modifier = Modifier.fillMaxSize(),
     ) {
         KorailSingleActionTopAppBar(
@@ -351,6 +356,7 @@ fun PaymentScreen(
                             onClick = onLPointBottomSheetStateChange,
                             modifier = Modifier.fillMaxWidth(),
                             title = "L.POINT",
+                            state = lPointDiscountState
                         )
                         Spacer(modifier = Modifier.height(8.dp))
                         Row(
@@ -770,6 +776,7 @@ fun PaymentScreen(
             contentColor = KorailTalkTheme.colors.white,
             cornerRadius = 26.dp,
             backgroundColor = KorailTalkTheme.colors.purple03,
+            onClick = onTicketBuyingClick
         )
         Spacer(modifier = Modifier.height(10.dp))
 
@@ -807,6 +814,7 @@ fun PaymentScreen(
             applyLPointDiscount = {
                 updateDiscount(lPoint)
                 onLPointBottomSheetStateChange()
+                lPointDiscountState = PaymentSelectableOptionType.SELECTED
             }
         )
 

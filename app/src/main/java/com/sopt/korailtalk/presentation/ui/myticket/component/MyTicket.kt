@@ -26,9 +26,9 @@ import androidx.compose.ui.unit.dp
 import com.sopt.korailtalk.R
 import com.sopt.korailtalk.domain.model.TicketData
 import com.sopt.korailtalk.domain.type.MyTicketButtonType
-import com.sopt.korailtalk.presentation.ui.KorailRoundedButton
-import com.sopt.korailtalk.presentation.ui.KorailTicketHeader
-import com.sopt.korailtalk.presentation.ui.KorailWayInfoWithTime
+import com.sopt.korailtalk.presentation.ui.core.KorailRoundedButton
+import com.sopt.korailtalk.presentation.ui.core.KorailTicketHeader
+import com.sopt.korailtalk.presentation.ui.core.KorailWayInfoWithTime
 import com.sopt.korailtalk.presentation.util.clickableWithoutRipple
 import com.sopt.korailtalk.ui.theme.COLLAVORATIONANDROIDKORAILTALKTheme
 import com.sopt.korailtalk.ui.theme.KorailTalkTheme

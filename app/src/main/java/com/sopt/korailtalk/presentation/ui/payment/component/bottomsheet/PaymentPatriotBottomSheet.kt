@@ -11,10 +11,16 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import com.sopt.korailtalk.domain.type.PaymentDropdownOptionType
-import com.sopt.korailtalk.presentation.ui.KorailBottomSheet
+import com.sopt.korailtalk.presentation.ui.core.KorailBottomSheet
+import com.sopt.korailtalk.presentation.ui.core.KorailToast
 import com.sopt.korailtalk.presentation.ui.payment.component.PaymentChipButton
 import com.sopt.korailtalk.presentation.ui.payment.component.PaymentDropdownOption
 import com.sopt.korailtalk.presentation.ui.payment.component.PaymentSquareButton
@@ -33,6 +39,8 @@ fun PaymentPatriotBottomSheet(
     updatePatriotCertificationNumber: (String) -> Unit,
     applyPatriotDiscount: () -> Unit
 ) {
+    var showToast by remember { mutableStateOf(false) }
+    var buttonEnabled by remember { mutableStateOf(false) }
     val sheetState = rememberModalBottomSheetState()
     KorailBottomSheet(
         isOpenBottomSheet = showPatriotBottomSheet,
@@ -80,7 +88,10 @@ fun PaymentPatriotBottomSheet(
                     Spacer(modifier = Modifier.width(4.dp))
                     PaymentChipButton(
                         title = "보훈번호 확인",
-                        onClick = {}
+                        onClick = {
+                            showToast = true
+                            buttonEnabled = true
+                        }
                     )
                 }
 
@@ -97,11 +108,18 @@ fun PaymentPatriotBottomSheet(
             Spacer(modifier = Modifier.height(20.dp))
             PaymentSquareButton(
                 title = "할인적용",
-                enabled = true,
+                enabled = buttonEnabled,
                 onClick = applyPatriotDiscount
             )
         },
         sheetState = sheetState,
         onDismissRequest = onPatriotBottomSheetStateChange
     )
+    if (showToast) {
+        val patriotToast = KorailToast(LocalContext.current)
+        patriotToast.ShowToast(
+            msg = "보훈번호 확인되었습니다."
+        )
+        showToast = false
+    }
 }

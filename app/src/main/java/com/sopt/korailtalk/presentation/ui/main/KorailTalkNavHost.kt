@@ -45,17 +45,15 @@ fun KorailTalkNavHost(
             }
 
             composable(
-                route = "seat_map/{ticketId}",
+                route = "seat_map/{timetableId}",
                 arguments = listOf (
-                    navArgument("ticketId") { type = NavType.LongType }
+                    navArgument("timetableId") { type = NavType.LongType }
                 )
             ) { backStackEntry ->
-                val ticketId = backStackEntry.arguments?.getLong("ticketId") ?: 1
+                val timetableId = backStackEntry.arguments?.getLong("timetableId") ?: 1
                 SeatMapScreen(
-                    navigateToTrainCheck = { navController.navigateToTrainCheck(
-                        ticketId = ticketId
-                    )
-                    }
+                    timetableId = timetableId,
+                    navigateToTrainCheck = { ticketId -> navController.navigateToTrainCheck(ticketId = ticketId) }
                 )
             }
 
@@ -65,25 +63,36 @@ fun KorailTalkNavHost(
                     navArgument("ticketId") { type = NavType.LongType }
                 )
             ) { backStackEntry ->
-                val ticketId = backStackEntry.arguments?.getLong("ticketId") ?: 10
+                val ticketId = backStackEntry.arguments?.getLong("ticketId") ?: 32
                 TrainCheckScreen(
                     ticketId = ticketId,
-                    navigateToPayment = { navController.navigateToPayment() }
+                    navigateToPayment = { navController.navigateToPayment(ticketId) }
                 )
             }
 
             composable(
-                route = "payment"
-            ) {
+                route = "payment/{ticketId}",
+                arguments = listOf(
+                    navArgument("ticketId") { type = NavType.LongType }
+                )
+            ) { backStackEntry ->
+                val ticketId = backStackEntry.arguments?.getLong("ticketId") ?: 32
                 PaymentRoute(
-                    navigateToMyTicket = { navController.navigateToMyTicket() }
+                    ticketId = ticketId,
+                    navigateToMyTicket = { navController.navigateToMyTicket(ticketId = ticketId) }
                 )
             }
 
             composable(
-                route = "my_ticket"
-            ) {
-                MyTicketScreen()
+                route = "my_ticket/{ticketId}",
+                arguments = listOf(
+                    navArgument("ticketId") { type = NavType.LongType }
+                )
+            ) { backStackEntry ->
+                val ticketId = backStackEntry.arguments?.getLong("ticketId") ?: 32
+                MyTicketScreen(
+                    ticketId = ticketId
+                )
             }
         }
     }

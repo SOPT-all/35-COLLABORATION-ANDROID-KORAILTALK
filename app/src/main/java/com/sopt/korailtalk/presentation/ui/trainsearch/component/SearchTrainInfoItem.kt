@@ -26,10 +26,10 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.sopt.korailtalk.R
-import com.sopt.korailtalk.domain.model.TimeTable
+import com.sopt.korailtalk.domain.model.TimeTables
 import com.sopt.korailtalk.domain.type.CarType
 import com.sopt.korailtalk.domain.type.SearchTrainStateType
-import com.sopt.korailtalk.presentation.ui.KorailChip
+import com.sopt.korailtalk.presentation.ui.core.KorailChip
 import com.sopt.korailtalk.presentation.util.clickableWithoutRipple
 import com.sopt.korailtalk.presentation.util.roundedBackgroundWithBorder
 import com.sopt.korailtalk.ui.theme.COLLAVORATIONANDROIDKORAILTALKTheme
@@ -37,7 +37,7 @@ import com.sopt.korailtalk.ui.theme.KorailTalkTheme
 
 @Composable
 fun SearchTrainInfoItem(
-    timetable: TimeTable,
+    timetable: TimeTables.TimeTable,
     standardPrice: String?,
     premiumPrice: String?,
     modifier: Modifier = Modifier,
@@ -170,7 +170,7 @@ fun ShowSearchTrainInfoItem() {
                 .padding(vertical = 16.dp),
             verticalArrangement = Arrangement.spacedBy(space = 5.dp)
         ) {
-            val trainDummy = TimeTable(
+            val trainDummy = TimeTables.TimeTable(
                 timetableId = 1,
                 trainName = "KTX 001",
                 departureTime = "05:13",
@@ -181,7 +181,7 @@ fun ShowSearchTrainInfoItem() {
                 isPremiumSold = false,
                 travelTime = 2,
             )
-            val trainDummy2 = TimeTable(
+            val trainDummy2 = TimeTables.TimeTable(
                 timetableId = 1,
                 trainName = "KTX 001",
                 departureTime = "05:13",

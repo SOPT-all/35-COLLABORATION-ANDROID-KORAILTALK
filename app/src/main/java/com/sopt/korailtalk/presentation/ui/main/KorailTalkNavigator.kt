@@ -6,22 +6,18 @@ fun NavController.navigateToTrainSearch() {
     navigate("train_search")
 }
 
-fun NavController.navigateToSeatMap(
-    timetableId: Long
-) {
+fun NavController.navigateToSeatMap(timetableId: Long) {
     navigate("seat_map/$timetableId")
 }
 
-fun NavController.navigateToTrainCheck(
-    ticketId: Long
-) {
+fun NavController.navigateToTrainCheck(ticketId: Long) {
     navigate("train_check/$ticketId")
 }
 
-fun NavController.navigateToPayment() {
-    navigate("payment")
+fun NavController.navigateToPayment(ticketId: Long) {
+    navigate("payment/$ticketId")
 }
 
-fun NavController.navigateToMyTicket() {
-    navigate("my_ticket")
+fun NavController.navigateToMyTicket(ticketId: Long) {
+    navigate("my_ticket/$ticketId")
 }

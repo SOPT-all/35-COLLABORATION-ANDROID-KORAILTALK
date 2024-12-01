@@ -11,5 +11,4 @@ interface TrainSearchRepository {
         departurePlace: String,
         arrivalPlace: String
     ): Result<TimeTables>
-    suspend fun selectSeat(userId: Long, seatSelecting: SeatSelecting): Result<SeatTicket>
 }

@@ -1,4 +1,4 @@
-package com.sopt.korailtalk.presentation.ui
+package com.sopt.korailtalk.presentation.ui.core
 
 import android.content.Context
 import android.widget.Toast

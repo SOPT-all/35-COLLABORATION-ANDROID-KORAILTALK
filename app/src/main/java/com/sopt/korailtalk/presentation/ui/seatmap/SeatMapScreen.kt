@@ -16,6 +16,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Text
@@ -26,17 +27,15 @@ import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import com.sopt.korailtalk.R
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.sopt.korailtalk.presentation.ui.KorailDialog
-import com.sopt.korailtalk.presentation.ui.KorailDoubleActionTopAppBar
-import com.sopt.korailtalk.presentation.ui.KorailRoundedButton
-import com.sopt.korailtalk.presentation.ui.KorailWayInfo
+import com.sopt.korailtalk.presentation.ui.core.KorailDialog
+import com.sopt.korailtalk.presentation.ui.core.KorailDoubleActionTopAppBar
+import com.sopt.korailtalk.presentation.ui.core.KorailRoundedButton
+import com.sopt.korailtalk.presentation.ui.core.KorailWayInfo
 import com.sopt.korailtalk.presentation.ui.seatmap.component.SeatMapCoachSelector
 import com.sopt.korailtalk.presentation.ui.seatmap.component.SeatMapSeatSelector
 import com.sopt.korailtalk.presentation.util.clickableWithoutRipple
@@ -118,12 +117,12 @@ fun SeatMapScreen(
                 .padding(vertical = 8.dp),
             contentPadding = PaddingValues(horizontal = 12.dp)
         ) {
-            items(seatsMapData.size) { index ->
-                val coach = seatsMapData[index]
+            itemsIndexed(seatsMapData.coaches) { index, item ->
+                val coach = item.coachId
                 SeatMapCoachSelector(
-                    coachId = coach.coachId,
-                    leftSeats = coach.leftSeats,
-                    isSelected = coach.coachId == viewModel.selectedCoachId.value,
+                    coachId = item.coachId,
+                    leftSeats = item.leftSeats,
+                    isSelected = item.coachId == viewModel.selectedCoachId.value,
                     onSelectionChange = viewModel::selectCoach
                 )
             }
@@ -269,37 +268,32 @@ fun Seats(selectedCoachId: MutableState<Long>, viewModel: SeatMapViewModel, modi
     // StateFlow에서 상태를 수집
     val seatsMapData by viewModel.seatsMapData.collectAsState()
 
-    Column(modifier = modifier.padding(horizontal = 16.dp)) {
+    Column(modifier = Modifier.padding(horizontal = 16.dp)) {
         // 선택된 coachId에 따른 좌석 데이터 찾기
-        seatsMapData.find { it.coachId == selectedCoachId.value }?.seats?.reversed()?.let { seats ->
-            // 한 줄의 4개씩 배치
-            seats.chunked(4).forEach { rowSeats ->
-                Row(
-                    horizontalArrangement = Arrangement.SpaceBetween,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(bottom = 6.dp)
-                ) {
-                    rowSeats.forEachIndexed { index, seat ->
-                        SeatMapSeatSelector(
-                            seatId = seat.seatId,
-                            seatName = seat.seatName,
-                            direction = seat.direction,
-                            isSold = seat.isSold,
-                            isSelected = viewModel.selectedSeatId.value == seat.seatId,
-                            onSelectionChange = { id ->
-                                viewModel.selectSeat(id)
-                            }
-                        )
+        seatsMapData.coaches.find { it.coachId == selectedCoachId.value }?.seats?.reversed()?.chunked(4)?.forEach { rowSeats ->
+            Row(
+                horizontalArrangement = Arrangement.SpaceBetween,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(bottom = 6.dp)
+            ) {
+                rowSeats.forEachIndexed { index, seat ->
+                    SeatMapSeatSelector(
+                        seatId = seat.seatId,
+                        seatName = seat.seatName,
+                        direction = seat.direction,
+                        isSold = seat.isSold,
+                        isSelected = viewModel.selectedSeatId.value == seat.seatId,
+                        onSelectionChange = { id -> viewModel.selectSeat(id) }
+                    )
 
-                        // 좌석 2와 3 사이 이미지 배치
-                        if (index == 1) {
-                            Image(
-                                painter = painterResource(id = R.drawable.ic_seat_direction),
-                                contentDescription = "열차 진행 방향",
-                                modifier = Modifier.padding(horizontal = 10.dp)
-                            )
-                        }
+                    // 두 번째 좌석 뒤에 이미지 삽입
+                    if (index == 1) {
+                        Image(
+                            painter = painterResource(id = R.drawable.ic_seat_direction),
+                            contentDescription = "열차 진행 방향",
+                            modifier = Modifier.padding(horizontal = 10.dp)
+                        )
                     }
                 }
             }

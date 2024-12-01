@@ -1,10 +1,9 @@
 package com.sopt.korailtalk.presentation.ui.trainsearch
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.sopt.korailtalk.domain.model.SeatSelecting
-import com.sopt.korailtalk.domain.model.TimeTable
+import com.sopt.korailtalk.domain.model.TimeTables
 import com.sopt.korailtalk.domain.repository.SeatsRepository
 import com.sopt.korailtalk.domain.repository.TrainSearchRepository
 import com.sopt.korailtalk.presentation.ui.seatmap.SeatSelectingState
@@ -17,16 +16,14 @@ import javax.inject.Inject
 
 @HiltViewModel
 class TravelSearchViewModel @Inject constructor(
-    private val trainSearchRepository: TrainSearchRepository
+    private val trainSearchRepository: TrainSearchRepository,
+    private val seatsRepository: SeatsRepository
 ) : ViewModel() {
     private val _timeTableState = MutableStateFlow<TimeTableState>(TimeTableState.Idle)
     val timeTableState: StateFlow<TimeTableState> = _timeTableState
 
-    private val _timeTableList = MutableStateFlow<ArrayList<TimeTable>>(arrayListOf())
-    val timeTableList: StateFlow<ArrayList<TimeTable>> get() = _timeTableList
-
-    private val _timetableId = MutableStateFlow<Long>(1)
-    val timetableId: StateFlow<Long> = _timetableId
+    private val _timeTables = MutableStateFlow(TimeTables(emptyList()))
+    val timeTables: StateFlow<TimeTables> = _timeTables
 
     private val _seatSelectingState = MutableStateFlow<SeatSelectingState>(SeatSelectingState.Idle)
     val seatSelectingState: StateFlow<SeatSelectingState> = _seatSelectingState
@@ -34,46 +31,11 @@ class TravelSearchViewModel @Inject constructor(
     private val _ticketId = MutableStateFlow<Long>(1)
     val ticketId: StateFlow<Long> = _ticketId
 
-
-    fun getTimeTableData(
-        userId: Long,
-        date: String,
-        departurePlace: String,
-        arrivalPlace: String
-    ) {
-        _timeTableState.value = TimeTableState.Loading
-        viewModelScope.launch {
-            val result = trainSearchRepository.getTimeTableData(
-                userId = userId,
-                date = date,
-                departurePlace = departurePlace,
-                arrivalPlace = arrivalPlace
-            )
-            _timeTableState.value = result.fold(
-                onSuccess = {
-                    _timeTableList.value = it.timetables
-                    TimeTableState.Success(it)
-                },
-                onFailure = { error ->
-                    TimeTableState.Failure(error.message.orEmpty())
-                }
-            )
-        }
-    }
-
     private val _selectDate = MutableStateFlow("11.16 (토)")
     val selectDate: StateFlow<String> = _selectDate
 
     private val _nextDate = MutableStateFlow(17)
     val nextDate: StateFlow<Int> = _nextDate
-
-    fun setDate(date: String) {
-        _selectDate.value = date
-    }
-
-    fun setNextDate() {
-        _nextDate.value++
-    }
 
     val chipList = listOf(
         "11.16 (토)",
@@ -91,7 +53,7 @@ class TravelSearchViewModel @Inject constructor(
         "11.28 (목)",
         "11.29 (금)"
     )
-    val trainDummy = TimeTable(
+    val trainDummy = TimeTables.TimeTable(
         timetableId = 1,
         trainName = "KTX 001",
         departureTime = "05:13",
@@ -105,18 +67,39 @@ class TravelSearchViewModel @Inject constructor(
     val trainDummyList =
         listOf(trainDummy, trainDummy, trainDummy, trainDummy)
 
-    fun formatPrice(amount: Int): String {
-        val formatter = DecimalFormat("#,###")
-        return formatter.format(amount)
+    fun getTimeTableData(
+        userId: Long,
+        date: String,
+        departurePlace: String,
+        arrivalPlace: String
+    ) {
+        _timeTableState.value = TimeTableState.Loading
+        viewModelScope.launch {
+            val result = trainSearchRepository.getTimeTableData(
+                userId = userId,
+                date = date,
+                departurePlace = departurePlace,
+                arrivalPlace = arrivalPlace
+            )
+            _timeTableState.value = result.fold(
+                onSuccess = { timeTables ->
+                    _timeTables.value = timeTables
+                    TimeTableState.Success(timeTables)
+                },
+                onFailure = { error ->
+                    TimeTableState.Failure(error.message.orEmpty())
+                }
+            )
+        }
     }
 
-    fun onAutoSeatClick() {
+    fun selectSeat() {
         _seatSelectingState.value = SeatSelectingState.Loading
-        viewModelScope.launch{
-            val result = trainSearchRepository.selectSeat(
+        viewModelScope.launch {
+            val result = seatsRepository.selectSeat(
                 userId = 1,
                 seatSelecting = SeatSelecting(
-                    isAuto = true,
+                    isAuto = false,
                     timetableId = 1,
                     coachId = 1,
                     seatId = null,
@@ -124,9 +107,27 @@ class TravelSearchViewModel @Inject constructor(
                 )
             )
             _seatSelectingState.value = result.fold(
-                onSuccess = { SeatSelectingState.Success(it.ticketId) },
-                onFailure = { SeatSelectingState.Failure(it.message ?: "몰라") }
+                onSuccess = { seatSelectingResult ->
+                    _ticketId.value = seatSelectingResult.ticketId
+                    SeatSelectingState.Success(seatSelectingResult.ticketId)
+                },
+                onFailure = { error ->
+                    SeatSelectingState.Failure(error.message.orEmpty())
+                }
             )
         }
+    }
+
+    fun setDate(date: String) {
+        _selectDate.value = date
+    }
+
+    fun setNextDate() {
+        _nextDate.value++
+    }
+
+    fun formatPrice(amount: Int): String {
+        val formatter = DecimalFormat("#,###")
+        return formatter.format(amount)
     }
 }
