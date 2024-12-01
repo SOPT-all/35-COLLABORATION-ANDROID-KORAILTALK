@@ -16,9 +16,9 @@
 ## 📱 *****Demonstration*****
 | `열차조회`  | `좌석선택` | `승차권 확인` |
 |:---------:|:-------:|:-----------:|
-| <img width="250" src=""/> | <img width="250" src="https://github.com/user-attachments/assets/92309299-a892-4fe8-ba19-3d2fd514c2aa"/> | <img width="250" src="https://github.com/user-attachments/assets/6e321a05-d693-4ec6-b0ca-e2c007982865"/> |
+| <img width="250" src="![trainsearch](https://github.com/user-attachments/assets/f595d381-4b8f-46da-ac53-298f96b8210b)"/> | <img width="250" src="![trainCheck](https://github.com/user-attachments/assets/c2bf188a-257c-4a77-ac8e-6dbdf553935a)"/> | <img width="250" src="![seatSelect](https://github.com/user-attachments/assets/57231f28-3527-458c-8c52-4008606ab10d)"/> |
 | `결제하기1` | `결제하기2` | `나의티켓` |     
-| <img width="250" src="https://github.com/user-attachments/assets/0aab19e2-0d0b-4b26-8ca5-519a6f3c1381"/> | <img width="250" src="https://github.com/user-attachments/assets/0fd7b2fd-9b84-4111-a384-03abdf56b2e4"/> | <img width="250" src=""/> |
+| <img width="250" src="![payment_1](https://github.com/user-attachments/assets/0adb21c4-a5a8-40bf-8485-ec38c6d9ff0f)"/> | <img width="250" src="![payment_2](https://github.com/user-attachments/assets/24771ea8-b2f4-4164-b3ec-cff2841c82e5)"/> | <img width="250" src="![myticket](https://github.com/user-attachments/assets/e946f719-b623-491b-85f3-5b77216bc6dc)"/> |
 
 <br>
 
