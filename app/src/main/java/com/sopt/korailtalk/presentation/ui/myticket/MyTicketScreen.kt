@@ -141,7 +141,6 @@ fun MyTicketScreen(
                     val myTicketToast = KorailToast(LocalContext.current)
                     myTicketToast.ShowToast(
                         msg = "승차권 상세정보를 로딩중입니다",
-                        duration = 6
                     )
                     showToast = false
                 }

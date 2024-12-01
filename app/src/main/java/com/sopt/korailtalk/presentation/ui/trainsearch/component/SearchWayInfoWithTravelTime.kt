@@ -22,7 +22,7 @@ import com.sopt.korailtalk.ui.theme.KorailTalkTheme
 fun SearchWayInfoWithTravelTime(
     departureTime: String,
     arrivalTime: String,
-    travelTime: Int,
+    travelTime: String,
     modifier: Modifier = Modifier
 ) {
     Row(
@@ -45,7 +45,7 @@ fun SearchWayInfoWithTravelTime(
                 contentDescription = null
             )
             Text(
-                text = "$travelTime",
+                text = travelTime,
                 style = KorailTalkTheme.typography.caption4.copy(
                     color = KorailTalkTheme.colors.grey500
                 )
@@ -96,7 +96,7 @@ fun ShowSearchWayInfoWithTravelTime() {
             SearchWayInfoWithTravelTime(
                 departureTime = "01:12",
                 arrivalTime = "12:22",
-                travelTime = 1010
+                travelTime = "1010"
             )
         }
     }
