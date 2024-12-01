@@ -19,7 +19,7 @@ class SeatMapViewModel @Inject constructor(
 )  : ViewModel() {
 
     var selectedCoachId = mutableStateOf<Long>(1)
-    var selectedSeatId = mutableStateOf<Long?>(1)
+    var selectedSeatId = mutableStateOf<Long?>(null)
     var showDialog = mutableStateOf(false)
 
     private val _leftSeatsState = MutableStateFlow<LeftSeatsState>(LeftSeatsState.Idle)
