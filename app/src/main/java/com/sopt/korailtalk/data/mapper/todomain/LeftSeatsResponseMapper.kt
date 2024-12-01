@@ -2,25 +2,22 @@ package com.sopt.korailtalk.data.mapper.todomain
 
 import com.sopt.korailtalk.data.remote.model.response.LeftSeatsResponseDto
 import com.sopt.korailtalk.domain.model.LeftSeats
-import com.sopt.korailtalk.domain.model.SeatData
-import com.sopt.korailtalk.domain.model.SeatMapData
 
 fun LeftSeatsResponseDto.toDomain(): LeftSeats {
-    // LeftSeats domain 과 각 하위 데이터 클래스를 매핑
     return LeftSeats(
-        coaches = this.coaches.map {
-            SeatMapData(
-                coachId = it.coachId,
-                leftSeats = it.leftSeats,
-                seats = it.seats.map {
-                    SeatData(
-                        seatId = it.seatId,
-                        seatName = it.seatName,
-                        direction = it.direction,
-                        isSold = it.isSold
+        coaches = this.coaches.map { coach ->
+            LeftSeats.SeatMapData(
+                coachId = coach.coachId,
+                leftSeats = coach.leftSeats,
+                seats = coach.seats.map { seat ->
+                    LeftSeats.SeatMapData.SeatData(
+                        seatId = seat.seatId,
+                        seatName = seat.seatName,
+                        direction = seat.direction,
+                        isSold = seat.isSold
                     )
-                }.toCollection(ArrayList())
+                }
             )
-        }.toCollection(ArrayList())
+        }
     )
 }

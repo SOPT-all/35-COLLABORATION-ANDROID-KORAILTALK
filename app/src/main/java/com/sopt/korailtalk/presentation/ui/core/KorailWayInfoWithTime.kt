@@ -1,4 +1,4 @@
-package com.sopt.korailtalk.presentation.ui
+package com.sopt.korailtalk.presentation.ui.core
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background

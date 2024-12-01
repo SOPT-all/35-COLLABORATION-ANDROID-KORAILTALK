@@ -21,7 +21,7 @@ class PaymentViewModel @Inject constructor(
     private val _priceBeforeDiscount = MutableStateFlow(12500)
     val priceBeforeDiscount: StateFlow<Int> = _priceBeforeDiscount
 
-    private val _discount = MutableStateFlow(500)
+    private val _discount = MutableStateFlow(0)
     val discount: StateFlow<Int> = _discount
 
     val priceAfterDiscount: StateFlow<Int> = combine(_priceBeforeDiscount, _discount) { before, discount ->
@@ -224,7 +224,7 @@ class PaymentViewModel @Inject constructor(
         _isCardPaymentPrivacyChecked.value = !_isCardPaymentPrivacyChecked.value
     }
 
-    fun buyTicket(ticketId: Long = 1) {
+    fun buyTicket(ticketId: Long = 29) {
         val totalPrice = priceAfterDiscount.value
         val usedPoint = _discount.value
         _ticketBuyingState.value = TicketBuyingState.Loading

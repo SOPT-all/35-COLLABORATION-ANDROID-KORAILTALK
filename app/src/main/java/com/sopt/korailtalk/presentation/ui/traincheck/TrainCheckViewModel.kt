@@ -4,26 +4,25 @@ import android.util.Log
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.sopt.korailtalk.domain.model.SeatMapData
 import com.sopt.korailtalk.domain.model.TicketData
 import com.sopt.korailtalk.domain.repository.TicketRepository
-import com.sopt.korailtalk.presentation.ui.seatmap.LeftSeatsState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
+import javax.inject.Inject
 
 @HiltViewModel
 class TrainCheckViewModel @Inject constructor(
     private val ticketRepository: TicketRepository
-)  : ViewModel() {
+) : ViewModel() {
+
     private var _ticketState = MutableStateFlow<TicketState>(TicketState.Idle)
     val ticketState: StateFlow<TicketState> = _ticketState
 
-    private val _ticketData = MutableStateFlow<TicketData>(
+    private val _ticketData = MutableStateFlow(
         TicketData(
             departurePlace = "",
             arrivalPlace = "",
@@ -37,7 +36,7 @@ class TrainCheckViewModel @Inject constructor(
             coachesNumber = 0
         )
     )
-    val ticketData: StateFlow<TicketData> get() = _ticketData
+    val ticketData: StateFlow<TicketData> = _ticketData
 
     var showDialog = mutableStateOf(false)
 
@@ -45,7 +44,7 @@ class TrainCheckViewModel @Inject constructor(
         _ticketState.value = TicketState.Loading
         viewModelScope.launch {
             val result = ticketRepository.getTicketInformation(userId = userId, ticketId = ticketId)
-            Log.d("result",result.toString())
+            Log.d("result", result.toString())
             result.fold(
                 onSuccess = { ticket ->
                     val formattedTicket = ticket.copy(
@@ -63,7 +62,7 @@ class TrainCheckViewModel @Inject constructor(
         }
     }
 
-    fun formatDate(time: String): String{
+    fun formatDate(time: String): String {
         // 서버의 포맷 타입을 적용!
         val inputFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")
         // 출력 문자열의 형식

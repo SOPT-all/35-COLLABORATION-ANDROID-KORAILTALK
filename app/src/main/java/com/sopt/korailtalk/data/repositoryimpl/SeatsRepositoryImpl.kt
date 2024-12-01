@@ -22,12 +22,8 @@ class SeatsRepositoryImpl @Inject constructor(
 
     override suspend fun selectSeat(userId: Long, seatSelecting: SeatSelecting): Result<SeatTicket> {
         return runCatching {
-            // post에 대한 response를 확인
-            val response = seatsRemoteDataSource.selectSeat(userId, seatSelecting.toData())
-            // 받은 response를 domain의 데이터로 저장
-            val ticketId = response.data?.ticketId ?: throw IllegalStateException("ticketId가 비어있음")
-            // ticketId Int형으로 저장
-            SeatTicket(ticketId = ticketId)
+            seatsRemoteDataSource.selectSeat(userId = userId, seatSelectingRequestDto = seatSelecting.toData())
+                .handleApiResponse().getOrThrow().toDomain()
         }
     }
 }

@@ -22,6 +22,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableLongStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -32,13 +33,13 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.sopt.korailtalk.R
-import com.sopt.korailtalk.presentation.ui.KorailBottomSheet
-import com.sopt.korailtalk.presentation.ui.KorailDoubleActionTopAppBar
-import com.sopt.korailtalk.presentation.ui.KorailRoundedButton
-import com.sopt.korailtalk.presentation.ui.KorailWayInfo
-import com.sopt.korailtalk.presentation.ui.SeatSelectContent
-import com.sopt.korailtalk.presentation.ui.TrainSelectContent
-import com.sopt.korailtalk.presentation.ui.WaySelectContent
+import com.sopt.korailtalk.presentation.ui.core.KorailBottomSheet
+import com.sopt.korailtalk.presentation.ui.core.KorailDoubleActionTopAppBar
+import com.sopt.korailtalk.presentation.ui.core.KorailRoundedButton
+import com.sopt.korailtalk.presentation.ui.core.KorailWayInfo
+import com.sopt.korailtalk.presentation.ui.core.SeatSelectContent
+import com.sopt.korailtalk.presentation.ui.core.TrainSelectContent
+import com.sopt.korailtalk.presentation.ui.core.WaySelectContent
 import com.sopt.korailtalk.presentation.ui.seatmap.SeatSelectingState
 import com.sopt.korailtalk.presentation.ui.trainsearch.component.SearchDetailBottomSheet
 import com.sopt.korailtalk.presentation.ui.trainsearch.component.SearchTrainDateChipGroup
@@ -55,18 +56,16 @@ fun TrainSearchScreen(
     navigateToTrainCheck: (Long) -> Unit,
 ) {
     val timeTableState by viewModel.timeTableState.collectAsState()
-
-    val timetableId = viewModel.timetableId.collectAsState().value
+    val seatSelectingState by viewModel.seatSelectingState.collectAsState()
+    val selectedTime by viewModel.selectDate.collectAsState()
+    val nextDay by viewModel.nextDate.collectAsState()
+    val timeTables by viewModel.timeTables.collectAsState()
+    var timetableId by remember { mutableLongStateOf(1) }
     var showDateChip by remember { mutableStateOf(false) }
     var showTrainBottomSheet by remember { mutableStateOf(false) }
     var showSeatBottomSheet by remember { mutableStateOf(false) }
     var showWayBottomSheet by remember { mutableStateOf(false) }
     var isOpenBottomSheet by rememberSaveable { mutableStateOf(false) }
-    val seatSelectingState = viewModel.seatSelectingState.collectAsState().value
-
-    val selectedTime by viewModel.selectDate.collectAsState()
-    val nextDay by viewModel.nextDate.collectAsState()
-    val timeTableList by viewModel.timeTableList.collectAsState()
 
     LaunchedEffect(Unit) {
         viewModel.getTimeTableData(
@@ -77,32 +76,24 @@ fun TrainSearchScreen(
         )
     }
 
-    when (val state = timeTableState) {
-        is TimeTableState.Idle -> {
-            Log.d("TrainSearchScreen", "Idle")
-        }
-
-        is TimeTableState.Loading -> {
-            Log.d("TrainSearchScreen", "loading")
-        }
-
-        is TimeTableState.Success -> {
-            Log.d("TrainSearchScreen", "${state.data}")
-        }
-
-        is TimeTableState.Failure -> {
-            Log.d("TrainSearchScreen", "Failure")
-
-        }
+    val onSelectSeatClick = {
+        navigateToSeatMap(5)
     }
 
     val onAutoSeatClick = {
-        viewModel.onAutoSeatClick()
+        viewModel.selectSeat()
         when(seatSelectingState) {
             is SeatSelectingState.Success -> {
-                navigateToTrainCheck(seatSelectingState.data)
+                Log.d("success", "success 상태임")
+                navigateToTrainCheck((seatSelectingState as SeatSelectingState.Success).data)
             }
-            else -> { }
+            is SeatSelectingState.Failure -> {
+                Log.d("failure", "failure 상태임")
+                navigateToTrainCheck(132)
+            }
+            else -> {
+
+            }
         }
     }
 
@@ -157,7 +148,7 @@ fun TrainSearchScreen(
             }
 
             LazyColumn {
-                itemsIndexed(items = timeTableList) { index, item ->
+                itemsIndexed(items = timeTables.timetables) { index, item ->
                     SearchTrainInfoItem(
                         modifier = Modifier
                             .fillMaxWidth(),
@@ -246,7 +237,7 @@ fun TrainSearchScreen(
         isOpenBottomSheet = isOpenBottomSheet,
         date = "2024.11.16 (토)",
         trainData = viewModel.trainDummy,
-        onSelectSeatClick = { navigateToSeatMap(timetableId) },
+        onSelectSeatClick = onSelectSeatClick,
         onAutoSeatClick = onAutoSeatClick,
         onDismissRequest = {
             isOpenBottomSheet = false

@@ -30,10 +30,10 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.sopt.korailtalk.R
-import com.sopt.korailtalk.domain.model.TimeTable
-import com.sopt.korailtalk.presentation.ui.KorailBottomSheet
-import com.sopt.korailtalk.presentation.ui.KorailChip
-import com.sopt.korailtalk.presentation.ui.KorailRoundedButton
+import com.sopt.korailtalk.domain.model.TimeTables
+import com.sopt.korailtalk.presentation.ui.core.KorailBottomSheet
+import com.sopt.korailtalk.presentation.ui.core.KorailChip
+import com.sopt.korailtalk.presentation.ui.core.KorailRoundedButton
 import com.sopt.korailtalk.presentation.util.clickableWithoutRipple
 import com.sopt.korailtalk.presentation.util.roundedBackgroundWithBorder
 import com.sopt.korailtalk.ui.theme.KorailTalkTheme
@@ -44,7 +44,7 @@ fun SearchDetailBottomSheet(
     isOpenBottomSheet: Boolean,
     sheetState: SheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true),
     date: String,
-    trainData: TimeTable,
+    trainData: TimeTables.TimeTable,
     onSelectSeatClick: () -> Unit,
     onAutoSeatClick: () -> Unit,
     onDismissRequest: () -> Unit = {},
@@ -232,7 +232,7 @@ private fun SearchTrainInfoDropDown(
 @Composable
 fun ShowSearchDetailBottomSheet() {
     var isOpenBottomSheet by rememberSaveable { mutableStateOf(false) }
-    val trainDummy = TimeTable(
+    val trainDummy = TimeTables.TimeTable(
         timetableId = 1,
         trainName = "KTX 001",
         departureTime = "05:13",

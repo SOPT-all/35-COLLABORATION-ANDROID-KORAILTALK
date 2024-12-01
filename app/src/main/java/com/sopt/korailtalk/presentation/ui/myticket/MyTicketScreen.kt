@@ -18,6 +18,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -32,9 +33,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.sopt.korailtalk.R
-import com.sopt.korailtalk.presentation.ui.KorailRoundedButton
-import com.sopt.korailtalk.presentation.ui.KorailSingleActionTopAppBar
-import com.sopt.korailtalk.presentation.ui.KorailToast
+import com.sopt.korailtalk.presentation.ui.core.KorailRoundedButton
+import com.sopt.korailtalk.presentation.ui.core.KorailSingleActionTopAppBar
+import com.sopt.korailtalk.presentation.ui.core.KorailToast
 import com.sopt.korailtalk.presentation.ui.myticket.component.MyTicket
 import com.sopt.korailtalk.presentation.ui.myticket.component.MyTicketAdditionalService
 import com.sopt.korailtalk.presentation.ui.myticket.component.MyTicketAdditionalServiceType
@@ -46,10 +47,15 @@ import com.sopt.korailtalk.ui.theme.KorailTalkTheme
 
 @Composable
 fun MyTicketScreen(
-    viewModel: MyTicketViewModel = hiltViewModel()
+    viewModel: MyTicketViewModel = hiltViewModel(),
+    ticketId: Long
 ) {
     var showToast by remember { mutableStateOf(false) }
     val scrollState = rememberScrollState()
+
+    LaunchedEffect(Unit) {
+        viewModel.getTicketInformation(userId = 1, ticketId = ticketId)
+    }
 
     val ticketData by viewModel.ticketData.collectAsState()
 
@@ -154,6 +160,6 @@ fun MyTicketScreen(
 @Composable
 fun GreetingPreview() {
     COLLAVORATIONANDROIDKORAILTALKTheme {
-        MyTicketScreen()
+
     }
 }
